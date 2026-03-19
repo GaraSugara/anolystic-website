@@ -1,1 +1,819 @@
-<html><body><h1>Selamat Datang di Anolystic</h1></body></html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anolystic | Streetwear Indonesia</title>
+    <meta name="description" content="Anolystic - Gaya gak banyak bicara. Streetwear premium Indonesia.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'anol-black': '#0a0a0a',
+                        'anol-dark': '#141414',
+                        'anol-gray': '#1f1f1f',
+                        'anol-red': '#dc2626',
+                        'anol-red-light': '#ef4444',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dc2626;
+            border-radius: 4px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-red {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 20px rgba(220, 38, 38, 0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        .animate-delay-300 { animation-delay: 0.3s; }
+        .animate-delay-400 { animation-delay: 0.4s; }
+
+        .btn-pulse {
+            animation: pulse-red 2s infinite;
+        }
+
+        /* Hover Effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px -10px rgba(220, 38, 38, 0.3);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #dc2626 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glass Effect */
+        .glass {
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Product Card */
+        .product-card {
+            background: linear-gradient(145deg, #141414 0%, #1f1f1f 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            border-color: #dc2626;
+            transform: scale(1.02);
+        }
+
+        /* Red Accent Line */
+        .accent-line {
+            width: 60px;
+            height: 4px;
+            background: #dc2626;
+            margin: 20px 0;
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Image Placeholder */
+        .img-placeholder {
+            background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+            border: 2px dashed #333;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                   <a href="#" class="flex items-center">
+    <img src="https://i.ibb.co.com/NX7GLMb/simple-logo-white-anolystic.png" alt="Anolystic" class="h-8 md:h-10 w-auto">
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Home</a>
+                    <a href="#koleksi" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Koleksi</a>
+                    <a href="#tentang" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Founder</a>
+ 		    <a href="#visi-misi" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Visi & Misi</a>
+                    <a href="#kontak" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Kontak</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" 
+                       class="bg-anol-red hover:bg-anol-red-light text-white px-6 py-2 rounded-none text-sm font-bold uppercase tracking-wider transition-all hover:scale-105">
+                        Shop Now
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-anol-red">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-anol-dark border-t border-gray-800">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#home" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Home</a>
+                <a href="#koleksi" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Koleksi</a>
+                <a href="#tentang" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Founder</a>
+	        <a href="#visi-misi" class="block px-3 py-2 text-gray-300 hover:text-anol-red hover:bg-gray-800 rounded-md">Visi & Misi</a>
+                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" class="block px-3 py-2 text-anol-red font-bold">Shop Now →</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-anol-red opacity-10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-red-900 opacity-10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="animate-fade-in-up">
+                <!-- Teks Atas (dibuat lebih dekat) -->
+		<p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-4">Streetwear Indonesia</p>
+
+	<!-- Logo (diperbesar) -->
+	<div class="my-2">
+    		<img src="https://i.ibb.co.com/TBMqCNwb/logo-anolystic-PNG-white.png" alt="Anolystic" class="h-32 md:h-48 lg:h-56 w-auto mx-auto">
+	</div>
+
+	<!-- Garis merah (dibuat lebih dekat) -->
+	<div class="accent-line mx-auto my-4"></div>
+
+	<!-- Tagline (dibuat lebih dekat) -->
+		<p class="text-xl md:text-2xl text-gray-400 font-light mt-2 mb-6">
+    			Gaya gak banyak bicara.
+		</p>
+                <p class="text-gray-500 mb-12 max-w-xl mx-auto">
+                    Streetwear premium untuk generasi yang percaya diri. 
+                    Desain minimalis, kualitas maksimal.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" 
+                       class="btn-pulse bg-anol-red hover:bg-anol-red-light text-white px-8 py-4 rounded-none font-bold uppercase tracking-wider transition-all hover:scale-105 w-full sm:w-auto text-center">
+                        Beli di Tokopedia
+                    </a>
+                    <a href="https://wa.me/6285352990189" target="_blank"
+                       class="border-2 border-white hover:bg-white hover:text-anol-black text-white px-8 py-4 rounded-none font-bold uppercase tracking-wider transition-all w-full sm:w-auto text-center">
+                        Chat WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="koleksi" class="py-20 bg-anol-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fade-in-up">
+                <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Koleksi Terbaru</p>
+                <h2 class="text-3xl md:text-5xl font-black mb-4">DROP TERBARU</h2>
+                <div class="accent-line mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="product-card rounded-lg overflow-hidden group animate-fade-in-up animate-delay-100 hover-lift">
+                    <div class="aspect-square relative overflow-hidden">
+                         <img src="https://i.ibb.co.com/qMMqT8gm/Back-women-satanic.png" alt="Woman Satanic" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2"> Woman Satanic </h3>
+                        <p class="text-gray-400 text-sm mb-4">Ilustrasi ini menampilkan wanita bergaya satanic dengan mata tertutup, melambangkan pencarian kebenaran 					dari dalam diri. Tanduknya merepresentasikan kekuatan dan pemberontakan, sementara rambut yang mengalir menggambarkan 						kebebasan. Gestur tangan terkatup seperti berdoa menciptakan kontras antara gelap dan spiritualitas. Api di bawahnya 						melambangkan transformasi dan kekuatan batin.
+			</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-anol-red font-bold text-lg"> 150K </span>
+                            <a href="https://tk.tokopedia.com/ZSmKANYoj/" target="_blank" 
+                               class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-sm font-bold uppercase transition-colors">
+                                Beli →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card rounded-lg overflow-hidden group animate-fade-in-up animate-delay-200 hover-lift">
+                   <div class="aspect-square relative overflow-hidden">
+    			<img src="https://i.ibb.co.com/svLKDCbj/Back-croc.png" alt="Croc Club class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Croc Club</h3>
+                        <p class="text-gray-400 text-sm mb-4">Desain ini menampilkan ilustrasi buaya bergaya kartun dengan ekspresi santai dan ceria. Pose terlentang 					memberi kesan playful dan percaya diri, sementara balon kata “Snap!” menonjolkan karakter khasnya. Tipografi besar “CROC CLUB” 					memperkuat identitas yang fun dan kompak, dengan tagline “Snapping Our Way Through Life” yang menyiratkan semangat menjalani 					hidup dengan santai, berani, dan penuh gaya.
+			</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-anol-red font-bold text-lg">90K</span>
+                            <a href="https://tk.tokopedia.com/ZSmKSK2Eu/" target="_blank" 
+                               class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-sm font-bold uppercase transition-colors">
+                                Beli →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card rounded-lg overflow-hidden group animate-fade-in-up animate-delay-300 hover-lift">
+                    <div class="aspect-square relative overflow-hidden">
+    				<img src="https://i.ibb.co.com/v6rHH7TC/Manticore-tshirt-Back.png" alt="Manticore" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Manticore</h3>
+                        <p class="text-gray-400 text-sm mb-4">Desain ini menampilkan makhluk mitologi bersayap dengan tubuh singa yang mengaum gagah di atas awan. 							Sayap terbentang dan cakar terulur melambangkan kekuatan, dominasi, dan keberanian. Ekspresi garang menegaskan 							aura perlindungan sekaligus ancaman. Tipografi bergaya klasik memperkuat nuansa epik dan heroik, menciptakan 							kesan legenda yang hidup dan penuh wibawa.
+			</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-anol-red font-bold text-lg">150K</span>
+                            <a href="https://tk.tokopedia.com/ZSmKS7ypJ/" target="_blank" 
+                               class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-sm font-bold uppercase transition-colors">
+                                Beli →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" 
+                   class="inline-block border-2 border-anol-red text-anol-red hover:bg-anol-red hover:text-white px-8 py-3 font-bold uppercase tracking-wider transition-all">
+                    Lihat Semua Produk →
+                </a>
+            </div>
+        </div>
+    </section>
+
+   <!-- WALL OF FOUNDER - 12 ORANG -->
+<section id="tentang" class="py-20 bg-anol-black relative overflow-hidden">
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.05) 35px, rgba(255,255,255,.05) 70px);"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <!-- Header -->
+        <div class="text-center mb-16 animate-fade-in-up">
+            <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">The Team</p>
+            <h2 class="text-3xl md:text-5xl font-black mb-4">WALL OF FOUNDER</h2>
+            <div class="accent-line mx-auto"></div>
+            <p class="text-gray-400 mt-4">12 visi, 1 tujuan. Gaya yang tak tergoyahkan.</p>
+        </div>
+
+        <!-- FOUNDER & CO-FOUNDER (2 Orang - Besar) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
+            
+            <!-- Founder 1 -->
+            <div class="glass rounded-lg overflow-hidden group hover-lift animate-fade-in-up">
+                <div class="aspect-[4/5] img-placeholder relative overflow-hidden">
+                    <span class="z-10">[FOTO FOUNDER]</span>
+                    <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-2xl font-black mb-1">[NAMA FOUNDER]</h3>
+                    <p class="text-anol-red font-bold uppercase tracking-wider text-sm mb-3">Founder</p>
+                    <p class="text-gray-400 text-sm">[Quote atau deskripsi singkat]</p>
+                </div>
+            </div>
+
+            <!-- Co-Founder 2 -->
+            <div class="glass rounded-lg overflow-hidden group hover-lift animate-fade-in-up animate-delay-100">
+                <div class="aspect-[4/5] img-placeholder relative overflow-hidden">
+                    <span class="z-10">[FOTO CO-FOUNDER]</span>
+                    <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-2xl font-black mb-1">[NAMA CO-FOUNDER]</h3>
+                    <p class="text-anol-red font-bold uppercase tracking-wider text-sm mb-3">Co-Founder</p>
+                    <p class="text-gray-400 text-sm">[Quote atau deskripsi singkat]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10 NAMA LAINNYA (Grid 5x2) -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 animate-fade-in-up animate-delay-200">
+            
+            <!-- Nama 1 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 1]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+
+            <!-- Nama 2 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 2]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+
+            <!-- Nama 3 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 3]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+
+            <!-- Nama 4 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 4]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+
+            <!-- Nama 5 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 5]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+
+            <!-- Nama 6 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 6]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+
+            <!-- Nama 7 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 7]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+
+            <!-- Nama 8 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 8]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+
+            <!-- Nama 9 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 9]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+
+            <!-- Nama 10 -->
+            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
+                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
+                    <span class="text-xs">[FOTO]</span>
+                </div>
+                <h4 class="font-bold text-sm mb-1">[NAMA 10]</h4>
+                <p class="text-gray-500 text-xs">[Role]</p>
+            </div>
+        </div>
+
+        <!-- Quote Brand -->
+        <div class="mt-16 text-center animate-fade-in-up animate-delay-300">
+            <p class="text-2xl md:text-3xl font-light italic text-gray-300 max-w-3xl mx-auto">
+                "Gaya gak banyak bicara, tapi karya yang berbicara."
+            </p>
+            <div class="mt-8 flex justify-center space-x-12">
+                <div class="text-center">
+                    <div class="text-4xl font-black text-anol-red">12</div>
+                    <div class="text-xs text-gray-500 uppercase tracking-wider">Founding Members</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-black text-anol-red">100%</div>
+                    <div class="text-xs text-gray-500 uppercase tracking-wider">Original</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-black text-anol-red">Local</div>
+                    <div class="text-xs text-gray-500 uppercase tracking-wider">Pride</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- VISI, MISI & ROADMAP -->
+<section id="visi-misi" class="py-20 bg-anol-dark relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <!-- Header -->
+        <div class="text-center mb-16 animate-fade-in-up">
+            <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Our Direction</p>
+            <h2 class="text-3xl md:text-5xl font-black mb-4">VISI & MISI</h2>
+            <div class="accent-line mx-auto"></div>
+        </div>
+
+        <!-- Visi & Misi Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+            
+            <!-- VISI -->
+            <div class="glass rounded-lg p-8 md:p-12 border-l-4 border-anol-red animate-fade-in-up">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-anol-red rounded-full flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-black">VISI</h3>
+                </div>
+                <p class="text-gray-300 text-lg leading-relaxed">
+                    [Tulis visi Anolystic di sini. Contoh: Menjadi brand streetwear lokal yang diakui secara internasional dengan tetap mempertahankan identitas budaya Indonesia.]
+                </p>
+            </div>
+
+            <!-- MISI -->
+            <div class="glass rounded-lg p-8 md:p-12 border-l-4 border-white animate-fade-in-up animate-delay-100">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-white text-anol-black rounded-full flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-black">MISI</h3>
+                </div>
+                <ul class="text-gray-300 space-y-3">
+                    <li class="flex items-start">
+                        <span class="text-anol-red mr-2">01.</span>
+                        <span>[Misi pertama: Contoh - Menciptakan produk berkualitas premium dengan harga terjangkau]</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-anol-red mr-2">02.</span>
+                        <span>[Misi kedua: Contoh - Membangun komunitas streetwear yang positif dan kreatif]</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-anol-red mr-2">03.</span>
+                        <span>[Misi ketiga: Contoh - Mendukung industri kreatif lokal melalui kolaborasi]</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ROADMAP -->
+        <div class="animate-fade-in-up animate-delay-200">
+            <div class="text-center mb-12">
+                <h3 class="text-2xl md:text-3xl font-black mb-4">ROADMAP PERJALANAN</h3>
+                <p class="text-gray-400">Langkah demi langkah membangun legacy.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Garis tengah -->
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-800"></div>
+
+                <!-- Roadmap Item 1 -->
+                <div class="relative mb-12 md:mb-0">
+                    <div class="md:flex items-center justify-between">
+                        <div class="md:w-5/12 md:text-right mb-4 md:mb-0">
+                            <div class="glass rounded-lg p-6 inline-block text-left md:text-right">
+                                <span class="text-anol-red font-bold text-sm">2023</span>
+                                <h4 class="text-xl font-bold mt-2">[Judul Milestone]</h4>
+                                <p class="text-gray-400 text-sm mt-2">[Deskripsi pencapaian: Contoh - Berdiri sebagai brand lokal dengan 12 founding members]</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-anol-red rounded-full border-4 border-anol-dark"></div>
+                        <div class="md:w-5/12"></div>
+                    </div>
+                </div>
+
+                <!-- Roadmap Item 2 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12">
+                    <div class="md:flex items-center justify-between">
+                        <div class="md:w-5/12"></div>
+                        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rounded-full border-4 border-anol-dark"></div>
+                        <div class="md:w-5/12 mb-4 md:mb-0">
+                            <div class="glass rounded-lg p-6">
+                                <span class="text-anol-red font-bold text-sm">2024</span>
+                                <h4 class="text-xl font-bold mt-2">[Judul Milestone]</h4>
+                                <p class="text-gray-400 text-sm mt-2">[Deskripsi: Contoh - Launching koleksi pertama dan expand ke marketplace]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roadmap Item 3 -->
+                <div class="relative mb-12 md:mb-0 md:mt-12">
+                    <div class="md:flex items-center justify-between">
+                        <div class="md:w-5/12 md:text-right mb-4 md:mb-0">
+                            <div class="glass rounded-lg p-6 inline-block text-left md:text-right">
+                                <span class="text-anol-red font-bold text-sm">2025</span>
+                                <h4 class="text-xl font-bold mt-2">[Judul Milestone]</h4>
+                                <p class="text-gray-400 text-sm mt-2">[Deskripsi: Contoh - Buka flagship store dan kolaborasi dengan brand internasional]</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-anol-red rounded-full border-4 border-anol-dark"></div>
+                        <div class="md:w-5/12"></div>
+                    </div>
+                </div>
+
+                <!-- Roadmap Item 4 -->
+                <div class="relative md:mt-12">
+                    <div class="md:flex items-center justify-between">
+                        <div class="md:w-5/12"></div>
+                        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gray-600 rounded-full border-4 border-anol-dark"></div>
+                        <div class="md:w-5/12 mb-4 md:mb-0">
+                            <div class="glass rounded-lg p-6 border-2 border-dashed border-gray-700">
+                                <span class="text-gray-500 font-bold text-sm">2026</span>
+                                <h4 class="text-xl font-bold mt-2 text-gray-400">[Future Goal]</h4>
+                                <p class="text-gray-500 text-sm mt-2">[Visi masa depan: Contoh - Go international dan sustainable fashion]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <!-- Instagram Feed -->
+    <section class="py-20 bg-anol-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Follow Us</p>
+                <h2 class="text-3xl md:text-4xl font-black mb-4">@ANOLYSTIC</h2>
+                <p class="text-gray-400">Update terbaru dan behind the scenes</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="https://instagram.com/Anolystic" target="_blank" class="aspect-square img-placeholder hover:opacity-80 transition-opacity">
+                    <span class="text-xs">[IG POST 1]</span>
+                </a>
+                <a href="https://instagram.com/Anolystic" target="_blank" class="aspect-square img-placeholder hover:opacity-80 transition-opacity">
+                    <span class="text-xs">[IG POST 2]</span>
+                </a>
+                <a href="https://instagram.com/Anolystic" target="_blank" class="aspect-square img-placeholder hover:opacity-80 transition-opacity">
+                    <span class="text-xs">[IG POST 3]</span>
+                </a>
+                <a href="https://instagram.com/Anolystic" target="_blank" class="aspect-square img-placeholder hover:opacity-80 transition-opacity">
+                    <span class="text-xs">[IG POST 4]</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="py-20 bg-anol-black">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-5xl font-black mb-4">HUBUNGI KAMI</h2>
+            <div class="accent-line mx-auto"></div>
+            <p class="text-gray-400 mb-12">Pertanyaan? Kerjasama? Atau sekadar say hi?</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <a href="https://wa.me/6285352990189" target="_blank" 
+                   class="glass p-8 rounded-lg hover:border-anol-red transition-colors group">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.004 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold mb-2">WhatsApp</h3>
+                    <p class="text-sm text-gray-400">0853-5299-0189</p>
+                </a>
+
+                <a href="https://instagram.com/Anolystic" target="_blank"
+                   class="glass p-8 rounded-lg hover:border-pink-500 transition-colors group">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold mb-2">Instagram</h3>
+                    <p class="text-sm text-gray-400">@Anolystic</p>
+                </a>
+
+                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank"
+                   class="glass p-8 rounded-lg hover:border-green-500 transition-colors group">
+                    <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold mb-2">Tokopedia</h3>
+                    <p class="text-sm text-gray-400">Official Store</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-anol-black border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <img src="https://i.ibb.co.com/TBMqCNwb/logo-anolystic-PNG-white.png" alt="Anolystic" class="h-8 w-auto">
+                    <p class="text-gray-500 text-sm mt-2">Gaya gak banyak bicara.</p>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="https://instagram.com/Anolystic" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <span class="sr-only">Instagram</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://wa.me/6285352990189" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <span class="sr-only">WhatsApp</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.004 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-600 text-sm">© 2024 Anolystic. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/6285352990189" target="_blank" class="whatsapp-float" aria-label="Chat WhatsApp">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.004 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.background = 'rgba(20, 20, 20, 0.8)';
+            }
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

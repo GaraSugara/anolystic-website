@@ -1,0 +1,8 @@
+# Anolystic Website - Robots.txt
+# Mengizinkan semua bot untuk crawl semua halaman
+
+User-agent: *
+Allow: /
+
+# Lokasi Sitemap
+Sitemap: https://anolystic.netlify.app/sitemap.xml

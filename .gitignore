@@ -1,0 +1,8 @@
+# File sensitif - JANGAN upload ke GitHub
+*.json
+alla_info_anolystic.txt
+
+# System files
+.DS_Store
+Thumbs.db
+*.log

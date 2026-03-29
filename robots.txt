@@ -5,4 +5,4 @@ User-agent: *
 Allow: /
 
 # Lokasi Sitemap
-Sitemap: https://anolystic.netlify.app/sitemap.xml
+Sitemap: https://anolystic.site/sitemap.xml

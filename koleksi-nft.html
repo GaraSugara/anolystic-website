@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Kita | Anolystic NFT & Lore</title>
+    <meta name="description" content="Cerita di balik setiap desain Anolystic dan daftar pemegang eksklusif Design Rights NFT.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'anol-black': '#0a0a0a',
+                        'anol-dark': '#141414',
+                        'anol-gray': '#1f1f1f',
+                        'anol-red': '#dc2626',
+                        'anol-red-light': '#ef4444',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 4px; }
+        
+        .slot-scrollbar::-webkit-scrollbar { width: 6px; }
+        .slot-scrollbar::-webkit-scrollbar-track { background: #141414; border-radius: 4px;}
+        .slot-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        .slot-scrollbar::-webkit-scrollbar-thumb:hover { background: #dc2626; }
+
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        .animate-delay-300 { animation-delay: 0.3s; }
+
+        /* Hover Effects */
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 40px -10px rgba(220, 38, 38, 0.3); }
+
+        /* Essential Classes */
+        .accent-line { width: 60px; height: 4px; background: #dc2626; margin: 20px 0; }
+        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        
+        /* Lore text styling */
+        .lore-text {
+            color: #a3a3a3;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+        .lore-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* NFT Slot Item */
+        .nft-slot {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+        }
+        .nft-slot:hover {
+            border-color: #dc2626;
+            background: #1a1a1a;
+        }
+        .nft-slot .slot-id {
+            font-weight: 900;
+            color: #dc2626;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        .nft-slot .slot-owner {
+            color: #666;
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass shadow-lg transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                   <a href="index.html" class="flex items-center">
+                    <img src="https://i.ibb.co.com/NX7GLMb/simple-logo-white-anolystic.png" alt="Anolystic" class="h-8 md:h-10 w-auto">
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Beranda</a>
+                    <a href="koleksi-nft.html" class="text-anol-red font-bold text-sm uppercase tracking-wider">Galeri Kita</a>
+                    <a href="index.html#visi-misi" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Visi & Misi</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" 
+                       class="bg-anol-red hover:bg-anol-red-light text-white px-6 py-2 rounded-none text-sm font-bold uppercase tracking-wider transition-all hover:scale-105">
+                        Shop Now
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-anol-red">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-anol-dark border-t border-gray-800">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Beranda</a>
+                <a href="koleksi-nft.html" class="block px-3 py-2 text-anol-red font-bold hover:bg-gray-800 rounded-md">Galeri Kita</a>
+                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" class="block px-3 py-2 text-anol-red font-bold">Shop Now →</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Narrative Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden flex items-center min-h-[60vh]">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-anol-red opacity-10 rounded-full blur-[100px]"></div>
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
+            <p class="text-anol-red font-bold tracking-[0.4em] uppercase text-sm mb-4">Galeri Kita</p>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight uppercase tracking-tighter">
+                Jejak Keabadian <br>Di Balik Benang
+            </h1>
+            <div class="accent-line mx-auto mb-8"></div>
+            <p class="text-xl text-gray-400 font-light leading-relaxed max-w-3xl mx-auto">
+                Karya seni Anolystic tidak sekadar kain dan sablon. Setiap goresan memiliki nyawa, filosofi mendalam, dan kini, keabadian di atas jaringan blockchain. Mempersembahkan cerita epik dari <strong>Koleksi Genesis</strong> beserta daftar pemegang eksklusif 200 Hak Cipta Desain (DR-NFT).
+            </p>
+        </div>
+    </section>
+
+    <!-- Collection 1: Woman Satanic -->
+    <section class="py-20 bg-anol-dark border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-16 items-start">
+                
+                <!-- Lore & Image Side -->
+                <div class="lg:w-1/2 animate-fade-in-up">
+                    <div class="sticky top-28">
+                        <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-xs mb-2">Genesis Drop 01</p>
+                        <h2 class="text-4xl font-black mb-6 uppercase tracking-wider">Woman Satanic</h2>
+                        
+                        <div class="aspect-square rounded-xl overflow-hidden mb-8 border border-gray-800 shadow-[0_0_50px_rgba(220,38,38,0.1)] group">
+                            <img src="https://i.ibb.co.com/qMMqT8gm/Back-women-satanic.png" alt="Woman Satanic" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+
+                        <div class="lore-text">
+                            <p>
+                                <strong>"Kebenaran Ditemukan Dalam Kegelapan."</strong> Jauh sebelum peradaban disilaukan oleh cahaya fana, ada mereka yang berani menutup mata untuk melihat realitas sejati. "Woman Satanic" bukanlah tentang pemujaan kejahatan, melainkan metafora dari pencarian *enlightenment*—pencerahan dari dalam diri sendiri.
+                            </p>
+                            <p>
+                                Tanduk melengkung yang menyatu dengan mahkota di kepalanya merepresentasikan pemberontakan terhadap dogma yang membatasi. Ia tidak tunduk; ia berdiri sejajar dengan takdir. Rambutnya yang terurai panjang dan bebas menyiratkan jiwa yang tak bisa dikekang oleh aturan duniawi.
+                            </p>
+                            <p>
+                                Perhatikan tangannya yang terkatup hening seperti berdoa. Ia merengkuh kontras terbesar umat manusia: spiritualitas yang murni terlahir bukan dari kepatuhan tanpa tanya, melainkan dari keberanian menelusuri rahasia paling gelap. Dan api abadi yang menyala di bawahnya, adalah simbol transformasi. Untuk merakit versi terbaik dari diri, kadang kita harus terlebih dulu hangus menjadi abu.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 200 NFT Holder Base -->
+                <div class="lg:w-1/2 animate-fade-in-up animate-delay-200">
+                    <div class="glass p-8 rounded-2xl border border-gray-800">
+                        <div class="flex justify-between items-end mb-6 border-b border-gray-800 pb-4">
+                            <div>
+                                <h3 class="text-2xl font-black uppercase tracking-wider">DR-NFT Holders</h3>
+                                <p class="text-gray-400 text-sm mt-1">Hak Royalti Abadi. Suplai Maksimal: 200 NFT.</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="bg-gray-800 text-gray-400 text-xs font-bold px-3 py-1 rounded-full border border-gray-700">MINTING LIVE</span>
+                            </div>
+                        </div>
+
+                        <!-- Grid 200 Holders Container -->
+                        <div class="slot-scrollbar h-[600px] overflow-y-auto pr-2 flex flex-col gap-3" id="holder-list-1">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection 2: Croc Club -->
+    <section class="py-20 bg-anol-black border-t border-gray-800 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row-reverse gap-16 items-start">
+                
+                <!-- Lore & Image Side -->
+                <div class="lg:w-1/2 animate-fade-in-up">
+                    <div class="sticky top-28">
+                        <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-xs mb-2">Genesis Drop 02</p>
+                        <h2 class="text-4xl font-black mb-6 uppercase tracking-wider">Croc Club</h2>
+                        
+                        <div class="aspect-square rounded-xl overflow-hidden mb-8 border border-gray-800 shadow-[0_0_50px_rgba(220,38,38,0.1)] group">
+                            <img src="https://i.ibb.co.com/svLKDCbj/Back-croc.png" alt="Croc Club" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+
+                        <div class="lore-text">
+                            <p>
+                                <strong>"Snapping Our Way Through Life."</strong> Tak semua revolusi harus dilakukan dengan otot menegang dan raut wajah menyeramkan. "Croc Club" hadir sebagai penyegar—sebuah antitesis dari kultur *hustle* yang menuntut kita untuk selalu terlihat sibuk dan sempurna.
+                            </p>
+                            <p>
+                                Buaya dalam mitologi klasik sering digambarkan sebagai pemangsa yang sabar. Namun di jagat Anolystic, ia adalah predator dengan gaya *swag*-nya sendiri; bersandar terlentang memandangi langit, menertawakan roda kehidupan yang terus berputar. Balon kata "Snap!" yang menyembul merupakan seruan untuk tetap waspada sekaligus tahu kapan harus mencengkeram momen.
+                            </p>
+                            <p>
+                                Mengoleksi karya ini berarti lo bergabung ke dalam *society* elit yang paham bahwa cara terbaik untuk mendominasi permainan adalah dengan menikmatinya. Santai, percaya diri, namun mematikan. *Welcome to the Club*.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 200 NFT Holder Base -->
+                <div class="lg:w-1/2 animate-fade-in-up animate-delay-200">
+                    <div class="glass p-8 rounded-2xl border border-gray-800">
+                        <div class="flex justify-between items-end mb-6 border-b border-gray-800 pb-4">
+                            <div>
+                                <h3 class="text-2xl font-black uppercase tracking-wider">DR-NFT Holders</h3>
+                                <p class="text-gray-400 text-sm mt-1">Hak Royalti Abadi. Suplai Maksimal: 200 NFT.</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="bg-gray-800 text-gray-400 text-xs font-bold px-3 py-1 rounded-full border border-gray-700">MINTING LIVE</span>
+                            </div>
+                        </div>
+
+                        <!-- Grid 200 Holders Container -->
+                        <div class="slot-scrollbar h-[600px] overflow-y-auto pr-2 flex flex-col gap-3" id="holder-list-2">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection 3: Manticore -->
+    <section class="py-20 bg-anol-dark border-t border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-16 items-start">
+                
+                <!-- Lore & Image Side -->
+                <div class="lg:w-1/2 animate-fade-in-up">
+                    <div class="sticky top-28">
+                        <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-xs mb-2">Genesis Drop 03</p>
+                        <h2 class="text-4xl font-black mb-6 uppercase tracking-wider">Manticore</h2>
+                        
+                        <div class="aspect-square rounded-xl overflow-hidden mb-8 border border-gray-800 shadow-[0_0_50px_rgba(220,38,38,0.1)] group">
+                            <img src="https://i.ibb.co.com/v6rHH7TC/Manticore-tshirt-Back.png" alt="Manticore" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+
+                        <div class="lore-text">
+                            <p>
+                                <strong>"Penguasa Langit dan Daratan."</strong> Ada makhluk yang dilahirkan bukan untuk dipahami, melainkan untuk ditakuti dan dihormati. "Manticore" tidak tunduk pada hukum alam yang memisahkan kekuatan singa si raja rimba, dan kebebasan elang penguasa langit. Keduanya berakulturasi menjadi entitas pelindung terkuat.
+                            </p>
+                            <p>
+                                Kepunahan hanyalah gosip bagi mereka yang memegang takdir di cakarnya. Pose sang makhluk yang mengaum garang di atas hamparan awan, menyimbolkan dominasi mutlak terhadap setiap rintangan—baik yang membumi, maupun awan gelap yang menutupi kejayaan klan Anolystic.
+                            </p>
+                            <p>
+                                Mengenakan atau menyimpan *design rights* dari karya epik ini seakan mengaktifkan wibawa kuno. Karya ini kami dedikasikan bagi para *leaders*, para legenda jalanan yang tidak pernah kompromi akan prinsip mereka. *Roar through the noise*.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 200 NFT Holder Base -->
+                <div class="lg:w-1/2 animate-fade-in-up animate-delay-200">
+                    <div class="glass p-8 rounded-2xl border border-gray-800">
+                        <div class="flex justify-between items-end mb-6 border-b border-gray-800 pb-4">
+                            <div>
+                                <h3 class="text-2xl font-black uppercase tracking-wider">DR-NFT Holders</h3>
+                                <p class="text-gray-400 text-sm mt-1">Hak Royalti Abadi. Suplai Maksimal: 200 NFT.</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="bg-gray-800 text-gray-400 text-xs font-bold px-3 py-1 rounded-full border border-gray-700">MINTING LIVE</span>
+                            </div>
+                        </div>
+
+                        <!-- Grid 200 Holders Container -->
+                        <div class="slot-scrollbar h-[600px] overflow-y-auto pr-2 flex flex-col gap-3" id="holder-list-3">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-anol-black border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0 text-center md:text-left">
+                    <img src="https://i.ibb.co.com/TBMqCNwb/logo-anolystic-PNG-white.png" alt="Anolystic" class="h-8 w-auto mx-auto md:mx-0">
+                    <p class="text-gray-500 text-sm mt-3">Wear the Revolution.</p>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="https://instagram.com/Anolystic" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                    </a>
+                    <a href="https://t.me/Anolystic_Bot" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-600 text-sm">© 2026 Anolystic. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Base -->
+    <script>
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 200 Slot Generator Logic
+        function generateSlots(containerId, maxSlots) {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+
+            let htmlString = "";
+            for(let i = 1; i <= maxSlots; i++) {
+                // Formatting 001, 002
+                let numStr = i.toString().padStart(3, '0');
+                
+                // Pure empty/available as requested
+                htmlString += `
+                    <div class="nft-slot">
+                        <span class="slot-id">#${numStr}</span>
+                        <span class="slot-owner opacity-50">[AVAILABLE: UNMINTED]</span>
+                    </div>
+                `;
+            }
+            container.innerHTML = htmlString;
+        }
+
+        // Initialize 200 items for the 3 collections
+        generateSlots('holder-list-1', 200);
+        generateSlots('holder-list-2', 200);
+        generateSlots('holder-list-3', 200);
+
+        // Animation observer
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

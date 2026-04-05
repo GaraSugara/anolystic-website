@@ -1104,12 +1104,10 @@
 
                     const raw = await response.json();
 
-                    // === FIX UTAMA ===
-                    // n8n kadang return array [{...}] atau object {...}
-                    // Kedua format kita handle di sini
+                    // Handle array [{...}] atau object {...} dari n8n
                     const result = Array.isArray(raw) ? raw[0] : raw;
 
-                    // Coba berbagai field yang mungkin dipakai n8n
+                    // Coba berbagai field response n8n
                     let botReply = result?.output
                         || result?.reply
                         || result?.message
@@ -1117,21 +1115,30 @@
                         || result?.response
                         || null;
 
-                    if (!botReply || botReply.toString().trim() === '') {
-                        botReply = 'Alla lagi loading sebentar, coba tanya lagi ya! 🙏';
+                    // Bersihkan tag internal [SIMPAN_...] dari tampilan ke user
+                    if (botReply) {
+                        botReply = botReply.toString()
+                            .replace(/\[SIMPAN_ESKALASI\][^\n]*/g, '')
+                            .replace(/\[SIMPAN_FEEDBACK\][^\n]*/g, '')
+                            .replace(/DATA_SAVE:[^\n]*/g, '')
+                            .trim();
+                    }
+
+                    if (!botReply || botReply.trim() === '') {
+                        botReply = 'Hmm, aku belum bisa menjawab itu. Coba tanya lagi dengan kalimat berbeda ya! 🙏';
                     }
 
                     typingIndicator.style.display = 'none';
-                    addMessage(botReply.toString(), 'bot');
+                    addMessage(botReply, 'bot');
 
                 } catch (error) {
                     clearTimeout(timeoutId);
                     console.error('Chat Error:', error);
                     typingIndicator.style.display = 'none';
                     if (error.name === 'AbortError') {
-                        addMessage('Koneksi timeout (>45 detik). Server lagi sibuk, coba lagi ya 🙏', 'bot');
+                        addMessage('Maaf, server lagi sibuk nih. Tunggu sebentar lalu coba lagi ya! ⏳', 'bot');
                     } else {
-                        addMessage('Alla lagi bermasalah nih. Coba refresh & tanya lagi ya 🙏', 'bot');
+                        addMessage('Aduh, ada gangguan koneksi nih. Coba refresh halaman & tanya lagi ya! 🙏', 'bot');
                     }
                 } finally {
                     isWaiting = false;

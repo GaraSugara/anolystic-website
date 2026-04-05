@@ -1104,7 +1104,9 @@
 
                     const raw = await response.json();
 
-                    // Handle array [{...}] atau object {...} dari n8n
+                    // === FIX UTAMA ===
+                    // n8n kadang return array [{...}] atau object {...}
+                    // Kedua format kita handle di sini
                     const result = Array.isArray(raw) ? raw[0] : raw;
 
                     // Coba berbagai field response n8n
@@ -1115,30 +1117,37 @@
                         || result?.response
                         || null;
 
-                    // Bersihkan tag internal [SIMPAN_...] dari tampilan ke user
+                    // Bersihkan semua noise dari tampilan user
                     if (botReply) {
                         botReply = botReply.toString()
+                            // Hapus tag internal simpan
                             .replace(/\[SIMPAN_ESKALASI\][^\n]*/g, '')
                             .replace(/\[SIMPAN_FEEDBACK\][^\n]*/g, '')
                             .replace(/DATA_SAVE:[^\n]*/g, '')
+                            // Hapus tool call yang bocor (Info_Anolystic, dll)
+                            .replace(/Info_Anolystic\s*\{[^}]*\}/g, '')
+                            .replace(/\w+_?\w+\s*\{"input":[^}]*\}/g, '')
+                            .replace(/\[.*?\]\s*\{"input":[^}]*\}/g, '')
+                            // Hapus JSON mentah yang bocor
+                            .replace(/\{\s*"input"\s*:[^}]*\}/g, '')
                             .trim();
                     }
 
                     if (!botReply || botReply.trim() === '') {
-                        botReply = 'Hmm, aku belum bisa menjawab itu. Coba tanya lagi dengan kalimat berbeda ya! 🙏';
+                        botReply = 'Hmm, aku belum bisa menjawab itu. Coba tanya lagi ya! 🙏';
                     }
 
                     typingIndicator.style.display = 'none';
-                    addMessage(botReply, 'bot');
+                    addMessage(botReply.toString(), 'bot');
 
                 } catch (error) {
                     clearTimeout(timeoutId);
                     console.error('Chat Error:', error);
                     typingIndicator.style.display = 'none';
                     if (error.name === 'AbortError') {
-                        addMessage('Maaf, server lagi sibuk nih. Tunggu sebentar lalu coba lagi ya! ⏳', 'bot');
+                        addMessage('Koneksi timeout (>45 detik). Server lagi sibuk, coba lagi ya 🙏', 'bot');
                     } else {
-                        addMessage('Aduh, ada gangguan koneksi nih. Coba refresh halaman & tanya lagi ya! 🙏', 'bot');
+                        addMessage('Alla lagi bermasalah nih. Coba refresh & tanya lagi ya 🙏', 'bot');
                     }
                 } finally {
                     isWaiting = false;

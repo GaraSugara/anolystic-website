@@ -70,16 +70,8 @@
 
         /* Essential Classes */
         .accent-line { width: 60px; height: 4px; background: #dc2626; margin: 20px 0; }
-        .glass { background: rgba(20, 20, 20, 0.8); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .text-gradient { background: linear-gradient(135deg, #fff 0%, #dc2626 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
-
-        /* Chat Window logic */
-        .chat-window { transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; transform: scale(0.8) translateY(20px); pointer-events: none; }
-        .chat-window.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
         
-        .btn-pulse { animation: pulse-red 2s infinite; }
-        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
-
         /* Lore text styling */
         .lore-text {
             color: #a3a3a3;
@@ -174,7 +166,7 @@
 
         <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
             <p class="text-anol-red font-bold tracking-[0.4em] uppercase text-sm mb-4">Galeri Kita</p>
-            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight uppercase tracking-tighter text-gradient">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight uppercase tracking-tighter">
                 Jejak Keabadian <br>Di Balik Benang
             </h1>
             <div class="accent-line mx-auto mb-8"></div>
@@ -367,35 +359,6 @@
         </div>
     </footer>
 
-    <!-- Chat Widget -->
-    <div class="fixed bottom-8 right-8 z-[1000] flex flex-col items-end">
-        <div id="chat-window" class="chat-window w-[350px] h-[500px] mb-6 glass rounded-2xl overflow-hidden shadow-2xl flex flex-col">
-            <div class="bg-anol-red/20 p-5 border-b border-white/5 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-anol-red flex items-center justify-center font-bold">A</div>
-                    <div>
-                        <p class="font-black text-sm text-white">ALLA AI</p>
-                        <p class="text-[10px] text-green-500 uppercase tracking-widest">Active Now</p>
-                    </div>
-                </div>
-            </div>
-            <div id="chat-messages" class="flex-1 p-5 overflow-y-auto space-y-4 text-sm scroll-smooth">
-                <div class="bg-white/10 p-3 rounded-xl rounded-tl-none max-w-[80%] border border-white/5 text-white">
-                    Ada yang mau ditanyain soal koleksi NFT kita? 🎨
-                </div>
-            </div>
-            <div class="p-4 bg-anol-black/80 border-t border-white/5 flex gap-2">
-                <input type="text" id="chat-input" placeholder="Tanya Alla..." autocomplete="off" class="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-anol-red transition-colors text-white">
-                <button id="chat-send" class="w-10 h-10 rounded-full bg-anol-red flex items-center justify-center hover:scale-110 transition-transform">
-                    <svg class="w-4 h-4 rotate-90 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                </button>
-            </div>
-        </div>
-        <button id="chat-widget-btn" class="w-16 h-16 rounded-full bg-anol-red flex items-center justify-center shadow-lg hover:scale-110 transition-transform btn-pulse">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-        </button>
-    </div>
-
     <!-- JavaScript Base -->
     <script>
         // Mobile Menu Logic
@@ -449,59 +412,6 @@
             el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
             observer.observe(el);
         });
-
-        // Chat Logic (Synced with index.html)
-        const chatBtn = document.getElementById('chat-widget-btn');
-        const chatWin = document.getElementById('chat-window');
-        const chatInput = document.getElementById('chat-input');
-        const chatMessages = document.getElementById('chat-messages');
-        const sessionID = 'session_' + Math.random().toString(36).substr(2, 9);
-
-        chatBtn.onclick = () => {
-            chatWin.classList.toggle('active');
-            if (chatWin.classList.contains('active')) {
-                setTimeout(() => chatInput.focus(), 300);
-            }
-        };
-
-        async function sendMessage() {
-            const msg = chatInput.value.trim();
-            if(!msg) return;
-
-            appendMsg(msg, 'user');
-            chatInput.value = '';
-            const loader = appendMsg('...', 'bot');
-            
-            try {
-                const response = await fetch('https://anolysticn8n.mooo.com/webhook/chat-alla', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: msg, chat_id: sessionID, type: 'chat_question' })
-                });
-
-                if (!response.ok) throw new Error('Network error');
-                const data = await response.json();
-                loader.remove();
-                appendMsg(data.output || data.response || 'Gak denger, bisa ulang?', 'bot');
-            } catch (e) {
-                console.error(e);
-                loader.innerText = 'Lagi gangguan koneksi nih.';
-            }
-        }
-
-        function appendMsg(text, sender) {
-            const div = document.createElement('div');
-            div.className = sender === 'user' 
-                ? 'bg-anol-red p-3 rounded-xl rounded-tr-none ml-auto max-w-[80%] text-white text-sm' 
-                : 'bg-white/5 p-3 rounded-xl rounded-tl-none max-w-[80%] text-white text-sm border border-white/5';
-            div.innerText = text;
-            chatMessages.appendChild(div);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            return div;
-        }
-
-        document.getElementById('chat-send').onclick = sendMessage;
-        chatInput.onkeypress = (e) => e.key === 'Enter' && sendMessage();
     </script>
 </body>
 </html>

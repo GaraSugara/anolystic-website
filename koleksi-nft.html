@@ -70,8 +70,9 @@
 
         /* Essential Classes */
         .accent-line { width: 60px; height: 4px; background: #dc2626; margin: 20px 0; }
-        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        
+        .glass { background: rgba(20, 20, 20, 0.8); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .text-gradient { background: linear-gradient(135deg, #fff 0%, #dc2626 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+
         /* Lore text styling */
         .lore-text {
             color: #a3a3a3;
@@ -166,7 +167,7 @@
 
         <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
             <p class="text-anol-red font-bold tracking-[0.4em] uppercase text-sm mb-4">Galeri Kita</p>
-            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight uppercase tracking-tighter">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight uppercase tracking-tighter text-gradient">
                 Jejak Keabadian <br>Di Balik Benang
             </h1>
             <div class="accent-line mx-auto mb-8"></div>

@@ -1024,7 +1024,8 @@
 
         if(chatBtn) {
             // ID Sesi Web (Dibuat sekali saat halaman dimuat agar AI ingat percakapan)
-            const visitorSessionId = 'web_visitor_' + Math.floor(Math.random() * 100000);
+            const visitorSessionId = 'web_' + Date.now() + '_' + Math.floor(Math.random() * 99999);
+            let isWaiting = false; // Mencegah kirim pesan dobel saat nunggu balasan
 
             function toggleChat() {
                 chatWindow.classList.toggle('active');
@@ -1034,16 +1035,26 @@
             }
             chatBtn.addEventListener('click', toggleChat);
             closeChat.addEventListener('click', toggleChat);
+
             function addMessage(text, sender) {
                 const msgDiv = document.createElement('div');
                 msgDiv.classList.add('message', sender);
+                // Tampilkan newline sebagai line break
+                msgDiv.style.whiteSpace = 'pre-wrap';
                 msgDiv.textContent = text;
+                // Insert sebelum typing indicator agar urutan benar
                 chatMessages.insertBefore(msgDiv, typingIndicator);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
+
             async function handleSendMessage() {
                 const text = chatInput.value.trim();
-                if (!text) return;
+                if (!text || isWaiting) return;
+
+                isWaiting = true;
+                chatSendBtn.disabled = true;
+                chatInput.disabled = true;
+
                 addMessage(text, 'user');
                 chatInput.value = '';
                 typingIndicator.style.display = 'flex';
@@ -1052,6 +1063,10 @@
                 // URL WEBHOOK N8N CHAT ALLA
                 const n8nChatUrl = 'https://anolysticn8n.mooo.com/webhook/chat-alla';
 
+                // Timeout 45 detik (AI bisa lambat kadang)
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 45000);
+
                 try {
                     const response = await fetch(n8nChatUrl, { 
                         method: 'POST', 
@@ -1059,22 +1074,57 @@
                         body: JSON.stringify({ 
                             text: text,
                             chat_id: visitorSessionId
-                        }) 
+                        }),
+                        signal: controller.signal
                     });
-                    
-                    const data = await response.json();
-                    let botReply = data.output || "Maaf, aku lagi loading sebentar. Coba tanya lagi ya!";
-                    
+
+                    clearTimeout(timeoutId);
+
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status);
+                    }
+
+                    const raw = await response.json();
+
+                    // === FIX UTAMA ===
+                    // n8n kadang return array [{...}] atau object {...}
+                    // Kedua format kita handle di sini
+                    const result = Array.isArray(raw) ? raw[0] : raw;
+
+                    // Coba berbagai field yang mungkin dipakai n8n
+                    let botReply = result?.output
+                        || result?.reply
+                        || result?.message
+                        || result?.text
+                        || result?.response
+                        || null;
+
+                    if (!botReply || botReply.toString().trim() === '') {
+                        botReply = 'Alla lagi loading sebentar, coba tanya lagi ya! 🙏';
+                    }
+
                     typingIndicator.style.display = 'none';
-                    addMessage(botReply, 'bot');
+                    addMessage(botReply.toString(), 'bot');
+
                 } catch (error) {
+                    clearTimeout(timeoutId);
                     console.error('Chat Error:', error);
                     typingIndicator.style.display = 'none';
-                    addMessage('Server lagi mikir keras nih. Coba lagi bentar ya 🙏', 'bot');
+                    if (error.name === 'AbortError') {
+                        addMessage('Koneksi timeout (>45 detik). Server lagi sibuk, coba lagi ya 🙏', 'bot');
+                    } else {
+                        addMessage('Alla lagi bermasalah nih. Coba refresh & tanya lagi ya 🙏', 'bot');
+                    }
+                } finally {
+                    isWaiting = false;
+                    chatSendBtn.disabled = false;
+                    chatInput.disabled = false;
+                    chatInput.focus();
                 }
             }
+
             chatSendBtn.addEventListener('click', handleSendMessage);
-            chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSendMessage(); });
+            chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !e.shiftKey) handleSendMessage(); });
         }
 
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');

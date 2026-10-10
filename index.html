@@ -20,11 +20,11 @@
     <meta property="og:url" content="https://anolystic.site/">
     <meta property="og:title" content="Anolystic | Streetwear Indonesia">
     <meta property="og:description" content="Gaya gak banyak bicara. Streetwear premium Indonesia.">
-    <meta property="og:image" content="https://anolystic.site/favicon.png">
-    <meta property="og:image:width" content="1024">
-    <meta property="og:image:height" content="1024">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:image" content="https://anolystic.site/favicon.png">
+    <meta property="og:image" content="https://anolystic.site/images/og-banner.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://anolystic.site/images/og-banner.jpg">
 
     <!-- Google Fonts: Inter (teks) + Dela Gothic One (judul gaya poster) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -169,6 +169,13 @@
             transition: transform .2s ease;
         }
         .wa-float:hover { transform: scale(1.08); }
+
+        /* FAQ */
+        .faq-item summary { list-style: none; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item .faq-icon { transition: transform .2s ease; }
+        .faq-item[open] .faq-icon { transform: rotate(45deg); }
+        .faq-item summary:hover { color: #ef4444; }
     </style>
 </head>
 <body>
@@ -221,6 +228,7 @@
                 <a href="verifikasi.html" class="block px-3 py-3 text-anol-red hover:bg-anol-gray">Cek Keaslian</a>
                 <a href="#token" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Token ALT</a>
                 <a href="#visi-misi" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Visi & Misi</a>
+                <a href="#faq" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">FAQ</a>
                 <a href="#kontak" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Kontak</a>
                 <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="block px-3 py-3 text-anol-red">Shop Now →</a>
             </div>
@@ -230,9 +238,9 @@
     <!-- ═══ HERO: poster merah ═══ -->
     <section id="home" class="poster-red grain relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         <!-- Ilustrasi kaos di kiri & kanan (seperti figur di poster referensi) -->
-        <img src="images/woman-satanic.png" alt="" aria-hidden="true"
+        <img src="images/woman-satanic.webp" alt="" aria-hidden="true"
              class="tee-ink absolute z-0 -left-[18%] sm:-left-[10%] bottom-[-6%] w-[70vw] sm:w-[48vw] lg:w-[38vw] max-w-[640px] -rotate-6 pointer-events-none select-none">
-        <img src="images/manticore.png" alt="" aria-hidden="true"
+        <img src="images/manticore.webp" alt="" aria-hidden="true"
              class="tee-ink absolute z-0 -right-[18%] sm:-right-[10%] top-[8%] w-[70vw] sm:w-[48vw] lg:w-[38vw] max-w-[640px] rotate-6 pointer-events-none select-none">
 
         <!-- Kanji vertikal: Anomaly and Mystic -->
@@ -360,7 +368,7 @@
                 <!-- Product 1 -->
                 <article class="ink-card group animate-fade-in-up animate-delay-100 flex flex-col">
                     <div class="aspect-square relative overflow-hidden bg-white">
-                        <img src="images/woman-satanic.png" alt="Woman Satanic" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        <img src="images/woman-satanic.webp" alt="Woman Satanic" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
                         <span class="absolute top-0 left-0 bg-anol-black text-white font-display text-sm px-3 py-2">01</span>
                     </div>
                     <div class="p-6 flex flex-col flex-1">
@@ -378,7 +386,7 @@
                 <!-- Product 2 -->
                 <article class="ink-card group animate-fade-in-up animate-delay-200 flex flex-col">
                     <div class="aspect-square relative overflow-hidden bg-white">
-                        <img src="images/croc-club.png" alt="Croc Club" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        <img src="images/croc-club.webp" alt="Croc Club" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
                         <span class="absolute top-0 left-0 bg-anol-black text-white font-display text-sm px-3 py-2">02</span>
                     </div>
                     <div class="p-6 flex flex-col flex-1">
@@ -396,7 +404,7 @@
                 <!-- Product 3 -->
                 <article class="ink-card group animate-fade-in-up animate-delay-300 flex flex-col">
                     <div class="aspect-square relative overflow-hidden bg-white">
-                        <img src="images/manticore.png" alt="Manticore" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        <img src="images/manticore.webp" alt="Manticore" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
                         <span class="absolute top-0 left-0 bg-anol-black text-white font-display text-sm px-3 py-2">03</span>
                     </div>
                     <div class="p-6 flex flex-col flex-1">
@@ -723,7 +731,7 @@
                 <div class="relative z-10">
                     <h3 class="font-display text-4xl text-white ink-shadow mb-6">VISI</h3>
                     <p class="text-white text-lg leading-relaxed font-medium">
-                        Membangun ulang industri fashion dari fundamentalnya — mengubah konsumen menjadi pemilik, hype menjadi kepemilikan nyata, dan komunitas menjadi pemegang kekuasaan. Menjadi ekosistem fashion terdesentralisasi pertama di Asia Tenggara yang memberdayakan kreator, kolektor, dan komunitas melalui teknologi blockchain.
+                        Membangun brand streetwear lokal yang karyanya bisa dipercaya: desain orisinal yang digambar tangan, edisi yang benar-benar terbatas, dan keaslian yang bisa dibuktikan siapa saja. Kami ingin menunjukkan bahwa blockchain bisa dipakai di fashion secara jujur dan berguna, bukan sekadar hype.
                     </p>
                     <p class="font-display text-anol-black text-xl mt-6">"Kodekan Kulturanya. Kenakan Masa Depannya."</p>
                 </div>
@@ -735,18 +743,22 @@
                 <ul class="text-gray-300 space-y-5">
                     <li class="flex items-start gap-4">
                         <span class="font-display text-anol-red text-xl">01</span>
-                        <span><strong class="text-white">Demokratisasi Fashion</strong> — Mengurangi barrier to entry untuk desainer independen melalui platform community curation dan crowdfunding.</span>
+                        <span><strong class="text-white">Karya Orisinal</strong> — Setiap desain digambar tangan dan punya cerita di baliknya, bukan sekadar sablon.</span>
                     </li>
                     <li class="flex items-start gap-4">
                         <span class="font-display text-anol-red text-xl">02</span>
-                        <span><strong class="text-white">Mengembalikan Kepemilikan</strong> — Memberikan konsumen hak nyata atas produk dan budaya yang mereka dukung melalui tokenized ownership.</span>
+                        <span><strong class="text-white">Kelangkaan yang Jujur</strong> — Edisi Limited maksimal 200 pcs per desain dan tidak diproduksi ulang. Jumlah sertifikatnya tercatat di blockchain, jadi tidak bisa ditambah diam-diam.</span>
                     </li>
                     <li class="flex items-start gap-4">
                         <span class="font-display text-anol-red text-xl">03</span>
-                        <span><strong class="text-white">Ekonomi Sirkular</strong> — Menciptakan sistem di mana value mengalir kembali kepada kreator dan komunitas secara otomatis via smart contract.</span>
+                        <span><strong class="text-white">Melindungi Pembeli</strong> — Sertifikat NFT membuktikan keaslian kaos, termasuk saat dijual ulang, supaya barang palsu mudah ketahuan.</span>
                     </li>
                     <li class="flex items-start gap-4">
                         <span class="font-display text-anol-red text-xl">04</span>
+                        <span><strong class="text-white">Ruang untuk Kreator</strong> — Membuka kolaborasi dengan ilustrator lokal, dengan nama dan kredit yang jelas di setiap karya.</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="font-display text-anol-red text-xl">05</span>
                         <span><strong class="text-white">Transparansi</strong> — Kontrak token ALT dan NFT keaslian terverifikasi publik di BscScan, sehingga siapa pun bisa mengeceknya sendiri.</span>
                     </li>
                 </ul>
@@ -817,6 +829,89 @@
                    class="bg-gradient-to-br from-purple-600 to-pink-500 hover:opacity-90 text-white px-8 py-4 font-extrabold uppercase tracking-wider transition-opacity">Instagram @anolystic</a>
                 <a href="https://x.com/anolystic" target="_blank" rel="noopener"
                    class="btn-ghost">X / Twitter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section id="faq" class="py-24 bg-anol-black grain-dark relative overflow-hidden border-t-2 border-anol-gray">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-12 animate-fade-in-up">
+                <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">質問</span> Yang Sering Ditanya</p>
+                <h2 class="font-display text-4xl md:text-6xl">FAQ</h2>
+                <div class="red-bar mt-5"></div>
+            </div>
+
+            <div class="space-y-4">
+                <details class="faq-item group bg-anol-dark border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Gimana cara order?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Order lewat <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="text-white underline">Tokopedia Anolystic</a>, bayar pakai Rupiah seperti belanja biasa. Pengiriman ke seluruh Indonesia. Untuk drop Limited seperti Devotion, info pre-order diumumkan pertama kali di <a href="https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u" target="_blank" rel="noopener" class="text-white underline">Saluran WhatsApp</a>.
+                    </div>
+                </details>
+
+                <details class="faq-item group bg-anol-dark border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Ukurannya apa saja?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Kaos Anolystic berpotongan oversize. Pilihan ukuran dan tabel ukuran lengkap (lebar dada &amp; panjang badan) ada di halaman produk Tokopedia. Masih ragu? Tanya dulu di <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener" class="text-white underline">grup Telegram</a>.
+                    </div>
+                </details>
+
+                <details class="faq-item group bg-anol-dark border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Apa itu NFT Anolystic Certified?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Sertifikat keaslian digital untuk tiap kaos edisi Limited, tercatat di BNB Chain. Isinya koleksi dan nomor edisi kaos kamu. Fungsinya sebagai bukti bahwa kaosnya asli, bukan sebagai investasi. Kaos desain Genesis (Woman Satanic, Croc Club, Manticore) tidak memiliki NFT.
+                    </div>
+                </details>
+
+                <details class="faq-item group bg-anol-dark border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Belum punya wallet crypto, gimana?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Tidak masalah. Kamu tetap bisa beli kaos Limited seperti biasa. Sertifikatmu kami simpan dulu, dan bisa kami kirim ke wallet kamu kapan pun kamu siap. Biaya gas ditanggung Anolystic. Keaslian kaos tetap bisa dicek siapa saja lewat QR di label.
+                    </div>
+                </details>
+
+                <details class="faq-item group bg-anol-dark border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Gimana cara cek kaos ini asli?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Scan QR di label kaos, atau buka halaman <a href="verifikasi.html" class="text-white underline">Cek Keaslian</a> dan masukkan nomor sertifikatnya. Kalau beli kaos bekas, minta penjual membuktikan dia pemilik sertifikatnya lewat fitur "Buktikan Pemiliknya" di halaman yang sama.
+                    </div>
+                </details>
+
+                <details class="faq-item group bg-anol-dark border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Apa itu edisi bertanda tangan?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Di setiap koleksi Limited ada satu nomor edisi rahasia yang sertifikatnya memakai desain bertanda tangan langsung. Nomornya tidak diumumkan. Pembeli yang beruntung akan melihat label "Signed Edition" di sertifikatnya.
+                    </div>
+                </details>
+
+                <details class="faq-item group bg-anol-dark border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Apakah Token ALT itu investasi?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Bukan. ALT adalah token komunitas untuk program reward dan akses drop, bukan produk investasi dan bukan alat pembayaran. Kamu tidak perlu ALT untuk membeli kaos. Kalau mau tahu lebih lanjut, baca bagian <a href="#token" class="text-white underline">Token ALT</a> beserta risikonya.
+                    </div>
+                </details>
             </div>
         </div>
     </section>
@@ -938,6 +1033,7 @@
                 <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-bold uppercase tracking-wider">
                     <a href="verifikasi.html" class="text-anol-red hover:text-white">Cek Keaslian</a>
                     <a href="koleksi-nft.html" class="text-gray-400 hover:text-white">Galeri</a>
+                    <a href="#faq" class="text-gray-400 hover:text-white">FAQ</a>
                     <a href="#gabung" class="text-gray-400 hover:text-white">Gabung Tim & Kemitraan</a>
                 </div>
 

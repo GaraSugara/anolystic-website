@@ -26,15 +26,15 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:image" content="https://anolystic.site/favicon.png">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Inter (teks) + Dela Gothic One (judul gaya poster) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Tailwind Config -->
+    <!-- Tailwind Config (warna brand TIDAK diubah) -->
     <script>
         tailwind.config = {
             theme: {
@@ -48,6 +48,7 @@
                     },
                     fontFamily: {
                         'sans': ['Inter', 'sans-serif'],
+                        'display': ['"Dela Gothic One"', 'Inter', 'sans-serif'],
                     }
                 }
             }
@@ -55,9 +56,7 @@
     </script>
 
     <style>
-        * {
-            scroll-behavior: smooth;
-        }
+        * { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -67,185 +66,146 @@
         }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; }
+
+        /* ── Gaya poster (referensi: poster streetwear Asia merah-hitam) ── */
+        .jp { font-family: 'Noto Sans JP', sans-serif; font-weight: 900; }
+        .font-display { font-family: 'Dela Gothic One', 'Inter', sans-serif; letter-spacing: 0.01em; }
+
+        /* Latar merah dengan tekstur titik halftone */
+        .poster-red { background-color: #dc2626; position: relative; }
+        .grain::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+            background-image: radial-gradient(rgba(10,10,10,0.22) 1px, transparent 1.3px);
+            background-size: 5px 5px;
+            mix-blend-mode: multiply;
         }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #dc2626;
-            border-radius: 4px;
+        .grain-dark::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.3px);
+            background-size: 6px 6px;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Bayangan tinta tebal untuk judul */
+        .ink-shadow { text-shadow: 4px 4px 0 #0a0a0a; }
+        .ink-shadow-red { text-shadow: 4px 4px 0 #dc2626; }
+
+        /* Kaos (latar putih) menyatu dengan merah → siluet hitam seperti ilustrasi poster */
+        .tee-ink { mix-blend-mode: multiply; filter: contrast(1.1); }
+
+        /* Teks kanji vertikal */
+        .vertical { writing-mode: vertical-rl; text-orientation: upright; }
+
+        /* Kanji outline besar di belakang judul */
+        .kanji-outline { color: transparent; -webkit-text-stroke: 1.5px rgba(220,38,38,0.55); }
+
+        /* Stempel hanko */
+        .hanko {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: #dc2626; color: #fff; border: 3px solid #0a0a0a;
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 900; line-height: 1; transform: rotate(-8deg);
         }
 
-        @keyframes pulse-red {
-            0%, 100% {
-                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 0 20px rgba(220, 38, 38, 0);
-            }
-        }
+        /* Judul section */
+        .eyebrow { color: #dc2626; font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; }
+        .red-bar { width: 72px; height: 6px; background: #dc2626; }
 
-        .animate-fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
+        /* Tombol gaya cetak (bayangan keras) */
+        .btn-ink, .btn-red, .btn-ghost {
+            display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
+            padding: 1rem 2rem; transition: transform .15s ease, box-shadow .15s ease, background .2s, color .2s;
         }
+        .btn-ink { background: #0a0a0a; color: #fff; box-shadow: 5px 5px 0 #ffffff; }
+        .btn-ink:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #ffffff; }
+        .btn-red { background: #dc2626; color: #fff; box-shadow: 5px 5px 0 #ffffff; }
+        .btn-red:hover { background: #ef4444; transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #ffffff; }
+        .btn-ghost { border: 3px solid #fff; color: #fff; }
+        .btn-ghost:hover { background: #fff; color: #0a0a0a; }
 
+        /* Kartu gaya zine */
+        .ink-card {
+            background: #141414; border: 2px solid #1f1f1f;
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        }
+        .ink-card:hover { transform: translate(-4px,-4px); box-shadow: 8px 8px 0 #dc2626; border-color: #dc2626; }
+
+        /* Pita berjalan */
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .marquee-track { display: flex; width: max-content; animation: marquee 28s linear infinite; }
+
+        /* Animasi muncul */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
         .animate-delay-100 { animation-delay: 0.1s; }
         .animate-delay-200 { animation-delay: 0.2s; }
         .animate-delay-300 { animation-delay: 0.3s; }
-        .animate-delay-400 { animation-delay: 0.4s; }
 
-        .btn-pulse {
-            animation: pulse-red 2s infinite;
-        }
-
-        /* Hover Effects */
-        .hover-lift {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .hover-lift:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px -10px rgba(220, 38, 38, 0.3);
+        @media (prefers-reduced-motion: reduce) {
+            .marquee-track { animation: none; }
+            * { scroll-behavior: auto; }
         }
 
-        /* Gradient Text */
-        .text-gradient {
-            background: linear-gradient(135deg, #ffffff 0%, #dc2626 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Glass Effect */
-        .glass {
-            background: rgba(20, 20, 20, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Product Card */
-        .product-card {
-            background: linear-gradient(145deg, #141414 0%, #1f1f1f 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-        .product-card:hover {
-            border-color: #dc2626;
-            transform: scale(1.02);
-        }
-
-        /* Red Accent Line */
-        .accent-line {
-            width: 60px;
-            height: 4px;
-            background: #dc2626;
-            margin: 20px 0;
-        }
-
-        /* Telegram Float */
-        .telegram-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            background: #229ED9;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(34, 158, 217, 0.4);
-            transition: all 0.3s ease;
-        }
-        .telegram-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(34, 158, 217, 0.6);
-        }
-
-        /* AI Chat Widget */
-        .chat-widget-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
-        .chat-widget-btn { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4); cursor: pointer; transition: all 0.3s ease; }
-        .chat-widget-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(220, 38, 38, 0.6); }
-        .chat-window { width: 350px; height: 500px; max-height: 80vh; background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(220, 38, 38, 0.3); border-radius: 12px; margin-bottom: 20px; display: flex; flex-direction: column; overflow: hidden; transform-origin: bottom right; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; transform: scale(0.5); pointer-events: none; }
-        .chat-window.active { opacity: 1; transform: scale(1); pointer-events: auto; }
-        .chat-header { background: rgba(220, 38, 38, 0.1); border-bottom: 1px solid rgba(220, 38, 38, 0.2); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; }
-        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .message { max-width: 85%; padding: 10px 15px; border-radius: 12px; font-size: 14px; line-height: 1.4; }
-        .message.bot { background: #1f1f1f; border: 1px solid rgba(255, 255, 255, 0.1); border-bottom-left-radius: 2px; align-self: flex-start; }
-        .message.user { background: #dc2626; color: white; border-bottom-right-radius: 2px; align-self: flex-end; }
-        .chat-input-area { padding: 15px; background: rgba(10, 10, 10, 0.9); border-top: 1px solid rgba(255, 255, 255, 0.05); display: flex; gap: 10px; }
-        .chat-input { flex: 1; background: #1f1f1f; border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 10px 15px; border-radius: 20px; outline: none; font-size: 14px; transition: border-color 0.3s; }
-        .chat-input:focus { border-color: #dc2626; }
-        .chat-send-btn { background: transparent; color: #dc2626; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: background 0.3s; }
-        .chat-send-btn:hover { background: rgba(220, 38, 38, 0.1); }
-        .typing-indicator { display: none; align-items: center; gap: 4px; padding: 10px 15px; background: #1f1f1f; border-radius: 12px; border-bottom-left-radius: 2px; align-self: flex-start; width: fit-content; }
-        .typing-indicator span { width: 6px; height: 6px; background: #888; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-
-        /* Image Placeholder */
+        /* Dipakai section Wall of Founder (masih disembunyikan) */
+        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 40px -10px rgba(220, 38, 38, 0.3); }
+        .accent-line { width: 60px; height: 4px; background: #dc2626; margin: 20px 0; }
         .img-placeholder {
             background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 14px;
-            border: 2px dashed #333;
+            display: flex; align-items: center; justify-content: center;
+            color: #666; font-size: 14px; border: 2px dashed #333;
         }
+
+        /* Tombol Saluran WhatsApp melayang */
+        .wa-float {
+            position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: #fff;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            box-shadow: 4px 4px 0 #0a0a0a; border: 2px solid #0a0a0a;
+            transition: transform .2s ease;
+        }
+        .wa-float:hover { transform: scale(1.08); }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-anol-black/90 backdrop-blur border-b-2 border-anol-red" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex-shrink-0">
-                   <a href="#" class="flex items-center">
+                <a href="#home" class="flex items-center gap-3 flex-shrink-0">
                     <img src="images/logo-simple.png" alt="Anolystic" class="h-8 md:h-10 w-auto">
-                    </a>
-                </div>
+                    <span class="hanko hidden sm:inline-flex w-9 h-9 text-base">異</span>
+                </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Home</a>
-                    <a href="#koleksi" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Koleksi</a>
-                    <a href="koleksi-nft.html" class="text-anol-red font-bold text-sm uppercase tracking-wider">Galeri Kita</a>
-                    <a href="#token" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Token ALT</a>
-                    <a href="#visi-misi" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Visi & Misi</a>
-                    <a href="#kontak" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-medium uppercase tracking-wider">Kontak</a>
+                <div class="hidden lg:flex items-center space-x-7">
+                    <a href="#drop" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Devotion</a>
+                    <a href="#koleksi" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Koleksi</a>
+                    <a href="koleksi-nft.html" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Galeri</a>
+                    <a href="verifikasi.html" class="text-anol-red hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">Cek Keaslian</a>
+                    <a href="#token" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Token ALT</a>
+                    <a href="#visi-misi" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Visi</a>
+                    <a href="#kontak" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Kontak</a>
                 </div>
 
                 <!-- CTA Button -->
-                <div class="hidden md:block">
-                    <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" 
-                       class="bg-anol-red hover:bg-anol-red-light text-white px-6 py-2 rounded-none text-sm font-bold uppercase tracking-wider transition-all hover:scale-105">
+                <div class="hidden lg:block">
+                    <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener"
+                       class="bg-anol-red hover:bg-anol-red-light text-white px-6 py-2 text-sm font-extrabold uppercase tracking-wider transition-all" style="box-shadow:3px 3px 0 #fff">
                         Shop Now
                     </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-anol-red">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                <div class="lg:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-anol-red p-2" aria-label="Buka menu">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
                 </div>
@@ -253,196 +213,252 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-anol-dark border-t border-gray-800">
-            <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="#home" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Home</a>
-                <a href="#koleksi" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Koleksi</a>
-                <a href="koleksi-nft.html" class="block px-3 py-2 text-anol-red font-bold hover:bg-gray-800 rounded-md">Galeri Kita</a>
-                <a href="#token" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Token ALT</a>
-                <a href="#visi-misi" class="block px-3 py-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-md">Visi & Misi</a>
-                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" class="block px-3 py-2 text-anol-red font-bold">Shop Now →</a>
+        <div id="mobile-menu" class="hidden lg:hidden bg-anol-black border-t border-anol-gray">
+            <div class="px-4 pt-2 pb-6 space-y-1 font-bold uppercase tracking-wider text-sm">
+                <a href="#drop" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Devotion</a>
+                <a href="#koleksi" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Koleksi</a>
+                <a href="koleksi-nft.html" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Galeri</a>
+                <a href="verifikasi.html" class="block px-3 py-3 text-anol-red hover:bg-anol-gray">Cek Keaslian</a>
+                <a href="#token" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Token ALT</a>
+                <a href="#visi-misi" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Visi & Misi</a>
+                <a href="#kontak" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Kontak</a>
+                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="block px-3 py-3 text-anol-red">Shop Now →</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <!-- Background Elements -->
-        <div class="absolute inset-0 z-0">
-            <div class="absolute top-20 left-10 w-72 h-72 bg-anol-red opacity-10 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-20 right-10 w-96 h-96 bg-red-900 opacity-10 rounded-full blur-3xl"></div>
-        </div>
+    <!-- ═══ HERO: poster merah ═══ -->
+    <section id="home" class="poster-red grain relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Ilustrasi kaos di kiri & kanan (seperti figur di poster referensi) -->
+        <img src="images/woman-satanic.png" alt="" aria-hidden="true"
+             class="tee-ink absolute z-0 -left-[18%] sm:-left-[10%] bottom-[-6%] w-[70vw] sm:w-[48vw] lg:w-[38vw] max-w-[640px] -rotate-6 pointer-events-none select-none">
+        <img src="images/manticore.png" alt="" aria-hidden="true"
+             class="tee-ink absolute z-0 -right-[18%] sm:-right-[10%] top-[8%] w-[70vw] sm:w-[48vw] lg:w-[38vw] max-w-[640px] rotate-6 pointer-events-none select-none">
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <!-- Kanji vertikal: Anomaly and Mystic -->
+        <div class="hidden md:block absolute left-6 lg:left-10 top-1/2 -translate-y-1/2 z-10 jp bg-anol-black text-white text-3xl lg:text-4xl px-2 py-4 vertical select-none" style="box-shadow: 4px 4px 0 #fff;" aria-hidden="true">異常と神秘</div>
+        <div class="hidden md:block absolute right-6 lg:right-10 top-1/2 -translate-y-1/2 z-10 bg-anol-black text-white font-extrabold tracking-[0.4em] uppercase text-[10px] px-2 py-4" style="writing-mode: vertical-rl;" aria-hidden="true">Anomaly and Mystic · Est. 2024</div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="animate-fade-in-up">
-                <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-4">Streetwear Indonesia</p>
+                <p class="inline-block bg-anol-black text-white font-extrabold tracking-[0.3em] uppercase text-xs px-4 py-2 mb-6">Streetwear Indonesia</p>
 
-                <div class="my-6 w-full flex justify-center">
-                    <img src="images/logo-full.png"
-                         alt="Anolystic"
-                         class="w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-2xl h-auto object-contain mx-auto"
-                         style="display:block;">
+                <div class="my-4 w-full flex justify-center">
+                    <img src="images/logo-full.png" alt="Anolystic"
+                         class="w-full max-w-sm md:max-w-2xl lg:max-w-3xl h-auto object-contain mx-auto"
+                         style="display:block; filter: drop-shadow(5px 5px 0 #0a0a0a);">
                 </div>
 
-                <div class="accent-line mx-auto my-4"></div>
-
-                <p class="text-xl md:text-2xl text-gray-400 font-light mt-2 mb-6">
-                    Gaya gak banyak bicara.
-                </p>
-                <p class="text-gray-500 mb-12 max-w-xl mx-auto">
-                    Streetwear premium untuk generasi yang percaya diri. 
-                    Desain minimalis, kualitas maksimal.
+                <h1 class="font-display text-white ink-shadow text-4xl sm:text-5xl md:text-7xl leading-tight mt-2">
+                    GAYA GAK<br class="sm:hidden"> BANYAK BICARA.
+                </h1>
+                <p class="text-white font-semibold text-base md:text-lg max-w-xl mx-auto mt-6 mb-10">
+                    Ilustrasi digambar tangan. Edisi terbatas. Setiap kaos punya sertifikat keaslian di blockchain.
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" 
-                       class="btn-pulse bg-anol-red hover:bg-anol-red-light text-white px-8 py-4 rounded-none font-bold uppercase tracking-wider transition-all hover:scale-105 w-full sm:w-auto text-center">
+                <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+                    <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="btn-ink w-full sm:w-auto">
                         Beli di Tokopedia
                     </a>
-                    <a href="#token"
-                       class="border-2 border-white hover:bg-white hover:text-anol-black text-white px-8 py-4 rounded-none font-bold uppercase tracking-wider transition-all w-full sm:w-auto text-center">
-                        Token ALT
+                    <a href="#drop" class="btn-ghost w-full sm:w-auto">
+                        Drop Devotion →
                     </a>
                 </div>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-                <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                </svg>
             </div>
         </div>
     </section>
 
-    <!-- Featured Products -->
-    <section id="koleksi" class="py-20 bg-anol-dark">
+    <!-- Pita berjalan -->
+    <div class="bg-anol-black border-y-2 border-anol-black overflow-hidden py-4" aria-hidden="true">
+        <div class="marquee-track font-display text-xl md:text-2xl text-white whitespace-nowrap">
+            <span class="px-6">DEVOTION</span><span class="text-anol-red">✦</span>
+            <span class="px-6">LIMITED VOL. 1</span><span class="text-anol-red">✦</span>
+            <span class="px-6">200 PCS</span><span class="text-anol-red">✦</span>
+            <span class="px-6">TIDAK DIPRODUKSI ULANG</span><span class="text-anol-red">✦</span>
+            <span class="px-6">NFT ANOLYSTIC CERTIFIED</span><span class="text-anol-red">✦</span>
+            <span class="px-6 jp">異常と神秘</span><span class="text-anol-red">✦</span>
+            <span class="px-6">DEVOTION</span><span class="text-anol-red">✦</span>
+            <span class="px-6">LIMITED VOL. 1</span><span class="text-anol-red">✦</span>
+            <span class="px-6">200 PCS</span><span class="text-anol-red">✦</span>
+            <span class="px-6">TIDAK DIPRODUKSI ULANG</span><span class="text-anol-red">✦</span>
+            <span class="px-6">NFT ANOLYSTIC CERTIFIED</span><span class="text-anol-red">✦</span>
+            <span class="px-6 jp">異常と神秘</span><span class="text-anol-red">✦</span>
+        </div>
+    </div>
+
+    <!-- ═══ DROP: DEVOTION ═══ -->
+    <section id="drop" class="py-24 bg-anol-black grain-dark relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+                <!-- Gambar -->
+                <div class="relative animate-fade-in-up">
+                    <div class="relative border-4 border-white" style="box-shadow: 14px 14px 0 #dc2626;">
+                        <img src="images/nft-devotion.jpg" alt="Devotion - Anolystic Limited Vol. 1" class="w-full h-auto block">
+                    </div>
+                    <span class="hanko absolute -top-5 -right-3 md:-right-5 w-20 h-20 text-3xl">献</span>
+                    <div class="absolute -bottom-5 left-5 bg-white text-anol-black font-display text-lg px-4 py-2">No. ??? / 200</div>
+                </div>
+
+                <!-- Cerita -->
+                <div class="relative animate-fade-in-up animate-delay-100">
+
+                    <p class="eyebrow mb-3">Limited Vol. 1 · Drop Oktober 2026</p>
+                    <h2 class="font-display text-5xl sm:text-6xl xl:text-7xl ink-shadow-red mb-6">DEVOTION</h2>
+                    <div class="red-bar mb-8"></div>
+                    <p class="text-xl text-white font-semibold mb-4">Kebenaran tidak selalu ditemukan di bawah cahaya.</p>
+                    <p class="text-gray-400 leading-relaxed mb-8">
+                        Matanya tertutup, bukan untuk berhenti melihat, tapi untuk mulai melihat ke dalam.
+                        Tanduknya tanda berani menolak aturan yang membatasi. Dan api di bawahnya bukan akhir. Itu awal.
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-3 mb-10">
+                        <div class="border-2 border-anol-gray p-4 text-center">
+                            <p class="font-display text-3xl text-anol-red">200</p>
+                            <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mt-1">pcs saja</p>
+                        </div>
+                        <div class="border-2 border-anol-gray p-4 text-center">
+                            <p class="font-display text-3xl text-white">0×</p>
+                            <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mt-1">produksi ulang</p>
+                        </div>
+                        <div class="border-2 border-anol-gray p-4 text-center">
+                            <p class="font-display text-3xl text-anol-red">1</p>
+                            <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mt-1">edisi bertanda tangan</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-400 text-sm mb-8">
+                        Setiap kaos punya nomor edisi sendiri dan sertifikat keaslian <span class="text-white font-bold">NFT Anolystic Certified</span>.
+                        Satu di antaranya ditandatangani langsung. Nomornya? Hanya kami yang tahu.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <a href="https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u" target="_blank" rel="noopener" class="btn-red">
+                            Info Pre-Order
+                        </a>
+                        <a href="koleksi-nft.html" class="btn-ghost">
+                            Baca Lore →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ KOLEKSI GENESIS ═══ -->
+    <section id="koleksi" class="py-24 bg-anol-dark relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 animate-fade-in-up">
-                <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Koleksi Terbaru</p>
-                <h2 class="text-3xl md:text-5xl font-black mb-4">DROP TERBARU</h2>
-                <div class="accent-line mx-auto"></div>
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 animate-fade-in-up">
+                <div>
+                    <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">新作</span> Desain Genesis</p>
+                    <h2 class="font-display text-4xl md:text-6xl">DROP TERBARU</h2>
+                    <div class="red-bar mt-5"></div>
+                </div>
+                <p class="text-gray-400 max-w-sm">Tiga desain pertama Anolystic. Digambar sendiri, dicetak terbatas, tersedia di Tokopedia.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Product 1 -->
-                <div class="product-card rounded-lg overflow-hidden group animate-fade-in-up animate-delay-100 hover-lift">
-                    <div class="aspect-square relative overflow-hidden">
-                         <img src="images/woman-satanic.png" alt="Woman Satanic" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                <article class="ink-card group animate-fade-in-up animate-delay-100 flex flex-col">
+                    <div class="aspect-square relative overflow-hidden bg-white">
+                        <img src="images/woman-satanic.png" alt="Woman Satanic" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        <span class="absolute top-0 left-0 bg-anol-black text-white font-display text-sm px-3 py-2">01</span>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2"> Woman Satanic </h3>
-                        <p class="text-gray-400 text-sm mb-4">Ilustrasi ini menampilkan wanita bergaya satanic dengan mata tertutup, melambangkan pencarian kebenaran dari dalam diri. Tanduknya merepresentasikan kekuatan dan pemberontakan, sementara rambut yang mengalir menggambarkan kebebasan. Gestur tangan terkatup seperti berdoa menciptakan kontras antara gelap dan spiritualitas. Api di bawahnya melambangkan transformasi dan kekuatan batin.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-anol-red font-bold text-lg"> 150K </span>
-                            <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-sm font-bold uppercase transition-colors">
+                    <div class="p-6 flex flex-col flex-1">
+                        <h3 class="font-display text-2xl mb-3">WOMAN SATANIC</h3>
+                        <p class="text-gray-400 text-sm mb-6 flex-1">Wanita bergaya satanic dengan mata tertutup, melambangkan pencarian kebenaran dari dalam diri. Tanduknya kekuatan dan pemberontakan, rambut yang mengalir kebebasan, dan api di bawahnya transformasi serta kekuatan batin.</p>
+                        <div class="flex justify-between items-center border-t-2 border-anol-gray pt-4">
+                            <span class="font-display text-anol-red text-2xl">150K</span>
+                            <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-sm font-extrabold uppercase transition-colors">
                                 Beli di Tokopedia →
                             </a>
                         </div>
                     </div>
-                </div>
+                </article>
 
                 <!-- Product 2 -->
-                <div class="product-card rounded-lg overflow-hidden group animate-fade-in-up animate-delay-200 hover-lift">
-                   <div class="aspect-square relative overflow-hidden">
-                        <img src="images/croc-club.png" alt="Croc Club" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                <article class="ink-card group animate-fade-in-up animate-delay-200 flex flex-col">
+                    <div class="aspect-square relative overflow-hidden bg-white">
+                        <img src="images/croc-club.png" alt="Croc Club" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        <span class="absolute top-0 left-0 bg-anol-black text-white font-display text-sm px-3 py-2">02</span>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Croc Club</h3>
-                        <p class="text-gray-400 text-sm mb-4">Desain ini menampilkan ilustrasi buaya bergaya kartun dengan ekspresi santai dan ceria. Pose terlentang memberi kesan playful dan percaya diri, sementara balon kata "Snap!" menonjolkan karakter khasnya. Tipografi besar "CROC CLUB" memperkuat identitas yang fun dan kompak, dengan tagline "Snapping Our Way Through Life" yang menyiratkan semangat menjalani hidup dengan santai, berani, dan penuh gaya.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-anol-red font-bold text-lg">90K</span>
-                            <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-sm font-bold uppercase transition-colors">
+                    <div class="p-6 flex flex-col flex-1">
+                        <h3 class="font-display text-2xl mb-3">CROC CLUB</h3>
+                        <p class="text-gray-400 text-sm mb-6 flex-1">Buaya bergaya kartun dengan ekspresi santai dan ceria. Pose terlentang yang playful, balon kata "Snap!", dan tagline "Snapping Our Way Through Life": menjalani hidup dengan santai, berani, dan penuh gaya.</p>
+                        <div class="flex justify-between items-center border-t-2 border-anol-gray pt-4">
+                            <span class="font-display text-anol-red text-2xl">90K</span>
+                            <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-sm font-extrabold uppercase transition-colors">
                                 Beli di Tokopedia →
                             </a>
                         </div>
                     </div>
-                </div>
+                </article>
 
                 <!-- Product 3 -->
-                <div class="product-card rounded-lg overflow-hidden group animate-fade-in-up animate-delay-300 hover-lift">
-                    <div class="aspect-square relative overflow-hidden">
-                        <img src="images/manticore.png" alt="Manticore" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                <article class="ink-card group animate-fade-in-up animate-delay-300 flex flex-col">
+                    <div class="aspect-square relative overflow-hidden bg-white">
+                        <img src="images/manticore.png" alt="Manticore" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                        <span class="absolute top-0 left-0 bg-anol-black text-white font-display text-sm px-3 py-2">03</span>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Manticore</h3>
-                        <p class="text-gray-400 text-sm mb-4">Desain ini menampilkan makhluk mitologi bersayap dengan tubuh singa yang mengaum gagah di atas awan. Sayap terbentang dan cakar terulur melambangkan kekuatan, dominasi, dan keberanian. Ekspresi garang menegaskan aura perlindungan sekaligus ancaman. Tipografi bergaya klasik memperkuat nuansa epik dan heroik, menciptakan kesan legenda yang hidup dan penuh wibawa.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-anol-red font-bold text-lg">150K</span>
-                            <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-sm font-bold uppercase transition-colors">
+                    <div class="p-6 flex flex-col flex-1">
+                        <h3 class="font-display text-2xl mb-3">MANTICORE</h3>
+                        <p class="text-gray-400 text-sm mb-6 flex-1">Makhluk mitologi bersayap bertubuh singa yang mengaum gagah di atas awan. Sayap terbentang dan cakar terulur melambangkan kekuatan dan keberanian, dengan aura perlindungan sekaligus ancaman.</p>
+                        <div class="flex justify-between items-center border-t-2 border-anol-gray pt-4">
+                            <span class="font-display text-anol-red text-2xl">150K</span>
+                            <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-sm font-extrabold uppercase transition-colors">
                                 Beli di Tokopedia →
                             </a>
                         </div>
                     </div>
-                </div>
+                </article>
             </div>
 
-            <div class="text-center mt-12 flex flex-col sm:flex-row justify-center gap-4">
-                <a href="koleksi-nft.html"
-                   class="inline-block border-2 border-anol-red text-anol-red hover:bg-anol-red hover:text-white px-8 py-3 font-bold uppercase tracking-wider transition-all">
-                    Lihat Galeri Kita →
-                </a>
-                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" 
-                   class="inline-block bg-anol-red text-white hover:bg-anol-red-light px-8 py-3 font-bold uppercase tracking-wider transition-all">
-                    Shop Tokopedia →
-                </a>
+            <div class="text-center mt-14 flex flex-col sm:flex-row justify-center gap-5">
+                <a href="koleksi-nft.html" class="btn-ghost">Lihat Galeri Kita →</a>
+                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="btn-red">Shop Tokopedia →</a>
             </div>
         </div>
     </section>
 
-    <!-- AI Assistant Alla Section -->
-    <section id="ai-assistant" class="py-20 bg-anol-black relative overflow-hidden border-t border-b border-gray-800">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-anol-red opacity-5 rounded-full blur-3xl"></div>
-        </div>
+    <!-- ═══ KEASLIAN: banner merah ═══ -->
+    <section id="keaslian" class="poster-red grain relative overflow-hidden py-24">
+        <div class="absolute -right-10 top-1/2 -translate-y-1/2 jp text-[16rem] md:text-[22rem] leading-none text-anol-black opacity-[0.12] select-none pointer-events-none z-0" aria-hidden="true">本物</div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-1/2 w-full animate-fade-in-up">
-                    <div class="aspect-square relative flex items-center justify-center">
-                        <div class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-anol-red flex items-center justify-center bg-anol-dark relative overflow-hidden btn-pulse z-10">
-                            <!-- Avatar Alla -->
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='100' fill='%23dc2626'/%3E%3Ctext x='100' y='120' font-family='Arial,sans-serif' font-size='66' font-weight='bold' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" alt="Alla AI Assistant" class="w-full h-full object-cover">
-                        </div>
-                        <div class="absolute w-64 h-64 md:w-80 md:h-80 border border-gray-700 rounded-full animate-[spin_10s_linear_infinite]"></div>
-                        <div class="absolute w-72 h-72 md:w-96 md:h-96 border border-gray-800 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
-                    </div>
+            <div class="max-w-3xl mb-14 animate-fade-in-up">
+                <p class="inline-block bg-anol-black text-white font-extrabold tracking-[0.3em] uppercase text-xs px-4 py-2 mb-6">NFT Anolystic Certified</p>
+                <h2 class="font-display text-4xl md:text-6xl text-white ink-shadow leading-tight">ASLI ATAU BUKAN?<br>BUKTIKAN SENDIRI.</h2>
+                <p class="text-white font-semibold text-lg mt-6">Setiap kaos Limited punya sertifikat digital di BNB Chain. Siapa pun bisa mengeceknya, kapan saja, tanpa perlu percaya kata kami.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-anol-black p-8 border-2 border-anol-black animate-fade-in-up" style="box-shadow: 6px 6px 0 #fff;">
+                    <p class="font-display text-5xl text-anol-red mb-4">01</p>
+                    <h3 class="font-display text-xl mb-3">SCAN QR DI LABEL</h3>
+                    <p class="text-gray-400 text-sm">Label satin tiap kaos punya QR unik yang mengarah ke halaman cek keaslian di anolystic.site.</p>
                 </div>
-                <div class="md:w-1/2 w-full animate-fade-in-up animate-delay-100">
-                    <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Ada Pertanyaan?</p>
-                    <h2 class="text-3xl md:text-5xl font-black mb-6">TANYA LANGSUNG</h2>
-                    <p class="text-gray-400 text-lg mb-6 leading-relaxed">
-                        Mau tanya soal drop terbaru, size chart, <span class="text-white font-bold">Token ALT</span>, atau cara cek <span class="text-white font-bold">NFT Anolystic Certified</span> (sertifikat keaslian) di kaos?
-                    </p>
-                    <p class="text-gray-400 text-lg mb-8 leading-relaxed">
-                        Tanya apa aja di grup Telegram komunitas. Biar nggak ketinggalan info drop dan token, ikuti Saluran WhatsApp Anolystic.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 font-bold uppercase tracking-wider transition-all hover:scale-105">
-                            Grup Telegram
-                        </a>
-                        <a href="https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u" target="_blank" rel="noopener" class="bg-green-600 hover:bg-green-500 text-white px-8 py-3 font-bold uppercase tracking-wider transition-all hover:scale-105">
-                            Saluran WhatsApp
-                        </a>
-                    </div>
+                <div class="bg-anol-black p-8 border-2 border-anol-black animate-fade-in-up animate-delay-100" style="box-shadow: 6px 6px 0 #fff;">
+                    <p class="font-display text-5xl text-anol-red mb-4">02</p>
+                    <h3 class="font-display text-xl mb-3">LIHAT DATA ON-CHAIN</h3>
+                    <p class="text-gray-400 text-sm">Koleksi, nomor edisi, dan pemilik sertifikat dibaca langsung dari blockchain, bukan dari database kami.</p>
+                </div>
+                <div class="bg-anol-black p-8 border-2 border-anol-black animate-fade-in-up animate-delay-200" style="box-shadow: 6px 6px 0 #fff;">
+                    <p class="font-display text-5xl text-anol-red mb-4">03</p>
+                    <h3 class="font-display text-xl mb-3">BELI BEKAS? MINTA BUKTI</h3>
+                    <p class="text-gray-400 text-sm">Penjual bisa membuktikan dia pemilik sertifikatnya dengan tanda tangan wallet. QR bisa difoto, wallet tidak.</p>
                 </div>
             </div>
+
+            <a href="verifikasi.html" class="btn-ink">Cek Keaslian Sekarang →</a>
         </div>
     </section>
 
-    <!-- TOKEN ALT -->
-    <section id="token" class="py-20 bg-anol-dark relative overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute bottom-0 left-0 w-80 h-80 bg-anol-red opacity-5 rounded-full blur-3xl"></div>
-        </div>
+    <!-- ═══ TOKEN ALT ═══ -->
+    <section id="token" class="py-24 bg-anol-dark relative overflow-hidden">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-12 animate-fade-in-up">
-                <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Token Komunitas</p>
-                <h2 class="text-3xl md:text-5xl font-black mb-4">TOKEN ALT</h2>
-                <div class="accent-line mx-auto"></div>
-                <p class="text-gray-400 mt-6 max-w-2xl mx-auto leading-relaxed">
+            <div class="mb-12 animate-fade-in-up">
+                <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">共同体</span> Token Komunitas</p>
+                <h2 class="font-display text-4xl md:text-6xl">TOKEN ALT</h2>
+                <div class="red-bar mt-5"></div>
+                <p class="text-gray-400 mt-6 max-w-2xl leading-relaxed">
                     <span class="text-white font-bold">ALT (Anolystic)</span> adalah token komunitas Anolystic di BNB Chain.
                     ALT dipakai untuk program reward pembeli, akses drop eksklusif, dan terhubung dengan
                     <span class="text-white font-bold">NFT Anolystic Certified</span>, sertifikat keaslian digital untuk tiap produk kami.
@@ -450,13 +466,13 @@
             </div>
 
             <!-- Alamat kontrak -->
-            <div class="glass rounded-lg p-6 md:p-8 border-l-4 border-anol-red mb-8 animate-fade-in-up">
-                <p class="text-xs text-anol-red font-bold uppercase tracking-wider mb-2">Alamat Kontrak Resmi (BEP-20)</p>
+            <div class="bg-anol-black border-2 border-anol-gray border-l-8 border-l-anol-red p-6 md:p-8 mb-8 animate-fade-in-up">
+                <p class="text-xs text-anol-red font-extrabold uppercase tracking-wider mb-3">Alamat Kontrak Resmi (BEP-20)</p>
                 <div class="flex flex-col md:flex-row md:items-center gap-4">
-                    <code id="alt-address" class="flex-1 bg-anol-black border border-gray-800 rounded px-4 py-3 text-sm md:text-base text-white break-all">0x950Cca77126C29CD8979179Bf2D8E8144478404D</code>
+                    <code id="alt-address" class="flex-1 bg-anol-dark border border-anol-gray px-4 py-3 text-sm md:text-base text-white break-all">0x950Cca77126C29CD8979179Bf2D8E8144478404D</code>
                     <div class="flex gap-3">
-                        <button onclick="copyAltAddress()" id="alt-copy-btn" class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-5 py-3 text-sm font-bold uppercase transition-colors whitespace-nowrap">Copy</button>
-                        <button onclick="addAltToWallet()" class="border-2 border-white hover:bg-white hover:text-anol-black text-white px-5 py-3 text-sm font-bold uppercase transition-colors whitespace-nowrap">+ MetaMask</button>
+                        <button onclick="copyAltAddress()" id="alt-copy-btn" class="bg-white text-anol-black hover:bg-anol-red hover:text-white px-5 py-3 text-sm font-extrabold uppercase transition-colors whitespace-nowrap">Copy</button>
+                        <button onclick="addAltToWallet()" class="border-2 border-white hover:bg-white hover:text-anol-black text-white px-5 py-3 text-sm font-extrabold uppercase transition-colors whitespace-nowrap">+ MetaMask</button>
                     </div>
                 </div>
                 <p class="text-gray-500 text-xs mt-3">Selalu cocokkan alamat ini sebelum membeli. Hati-hati token palsu dengan nama yang sama.</p>
@@ -464,40 +480,40 @@
 
             <!-- Fakta token -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div class="glass rounded-lg p-5 text-center">
+                <div class="bg-anol-black border-2 border-anol-gray p-5 text-center">
                     <p class="text-gray-500 text-xs uppercase font-bold mb-1">Jaringan</p>
-                    <p class="text-white font-black text-lg">BNB Chain</p>
+                    <p class="font-display text-lg">BNB Chain</p>
                 </div>
-                <div class="glass rounded-lg p-5 text-center">
+                <div class="bg-anol-black border-2 border-anol-gray p-5 text-center">
                     <p class="text-gray-500 text-xs uppercase font-bold mb-1">Total Supply</p>
-                    <p class="text-white font-black text-lg">1.000.000.000</p>
+                    <p class="font-display text-lg">1.000.000.000</p>
                 </div>
-                <div class="glass rounded-lg p-5 text-center">
+                <div class="bg-anol-black border-2 border-anol-gray p-5 text-center">
                     <p class="text-gray-500 text-xs uppercase font-bold mb-1">Pajak Beli / Jual</p>
-                    <p class="text-white font-black text-lg">0% / 0%</p>
+                    <p class="font-display text-lg">0% / 0%</p>
                 </div>
-                <div class="glass rounded-lg p-5 text-center">
+                <div class="bg-anol-black border-2 border-anol-gray p-5 text-center">
                     <p class="text-gray-500 text-xs uppercase font-bold mb-1">Likuiditas</p>
-                    <p class="text-white font-black text-lg">Dikunci s/d Sep 2027</p>
+                    <p class="font-display text-lg">Dikunci s/d Sep 2027</p>
                 </div>
             </div>
 
             <!-- Tombol link -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
                 <a href="https://pancakeswap.finance/swap?chain=bsc&outputCurrency=0x950Cca77126C29CD8979179Bf2D8E8144478404D" target="_blank" rel="noopener"
-                   class="bg-anol-red hover:bg-anol-red-light text-white text-center px-4 py-4 font-bold uppercase tracking-wider text-sm transition-all hover:scale-105">PancakeSwap</a>
+                   class="bg-anol-red hover:bg-anol-red-light text-white text-center px-4 py-4 font-extrabold uppercase tracking-wider text-sm transition-colors">PancakeSwap</a>
                 <a href="https://dexscreener.com/bsc/0x0bf4aaf7a131250b6940cef4d41df2fdc39866ec" target="_blank" rel="noopener"
-                   class="border-2 border-gray-600 hover:border-white text-white text-center px-4 py-4 font-bold uppercase tracking-wider text-sm transition-colors">Chart</a>
+                   class="border-2 border-gray-600 hover:border-white text-white text-center px-4 py-4 font-extrabold uppercase tracking-wider text-sm transition-colors">Chart</a>
                 <a href="https://bscscan.com/token/0x950Cca77126C29CD8979179Bf2D8E8144478404D" target="_blank" rel="noopener"
-                   class="border-2 border-gray-600 hover:border-white text-white text-center px-4 py-4 font-bold uppercase tracking-wider text-sm transition-colors">BscScan</a>
+                   class="border-2 border-gray-600 hover:border-white text-white text-center px-4 py-4 font-extrabold uppercase tracking-wider text-sm transition-colors">BscScan</a>
                 <a href="https://pinksale.finance/pinklock/bsc/record/2052024" target="_blank" rel="noopener"
-                   class="border-2 border-gray-600 hover:border-white text-white text-center px-4 py-4 font-bold uppercase tracking-wider text-sm transition-colors">Bukti Lock LP</a>
+                   class="border-2 border-gray-600 hover:border-white text-white text-center px-4 py-4 font-extrabold uppercase tracking-wider text-sm transition-colors">Bukti Lock LP</a>
             </div>
 
             <!-- Transparansi & risiko -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass rounded-lg p-6 md:p-8">
-                    <h3 class="text-xl font-black mb-4">TRANSPARANSI</h3>
+                <div class="bg-anol-black border-2 border-anol-gray p-6 md:p-8">
+                    <h3 class="font-display text-xl mb-4">TRANSPARANSI</h3>
                     <ul class="text-gray-400 text-sm space-y-3">
                         <li>✅ Kontrak terverifikasi publik di <a href="https://bscscan.com/address/0x950Cca77126C29CD8979179Bf2D8E8144478404D#code" target="_blank" rel="noopener" class="text-white underline">BscScan</a>. Siapa pun bisa membaca kodenya.</li>
                         <li>✅ 100% LP PancakeSwap dikunci di PinkLock sampai 23 September 2027.</li>
@@ -506,8 +522,8 @@
                         <li>🔗 Kontrak NFT Anolystic Certified: <a href="https://bscscan.com/address/0xf481fA14111347Eed9Aa56fd16e6cfe132F161d8" target="_blank" rel="noopener" class="text-white underline break-all">0xf481...61d8</a></li>
                     </ul>
                 </div>
-                <div class="glass rounded-lg p-6 md:p-8 border border-gray-800">
-                    <h3 class="text-xl font-black mb-4 text-anol-red">PERHATIAN</h3>
+                <div class="bg-anol-black border-2 border-anol-red p-6 md:p-8">
+                    <h3 class="font-display text-xl mb-4 text-anol-red">PERHATIAN</h3>
                     <ul class="text-gray-400 text-sm space-y-3">
                         <li>• ALT adalah <span class="text-white">token komunitas dan utility brand</span>, bukan produk investasi, dan bukan alat pembayaran.</li>
                         <li>• Token baru dengan likuiditas kecil. Harga bisa naik-turun sangat tajam, dan nilainya bisa turun sampai nol.</li>
@@ -691,63 +707,47 @@
     </div>
 </section>
 
-<!-- VISI, MISI & ROADMAP -->
-<section id="visi-misi" class="py-20 bg-anol-dark relative overflow-hidden">
+<!-- ═══ VISI, MISI & ROADMAP ═══ -->
+<section id="visi-misi" class="py-24 bg-anol-black grain-dark relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        <!-- Header -->
-        <div class="text-center mb-16 animate-fade-in-up">
-            <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Our Direction</p>
-            <h2 class="text-3xl md:text-5xl font-black mb-4">VISI & MISI</h2>
-            <div class="accent-line mx-auto"></div>
+
+        <div class="mb-14 animate-fade-in-up">
+            <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">道</span> Our Direction</p>
+            <h2 class="font-display text-4xl md:text-6xl">VISI & MISI</h2>
+            <div class="red-bar mt-5"></div>
         </div>
 
-        <!-- Visi & Misi Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-            
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
             <!-- VISI -->
-            <div class="glass rounded-lg p-8 md:p-12 border-l-4 border-anol-red animate-fade-in-up">
-                <div class="flex items-center mb-6">
-                    <div class="w-12 h-12 bg-anol-red rounded-full flex items-center justify-center mr-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-black">VISI</h3>
+            <div class="poster-red grain p-8 md:p-12 animate-fade-in-up" style="box-shadow: 10px 10px 0 #ffffff;">
+                <div class="relative z-10">
+                    <h3 class="font-display text-4xl text-white ink-shadow mb-6">VISI</h3>
+                    <p class="text-white text-lg leading-relaxed font-medium">
+                        Membangun ulang industri fashion dari fundamentalnya — mengubah konsumen menjadi pemilik, hype menjadi kepemilikan nyata, dan komunitas menjadi pemegang kekuasaan. Menjadi ekosistem fashion terdesentralisasi pertama di Asia Tenggara yang memberdayakan kreator, kolektor, dan komunitas melalui teknologi blockchain.
+                    </p>
+                    <p class="font-display text-anol-black text-xl mt-6">"Kodekan Kulturanya. Kenakan Masa Depannya."</p>
                 </div>
-                <p class="text-gray-300 text-lg leading-relaxed">
-                    Membangun ulang industri fashion dari fundamentalnya — mengubah konsumen menjadi pemilik, hype menjadi kepemilikan nyata, dan komunitas menjadi pemegang kekuasaan. Menjadi ekosistem fashion terdesentralisasi pertama di Asia Tenggara yang memberdayakan kreator, kolektor, dan komunitas melalui teknologi blockchain.
-                </p>
-                <p class="text-anol-red font-bold italic mt-4">"Kodekan Kulturanya. Kenakan Masa Depannya."</p>
             </div>
 
             <!-- MISI -->
-            <div class="glass rounded-lg p-8 md:p-12 border-l-4 border-white animate-fade-in-up animate-delay-100">
-                <div class="flex items-center mb-6">
-                    <div class="w-12 h-12 bg-white text-anol-black rounded-full flex items-center justify-center mr-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-black">MISI</h3>
-                </div>
-                <ul class="text-gray-300 space-y-3">
-                    <li class="flex items-start">
-                        <span class="text-anol-red mr-2 font-bold">01.</span>
-                        <span><strong>Demokratisasi Fashion</strong> — Mengurangi barrier to entry untuk desainer independen melalui platform community curation dan crowdfunding.</span>
+            <div class="bg-anol-dark border-2 border-anol-gray p-8 md:p-12 animate-fade-in-up animate-delay-100">
+                <h3 class="font-display text-4xl mb-6">MISI</h3>
+                <ul class="text-gray-300 space-y-5">
+                    <li class="flex items-start gap-4">
+                        <span class="font-display text-anol-red text-xl">01</span>
+                        <span><strong class="text-white">Demokratisasi Fashion</strong> — Mengurangi barrier to entry untuk desainer independen melalui platform community curation dan crowdfunding.</span>
                     </li>
-                    <li class="flex items-start">
-                        <span class="text-anol-red mr-2 font-bold">02.</span>
-                        <span><strong>Mengembalikan Kepemilikan</strong> — Memberikan konsumen hak nyata atas produk dan budaya yang mereka dukung melalui tokenized ownership.</span>
+                    <li class="flex items-start gap-4">
+                        <span class="font-display text-anol-red text-xl">02</span>
+                        <span><strong class="text-white">Mengembalikan Kepemilikan</strong> — Memberikan konsumen hak nyata atas produk dan budaya yang mereka dukung melalui tokenized ownership.</span>
                     </li>
-                    <li class="flex items-start">
-                        <span class="text-anol-red mr-2 font-bold">03.</span>
-                        <span><strong>Ekonomi Sirkular</strong> — Menciptakan sistem di mana value mengalir kembali kepada kreator dan komunitas secara otomatis via smart contract.</span>
+                    <li class="flex items-start gap-4">
+                        <span class="font-display text-anol-red text-xl">03</span>
+                        <span><strong class="text-white">Ekonomi Sirkular</strong> — Menciptakan sistem di mana value mengalir kembali kepada kreator dan komunitas secara otomatis via smart contract.</span>
                     </li>
-                    <li class="flex items-start">
-                        <span class="text-anol-red mr-2 font-bold">04.</span>
-                        <span><strong>Transparansi</strong> — Kontrak token ALT dan NFT keaslian terverifikasi publik di BscScan, sehingga siapa pun bisa mengeceknya sendiri.</span>
+                    <li class="flex items-start gap-4">
+                        <span class="font-display text-anol-red text-xl">04</span>
+                        <span><strong class="text-white">Transparansi</strong> — Kontrak token ALT dan NFT keaslian terverifikasi publik di BscScan, sehingga siapa pun bisa mengeceknya sendiri.</span>
                     </li>
                 </ul>
             </div>
@@ -755,136 +755,80 @@
 
         <!-- ROADMAP -->
         <div class="animate-fade-in-up animate-delay-200">
-            <div class="text-center mb-12">
-                <h3 class="text-2xl md:text-3xl font-black mb-4">ROADMAP PERJALANAN</h3>
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+                <div>
+                    <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">歩み</span> Perjalanan</p>
+                    <h3 class="font-display text-3xl md:text-5xl">ROADMAP</h3>
+                </div>
                 <p class="text-gray-400">Langkah demi langkah membangun legacy.</p>
             </div>
 
-            <div class="relative">
-                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-800"></div>
-
-                <!-- Roadmap Item 1 -->
-                <div class="relative mb-12 md:mb-0">
-                    <div class="md:flex items-center justify-between">
-                        <div class="md:w-5/12 md:text-right mb-4 md:mb-0">
-                            <div class="glass rounded-lg p-6 inline-block text-left md:text-right border-l-4 border-anol-red">
-                                <span class="text-anol-red font-bold text-sm">SEP 2026 ✅</span>
-                                <h4 class="text-xl font-bold mt-2">Fondasi Web3</h4>
-                                <p class="text-gray-400 text-sm mt-2">Token ALT live di BNB Chain, likuiditas PancakeSwap dikunci 1 tahun, kontrak terverifikasi. Kontrak NFT Anolystic Certified live dengan 4 koleksi siap.</p>
-                            </div>
-                        </div>
-                        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-anol-red rounded-full border-4 border-anol-dark"></div>
-                        <div class="md:w-5/12"></div>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-anol-red p-6 relative" style="box-shadow: 6px 6px 0 #fff;">
+                    <span class="font-display text-white text-sm">SEP 2026 ✅</span>
+                    <h4 class="font-display text-xl mt-3 text-white">Fondasi Web3</h4>
+                    <p class="text-white/90 text-sm mt-3">Token ALT live di BNB Chain, likuiditas PancakeSwap dikunci 1 tahun, kontrak terverifikasi, ownership di-renounce. Kontrak NFT Anolystic Certified live dengan 4 koleksi siap.</p>
                 </div>
-
-                <!-- Roadmap Item 2 -->
-                <div class="relative mb-12 md:mb-0 md:mt-12">
-                    <div class="md:flex items-center justify-between">
-                        <div class="md:w-5/12"></div>
-                        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rounded-full border-4 border-anol-dark"></div>
-                        <div class="md:w-5/12 mb-4 md:mb-0">
-                            <div class="glass rounded-lg p-6 border-l-4 border-white">
-                                <span class="text-anol-red font-bold text-sm">OKT 2026 🔄</span>
-                                <h4 class="text-xl font-bold mt-2">Drop Pertama: "Devotion"</h4>
-                                <p class="text-gray-400 text-sm mt-2">Limited Vol. 1, maksimal 200 pcs, tidak diproduksi ulang. Tiap kaos dapat NFT keaslian dengan QR code di label, dan satu edisi rahasia bertanda tangan.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-anol-dark border-2 border-white p-6">
+                    <span class="font-display text-anol-red text-sm">OKT 2026 🔄</span>
+                    <h4 class="font-display text-xl mt-3">Drop Pertama: "Devotion"</h4>
+                    <p class="text-gray-400 text-sm mt-3">Limited Vol. 1, maksimal 200 pcs, tidak diproduksi ulang. Tiap kaos dapat NFT keaslian dengan QR code di label, dan satu edisi rahasia bertanda tangan.</p>
                 </div>
-
-                <!-- Roadmap Item 3 -->
-                <div class="relative mb-12 md:mb-0 md:mt-12">
-                    <div class="md:flex items-center justify-between">
-                        <div class="md:w-5/12 md:text-right mb-4 md:mb-0">
-                            <div class="glass rounded-lg p-6 inline-block text-left md:text-right border-l-4 border-gray-600">
-                                <span class="text-gray-400 font-bold text-sm">AKHIR 2026 ⏳</span>
-                                <h4 class="text-xl font-bold mt-2">Reward Komunitas</h4>
-                                <p class="text-gray-400 text-sm mt-2">Program reward ALT untuk pembeli, pengumuman rencana alokasi supply, logo ALT di Trust Wallet, dan listing CoinGecko (sedang direview).</p>
-                            </div>
-                        </div>
-                        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gray-600 rounded-full border-4 border-anol-dark"></div>
-                        <div class="md:w-5/12"></div>
-                    </div>
+                <div class="bg-anol-dark border-2 border-gray-600 p-6">
+                    <span class="font-display text-gray-400 text-sm">AKHIR 2026 ⏳</span>
+                    <h4 class="font-display text-xl mt-3">Reward Komunitas</h4>
+                    <p class="text-gray-400 text-sm mt-3">Program reward ALT untuk pembeli, pengumuman rencana alokasi supply, logo ALT di Trust Wallet, dan listing CoinGecko (sedang direview).</p>
                 </div>
-
-                <!-- Roadmap Item 4 -->
-                <div class="relative md:mt-12">
-                    <div class="md:flex items-center justify-between">
-                        <div class="md:w-5/12"></div>
-                        <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gray-700 rounded-full border-4 border-anol-dark"></div>
-                        <div class="md:w-5/12 mb-4 md:mb-0">
-                            <div class="glass rounded-lg p-6 border-2 border-dashed border-gray-700">
-                                <span class="text-gray-500 font-bold text-sm">2027 🚀</span>
-                                <h4 class="text-xl font-bold mt-2 text-gray-400">Drop Berikutnya</h4>
-                                <p class="text-gray-500 text-sm mt-2">Limited Vol. 2 "Eastern Dragon" dan Vol. 3 "Rose Blood", desain koleksi Basic, menumbuhkan komunitas holder, dan evaluasi renounce ownership kontrak ALT.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-anol-dark border-2 border-dashed border-gray-700 p-6">
+                    <span class="font-display text-gray-500 text-sm">2027 🚀</span>
+                    <h4 class="font-display text-xl mt-3 text-gray-300">Drop Berikutnya</h4>
+                    <p class="text-gray-500 text-sm mt-3">Limited Vol. 2 "Eastern Dragon" dan Vol. 3 "Rose Blood", desain koleksi Basic, dan menumbuhkan komunitas holder.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-    <!-- Instagram Feed -->
-    <section class="py-20 bg-anol-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Follow Us</p>
-                <h2 class="text-3xl md:text-4xl font-black mb-4">@ANOLYSTIC</h2>
-                <p class="text-gray-400">Update terbaru dan behind the scenes</p>
+    <!-- ═══ KOMUNITAS (gabungan Follow Us + Join the Movement) ═══ -->
+    <section id="join-movement" class="py-24 bg-anol-dark relative overflow-hidden border-t-2 border-anol-gray">
+        <div class="absolute -left-8 top-1/2 -translate-y-1/2 jp text-[14rem] md:text-[20rem] leading-none kanji-outline select-none pointer-events-none" aria-hidden="true">仲間</div>
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="mb-12 animate-fade-in-up">
+                <p class="eyebrow mb-3">Exclusive Access</p>
+                <h2 class="font-display text-4xl md:text-6xl">JOIN THE MOVEMENT</h2>
+                <div class="red-bar mt-5 mx-auto"></div>
+                <p class="text-gray-400 mt-6 max-w-2xl mx-auto">Koleksi terbatas, nggak diproduksi ulang. Ikuti saluran kami biar jadi yang pertama tahu info pre-order "Devotion", behind the scenes, dan program reward Token ALT.</p>
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 text-left">
+                <a href="https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u" target="_blank" rel="noopener"
+                   class="block bg-green-600 hover:bg-green-500 text-white p-7 transition-transform hover:-translate-y-1 border-2 border-anol-black" style="box-shadow: 6px 6px 0 #0a0a0a;">
+                    <p class="font-display text-2xl">SALURAN WHATSAPP</p>
+                    <p class="text-green-100 text-sm mt-2">Info drop, pre-order & pengumuman resmi</p>
+                </a>
+                <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener"
+                   class="block bg-blue-500 hover:bg-blue-600 text-white p-7 transition-transform hover:-translate-y-1 border-2 border-anol-black" style="box-shadow: 6px 6px 0 #0a0a0a;">
+                    <p class="font-display text-2xl">GRUP TELEGRAM</p>
+                    <p class="text-blue-100 text-sm mt-2">Ngobrol & tanya-tanya bareng komunitas</p>
+                </a>
+            </div>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a href="https://instagram.com/Anolystic" target="_blank" rel="noopener"
-                   class="bg-gradient-to-br from-purple-600 to-pink-500 hover:opacity-90 text-white text-center px-8 py-4 font-bold uppercase tracking-wider transition-all hover:scale-105">Instagram</a>
+                   class="bg-gradient-to-br from-purple-600 to-pink-500 hover:opacity-90 text-white px-8 py-4 font-extrabold uppercase tracking-wider transition-opacity">Instagram @anolystic</a>
                 <a href="https://x.com/anolystic" target="_blank" rel="noopener"
-                   class="border-2 border-white hover:bg-white hover:text-anol-black text-white text-center px-8 py-4 font-bold uppercase tracking-wider transition-all">X / Twitter</a>
-                <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener"
-                   class="bg-blue-500 hover:bg-blue-600 text-white text-center px-8 py-4 font-bold uppercase tracking-wider transition-all hover:scale-105">Grup Telegram</a>
+                   class="btn-ghost">X / Twitter</a>
             </div>
         </div>
     </section>
 
-    <!-- Join Waitlist / Database Form -->
-    <section id="join-movement" class="py-20 bg-anol-black relative overflow-hidden border-t border-gray-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-12 animate-fade-in-up">
-                <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Exclusive Access</p>
-                <h2 class="text-3xl md:text-5xl font-black mb-4">JOIN THE MOVEMENT</h2>
-                <div class="accent-line mx-auto"></div>
-                <p class="text-gray-400 mt-4">Koleksi terbatas, nggak diproduksi ulang. Ikuti saluran kami biar jadi yang pertama tahu info pre-order "Devotion" dan program reward Token ALT.</p>
-            </div>
-
-            <div class="glass p-8 md:p-12 rounded-2xl border border-gray-800 animate-fade-in-up animate-delay-100 shadow-[0_0_40px_rgba(220,38,38,0.05)]">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <a href="https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u" target="_blank" rel="noopener"
-                       class="block bg-green-600 hover:bg-green-500 text-white text-center rounded-lg p-6 transition-all hover:scale-[1.02]">
-                        <p class="font-black uppercase tracking-wider text-lg">Saluran WhatsApp</p>
-                        <p class="text-green-100 text-sm mt-1">Info drop, pre-order & pengumuman resmi</p>
-                    </a>
-                    <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener"
-                       class="block bg-blue-500 hover:bg-blue-600 text-white text-center rounded-lg p-6 transition-all hover:scale-[1.02]">
-                        <p class="font-black uppercase tracking-wider text-lg">Grup Telegram</p>
-                        <p class="text-blue-100 text-sm mt-1">Ngobrol & tanya-tanya bareng komunitas</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gabung Bersama Kami: rekrut tim inti & kemitraan -->
-    <section id="gabung" class="py-20 bg-anol-dark border-t border-gray-800 relative overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute top-10 right-10 w-72 h-72 bg-anol-red opacity-5 rounded-full blur-3xl"></div>
-        </div>
+    <!-- ═══ GABUNG BERSAMA KAMI: rekrut tim inti & kemitraan ═══ -->
+    <section id="gabung" class="py-24 bg-anol-black border-t-2 border-anol-gray relative overflow-hidden">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-12 animate-fade-in-up">
-                <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">Bangun Bareng Dari Nol</p>
-                <h2 class="text-3xl md:text-5xl font-black mb-4">GABUNG BERSAMA KAMI</h2>
-                <div class="accent-line mx-auto"></div>
-                <p class="text-gray-400 mt-6 max-w-2xl mx-auto leading-relaxed">
+            <div class="mb-12 animate-fade-in-up">
+                <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">参加</span> Bangun Bareng Dari Nol</p>
+                <h2 class="font-display text-4xl md:text-6xl">GABUNG BERSAMA KAMI</h2>
+                <div class="red-bar mt-5"></div>
+                <p class="text-gray-400 mt-6 max-w-2xl leading-relaxed">
                     Anolystic masih brand kecil yang dibangun dari bawah. Kami cari orang-orang yang percaya sama visinya
                     dan mau berjuang bareng membesarkan brand streetwear lokal plus ekosistem Web3-nya.
                 </p>
@@ -892,33 +836,30 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Kami cari tim inti -->
-                <div class="glass rounded-lg p-8 border-l-4 border-anol-red animate-fade-in-up">
-                    <h3 class="text-2xl font-black mb-2">KAMI CARI TIM INTI</h3>
+                <div class="bg-anol-dark border-2 border-anol-gray border-t-8 border-t-anol-red p-8 animate-fade-in-up">
+                    <h3 class="font-display text-2xl mb-2">KAMI CARI TIM INTI</h3>
                     <p class="text-gray-400 text-sm mb-6">Tim kecil, kerja remote, ritme fleksibel.</p>
-                    <ul class="space-y-3 text-sm mb-6">
-                        <li class="flex items-start gap-3"><span class="text-anol-red font-black">01</span><span><strong class="text-white">Desainer / Ilustrator</strong><br><span class="text-gray-400">Desain kaos & aset koleksi berikutnya</span></span></li>
-                        <li class="flex items-start gap-3"><span class="text-anol-red font-black">02</span><span><strong class="text-white">Content Creator / Admin Sosmed</strong><br><span class="text-gray-400">Instagram, TikTok, X, dan Saluran WA</span></span></li>
-                        <li class="flex items-start gap-3"><span class="text-anol-red font-black">03</span><span><strong class="text-white">Developer Web / Web3</strong><br><span class="text-gray-400">Website, sistem NFT keaslian, otomasi</span></span></li>
-                        <li class="flex items-start gap-3"><span class="text-anol-red font-black">04</span><span><strong class="text-white">Marketing & Komunitas</strong><br><span class="text-gray-400">Kolaborasi, event, dan grup komunitas</span></span></li>
+                    <ul class="space-y-4 text-sm mb-6">
+                        <li class="flex items-start gap-3"><span class="font-display text-anol-red">01</span><span><strong class="text-white">Desainer / Ilustrator</strong><br><span class="text-gray-400">Desain kaos & aset koleksi berikutnya</span></span></li>
+                        <li class="flex items-start gap-3"><span class="font-display text-anol-red">02</span><span><strong class="text-white">Content Creator / Admin Sosmed</strong><br><span class="text-gray-400">Instagram, TikTok, X, dan Saluran WA</span></span></li>
+                        <li class="flex items-start gap-3"><span class="font-display text-anol-red">03</span><span><strong class="text-white">Developer Web / Web3</strong><br><span class="text-gray-400">Website, sistem NFT keaslian, otomasi</span></span></li>
+                        <li class="flex items-start gap-3"><span class="font-display text-anol-red">04</span><span><strong class="text-white">Marketing & Komunitas</strong><br><span class="text-gray-400">Kolaborasi, event, dan grup komunitas</span></span></li>
                     </ul>
-                    <div class="bg-anol-black border border-gray-800 rounded-lg p-4 mb-6 text-sm">
+                    <div class="bg-anol-black border-2 border-anol-gray p-4 mb-6 text-sm">
                         <p class="text-white font-bold mb-1">Jujur di awal:</p>
                         <p class="text-gray-400">Saat ini <strong class="text-white">belum ada gaji</strong>. Ini untuk kamu yang mau berjuang bareng dari nol.
                         Yang kamu dapat: pengalaman nyata membangun brand dan Web3 dari awal, portofolio, nama kamu di halaman tim, dan peran inti seiring brand ini tumbuh.</p>
                     </div>
-                    <a href="https://ig.me/m/anolystic" target="_blank" rel="noopener"
-                       class="block text-center bg-anol-red hover:bg-anol-red-light text-white px-6 py-3 font-bold uppercase tracking-wider text-sm transition-all hover:scale-[1.02]">
-                        Daftar via DM Instagram
-                    </a>
-                    <p class="text-gray-500 text-xs text-center mt-3">
+                    <a href="https://ig.me/m/anolystic" target="_blank" rel="noopener" class="btn-red w-full">Daftar via DM Instagram</a>
+                    <p class="text-gray-500 text-xs text-center mt-4">
                         atau email ke <a href="mailto:anolystic@gmail.com?subject=Daftar%20Tim%20Inti%20Anolystic" class="text-white underline">anolystic@gmail.com</a><br>
                         Kirim: nama, peran yang diminati, dan contoh karya / portofolio.
                     </p>
                 </div>
 
                 <!-- Kemitraan & kolaborasi -->
-                <div class="glass rounded-lg p-8 border-l-4 border-white animate-fade-in-up animate-delay-100">
-                    <h3 class="text-2xl font-black mb-2">KEMITRAAN & KOLABORASI</h3>
+                <div class="bg-anol-dark border-2 border-anol-gray border-t-8 border-t-white p-8 animate-fade-in-up animate-delay-100">
+                    <h3 class="font-display text-2xl mb-2">KEMITRAAN & KOLABORASI</h3>
                     <p class="text-gray-400 text-sm mb-6">Terbuka untuk kerja sama yang saling menguntungkan.</p>
                     <ul class="space-y-3 text-sm text-gray-400 mb-6">
                         <li>• <strong class="text-white">Kolaborasi brand</strong>: capsule collection, desain bareng</li>
@@ -930,11 +871,8 @@
                         Diskusi kemitraan dilakukan secara pribadi dan dituangkan dalam perjanjian tertulis.
                         Halaman ini bukan penawaran investasi, dan token ALT bukan produk investasi.
                     </p>
-                    <a href="https://ig.me/m/anolystic" target="_blank" rel="noopener"
-                       class="block text-center border-2 border-white hover:bg-white hover:text-anol-black text-white px-6 py-3 font-bold uppercase tracking-wider text-sm transition-all">
-                        Hubungi via DM Instagram
-                    </a>
-                    <p class="text-gray-500 text-xs text-center mt-3">
+                    <a href="https://ig.me/m/anolystic" target="_blank" rel="noopener" class="btn-ghost w-full">Hubungi via DM Instagram</a>
+                    <p class="text-gray-500 text-xs text-center mt-4">
                         atau email ke <a href="mailto:anolystic@gmail.com?subject=Kemitraan%20Anolystic" class="text-white underline">anolystic@gmail.com</a>
                     </p>
                 </div>
@@ -942,57 +880,46 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="kontak" class="py-20 bg-anol-black">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-5xl font-black mb-4">HUBUNGI KAMI</h2>
-            <div class="accent-line mx-auto"></div>
-            <p class="text-gray-400 mb-12">Pertanyaan? Kerjasama? Atau sekadar say hi?</p>
+    <!-- ═══ KONTAK ═══ -->
+    <section id="kontak" class="poster-red grain py-24 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="font-display text-4xl md:text-6xl text-white ink-shadow mb-4">HUBUNGI KAMI</h2>
+            <p class="text-white font-semibold mb-12">Pertanyaan? Kerjasama? Atau sekadar say hi?</p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-                <!-- Saluran WhatsApp -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
                 <a href="https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u" target="_blank" rel="noopener"
-                   class="glass p-8 rounded-lg hover:border-green-500 transition-colors group">
+                   class="bg-anol-black p-6 md:p-8 group transition-transform hover:-translate-y-1" style="box-shadow: 6px 6px 0 #fff;">
                     <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                     </div>
-                    <h3 class="font-bold mb-2">WhatsApp</h3>
+                    <h3 class="font-display mb-1">WhatsApp</h3>
                     <p class="text-sm text-gray-400">Saluran Resmi</p>
                 </a>
 
-                <!-- Telegram -->
                 <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener"
-                   class="glass p-8 rounded-lg hover:border-anol-red transition-colors group">
+                   class="bg-anol-black p-6 md:p-8 group transition-transform hover:-translate-y-1" style="box-shadow: 6px 6px 0 #fff;">
                     <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                        </svg>
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                     </div>
-                    <h3 class="font-bold mb-2">Telegram</h3>
+                    <h3 class="font-display mb-1">Telegram</h3>
                     <p class="text-sm text-gray-400">Grup Komunitas</p>
                 </a>
 
-                <!-- Instagram -->
-                <a href="https://instagram.com/Anolystic" target="_blank"
-                   class="glass p-8 rounded-lg hover:border-pink-500 transition-colors group">
+                <a href="https://instagram.com/Anolystic" target="_blank" rel="noopener"
+                   class="bg-anol-black p-6 md:p-8 group transition-transform hover:-translate-y-1" style="box-shadow: 6px 6px 0 #fff;">
                     <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     </div>
-                    <h3 class="font-bold mb-2">Instagram</h3>
+                    <h3 class="font-display mb-1">Instagram</h3>
                     <p class="text-sm text-gray-400">@Anolystic</p>
                 </a>
 
-                <!-- Tokopedia -->
-                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank"
-                   class="glass p-8 rounded-lg hover:border-green-500 transition-colors group">
+                <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener"
+                   class="bg-anol-black p-6 md:p-8 group transition-transform hover:-translate-y-1" style="box-shadow: 6px 6px 0 #fff;">
                     <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
                     </div>
-                    <h3 class="font-bold mb-2">Tokopedia</h3>
+                    <h3 class="font-display mb-1">Tokopedia</h3>
                     <p class="text-sm text-gray-400">Official Store</p>
                 </a>
             </div>
@@ -1000,16 +927,22 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-anol-black border-t border-gray-800 py-12">
+    <footer class="bg-anol-black border-t-4 border-anol-red py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <img src="images/logo-full.png" alt="Anolystic" class="h-8 w-auto">
-                    <p class="text-gray-500 text-sm mt-2">Gaya gak banyak bicara.</p>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <img src="images/logo-full.png" alt="Anolystic" class="h-10 w-auto mx-auto md:mx-0">
+                    <p class="text-gray-500 text-sm mt-2">Gaya gak banyak bicara. <span class="jp text-gray-600 ml-1">異常と神秘</span></p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-bold uppercase tracking-wider">
+                    <a href="verifikasi.html" class="text-anol-red hover:text-white">Cek Keaslian</a>
+                    <a href="koleksi-nft.html" class="text-gray-400 hover:text-white">Galeri</a>
+                    <a href="#gabung" class="text-gray-400 hover:text-white">Gabung Tim & Kemitraan</a>
                 </div>
 
                 <div class="flex space-x-6">
-                    <a href="https://instagram.com/Anolystic" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://instagram.com/Anolystic" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors">
                         <span class="sr-only">Instagram</span>
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     </a>
@@ -1017,302 +950,45 @@
                         <span class="sr-only">X</span>
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </a>
-                    <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors">
                         <span class="sr-only">Telegram</span>
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                     </a>
                 </div>
             </div>
 
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center">
-                <p class="mb-3"><a href="#gabung" class="text-gray-400 hover:text-anol-red text-sm font-bold uppercase tracking-wider">Gabung Tim & Kemitraan →</a></p>
+            <div class="mt-8 pt-8 border-t border-anol-gray text-center">
                 <p class="text-gray-600 text-sm">© 2026 Anolystic. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Order Modal -->
-    <div id="order-modal" class="fixed inset-0 z-[99999] hidden flex justify-center items-center">
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm" onclick="closeOrderModal()"></div>
-        
-        <!-- Modal Content -->
-        <div class="glass relative z-10 w-full max-w-lg mx-4 rounded-2xl border border-gray-800 shadow-[0_0_50px_rgba(220,38,38,0.2)] animate-fade-in-up">
-            <div class="p-6 md:p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-black uppercase tracking-wider">Pesan Langsung</h3>
-                    <button onclick="closeOrderModal()" class="text-gray-400 hover:text-white">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                </div>
-
-                <form id="order-form" class="space-y-4">
-                    <!-- Product Info -->
-                    <div class="bg-anol-dark p-4 rounded-lg border border-gray-800 mb-6">
-                        <p class="text-xs text-anol-red font-bold uppercase mb-1">Selected Design</p>
-                        <div class="flex justify-between items-center">
-                            <h4 id="order-product-name" class="font-bold text-lg">Product Name</h4>
-                            <p id="order-product-price-display" class="text-gray-400 font-medium">Rp. 0</p>
-                        </div>
-                    </div>
-
-                    <!-- Hidden Inputs for logic -->
-                    <input type="hidden" id="order-product" name="product">
-                    <input type="hidden" id="order-base-price" name="basePrice">
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">Ukuran</label>
-                            <select id="order-size" class="w-full bg-anol-dark border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-anol-red cursor-pointer">
-                                <option value="S">Small (S)</option>
-                                <option value="M" selected>Medium (M)</option>
-                                <option value="L">Large (L)</option>
-                                <option value="XL">Extra Large (XL)</option>
-                                <option value="XXL">Double XL (XXL)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">Jumlah</label>
-                            <input type="number" id="order-qty" value="1" min="1" max="10" onchange="calculateOrderTotal()" onkeyup="calculateOrderTotal()" class="w-full bg-anol-dark border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-anol-red">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">Nama Penerima</label>
-                        <input type="text" id="order-name" required class="w-full bg-anol-dark border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-anol-red" placeholder="Walter White">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">WhatsApp / Email</label>
-                        <input type="text" id="order-contact" required class="w-full bg-anol-dark border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-anol-red" placeholder="08xx / walter@email.com">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">Alamat Lengkap</label>
-                        <textarea id="order-address" rows="2" required class="w-full bg-anol-dark border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-anol-red" placeholder="Jl. Sudirman No 1..."></textarea>
-                    </div>
-
-                    <div class="pt-4 border-t border-gray-800 flex justify-between items-center">
-                        <div>
-                            <p class="text-xs text-gray-400 uppercase">Total Bayar</p>
-                            <p id="order-total-display" class="text-xl font-black text-anol-red">Rp. 0</p>
-                        </div>
-                        <button type="submit" id="order-submit-btn" class="bg-anol-red hover:bg-anol-red-light text-white font-bold uppercase tracking-wider px-6 py-3 rounded-lg transition-all hover:scale-105 flex items-center justify-center">
-                            <span>Lanjut ke Tokopedia</span>
-                        </button>
-                    </div>
-                    <p id="order-msg" class="text-center text-xs font-medium hidden mt-2"></p>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tombol Saluran WhatsApp melayang (chat AI Alla dinonaktifkan sementara karena server n8n mati) -->
-    <div class="chat-widget-container">
-        <a href="https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u" target="_blank" rel="noopener"
-           class="chat-widget-btn" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);" aria-label="Ikuti Saluran WhatsApp Anolystic" title="Ikuti Saluran WhatsApp Anolystic">
-            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </a>
-    </div>
+    <!-- Tombol Saluran WhatsApp melayang -->
+    <a href="https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u" target="_blank" rel="noopener"
+       class="wa-float" aria-label="Ikuti Saluran WhatsApp Anolystic" title="Ikuti Saluran WhatsApp Anolystic">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
 
     <!-- JavaScript -->
     <script>
-        // Form & Chat Javascript
-        const waitlistForm = document.getElementById('waitlist-form');
-        const wlMsg = document.getElementById('wl-msg');
-        const wlSubmitBtn = document.getElementById('wl-submit-btn');
-
-        if(waitlistForm) {
-            waitlistForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const name = document.getElementById('wl-name').value;
-                const contact = document.getElementById('wl-contact').value;
-                const interest = document.getElementById('wl-interest').value;
-                
-                // Sebelumnya form ini hanya simulasi (data tidak terkirim ke mana pun).
-                // Sekarang pendaftaran dikirim lewat WhatsApp admin supaya benar-benar sampai.
-                const waText = `Halo Anolystic! Saya mau daftar waitlist.\nNama: ${name}\nKontak: ${contact}\nTertarik: ${interest}`;
-                const waUrl = 'https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u';   // nomor pribadi tidak dipakai lagi
-
-                wlSubmitBtn.disabled = true;
-                try {
-                    if (!window.open(waUrl, '_blank')) { window.location.href = waUrl; }
-                    wlMsg.textContent = 'WhatsApp terbuka. Tinggal tekan kirim, nanti admin catat lo di waitlist! 🔥';
-                    wlMsg.className = 'text-center text-sm font-medium mt-4 text-green-400';
-                    waitlistForm.reset();
-                } catch (error) {
-                    wlMsg.textContent = 'Wah ada error nih. Coba lagi nanti ya!';
-                    wlMsg.className = 'text-center text-sm font-medium mt-4 text-red-500';
-                } finally {
-                    wlMsg.classList.remove('hidden');
-                    wlSubmitBtn.innerHTML = '<span>Sikat Masuk Waitlist</span>';
-                    wlSubmitBtn.disabled = false;
-                    setTimeout(() => { wlMsg.classList.add('hidden'); }, 5000);
-                }
-            });
-        }
-
-        const chatBtn = document.getElementById('chat-widget-btn');
-        const chatWindow = document.getElementById('chat-window');
-        const closeChat = document.getElementById('close-chat');
-        const chatIconOpen = document.getElementById('chat-icon-open');
-        const chatIconClose = document.getElementById('chat-icon-close');
-        const chatInput = document.getElementById('chat-input');
-        const chatSendBtn = document.getElementById('chat-send');
-        const chatMessages = document.getElementById('chat-messages');
-        const typingIndicator = document.getElementById('typing-indicator');
-
-        if(chatBtn) {
-            // ID Sesi Web (Dibuat sekali saat halaman dimuat agar AI ingat percakapan)
-            const visitorSessionId = 'web_' + Date.now() + '_' + Math.floor(Math.random() * 99999);
-            let isWaiting = false; // Mencegah kirim pesan dobel saat nunggu balasan
-
-            function toggleChat() {
-                chatWindow.classList.toggle('active');
-                chatIconOpen.classList.toggle('hidden');
-                chatIconClose.classList.toggle('hidden');
-                if (chatWindow.classList.contains('active')) chatInput.focus();
-            }
-            chatBtn.addEventListener('click', toggleChat);
-            closeChat.addEventListener('click', toggleChat);
-
-            function addMessage(text, sender) {
-                const msgDiv = document.createElement('div');
-                msgDiv.classList.add('message', sender);
-                // Tampilkan newline sebagai line break
-                msgDiv.style.whiteSpace = 'pre-wrap';
-                msgDiv.textContent = text;
-                // Insert sebelum typing indicator agar urutan benar
-                chatMessages.insertBefore(msgDiv, typingIndicator);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            async function handleSendMessage() {
-                const text = chatInput.value.trim();
-                if (!text || isWaiting) return;
-
-                isWaiting = true;
-                chatSendBtn.disabled = true;
-                chatInput.disabled = true;
-
-                addMessage(text, 'user');
-                chatInput.value = '';
-                typingIndicator.style.display = 'flex';
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                // URL WEBHOOK N8N CHAT ALLA
-                const n8nChatUrl = 'https://anolysticn8n.mooo.com/webhook/chat-alla';
-
-                // Timeout 45 detik (AI bisa lambat kadang)
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 45000);
-
-                try {
-                    const response = await fetch(n8nChatUrl, { 
-                        method: 'POST', 
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            text: text,
-                            chat_id: visitorSessionId
-                        }),
-                        signal: controller.signal
-                    });
-
-                    clearTimeout(timeoutId);
-
-                    if (!response.ok) {
-                        throw new Error('HTTP ' + response.status);
-                    }
-
-                    const raw = await response.json();
-
-                    // === FIX UTAMA ===
-                    // n8n kadang return array [{...}] atau object {...}
-                    // Kedua format kita handle di sini
-                    const result = Array.isArray(raw) ? raw[0] : raw;
-
-                    // Coba berbagai field response n8n
-                    let botReply = result?.output
-                        || result?.reply
-                        || result?.message
-                        || result?.text
-                        || result?.response
-                        || null;
-
-                    // Bersihkan semua noise dari tampilan user
-                    if (botReply) {
-                        botReply = botReply.toString()
-                            // Hapus tag internal simpan
-                            .replace(/\[SIMPAN_ESKALASI\][^\n]*/g, '')
-                            .replace(/\[SIMPAN_FEEDBACK\][^\n]*/g, '')
-                            .replace(/DATA_SAVE:[^\n]*/g, '')
-                            // Hapus tool call yang bocor (Info_Anolystic, dll)
-                            .replace(/Info_Anolystic\s*\{[^}]*\}/g, '')
-                            .replace(/\w+_?\w+\s*\{"input":[^}]*\}/g, '')
-                            .replace(/\[.*?\]\s*\{"input":[^}]*\}/g, '')
-                            // Hapus JSON mentah yang bocor
-                            .replace(/\{\s*"input"\s*:[^}]*\}/g, '')
-                            .trim();
-                    }
-
-                    if (!botReply || botReply.trim() === '') {
-                        botReply = 'Hmm, aku belum bisa menjawab itu. Coba tanya lagi ya! 🙏';
-                    }
-
-                    typingIndicator.style.display = 'none';
-                    addMessage(botReply.toString(), 'bot');
-
-                } catch (error) {
-                    clearTimeout(timeoutId);
-                    console.error('Chat Error:', error);
-                    typingIndicator.style.display = 'none';
-                    if (error.name === 'AbortError') {
-                        addMessage('Koneksi timeout (>45 detik). Server lagi sibuk, coba lagi ya 🙏', 'bot');
-                    } else {
-                        addMessage('Alla lagi offline nih 🙏 Tanya langsung di grup Telegram t.me/+GgbXJt5Vchs3NWFI ya!', 'bot');
-                    }
-                } finally {
-                    isWaiting = false;
-                    chatSendBtn.disabled = false;
-                    chatInput.disabled = false;
-                    chatInput.focus();
-                }
-            }
-
-            chatSendBtn.addEventListener('click', handleSendMessage);
-            chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !e.shiftKey) handleSendMessage(); });
-        }
-
+        // Menu mobile
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-lg');
-                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
-            } else {
-                navbar.classList.remove('shadow-lg');
-                navbar.style.background = 'rgba(20, 20, 20, 0.8)';
-            }
-        });
-
+        // Scroll halus untuk link di halaman yang sama
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
+                    e.preventDefault();
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     mobileMenu.classList.add('hidden');
                 }
             });
         });
 
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        // Animasi muncul saat discroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1320,7 +996,7 @@
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
         document.querySelectorAll('.animate-fade-in-up').forEach(el => {
             el.style.opacity = '0';
@@ -1329,15 +1005,6 @@
             observer.observe(el);
         });
 
-        // Order Modal Logic
-        const orderModal = document.getElementById('order-modal');
-        const orderProductName = document.getElementById('order-product-name');
-        const orderProductInput = document.getElementById('order-product');
-        const orderBasePriceInput = document.getElementById('order-base-price');
-        const orderPriceDisplay = document.getElementById('order-product-price-display');
-        const orderTotalDisplay = document.getElementById('order-total-display');
-        const orderQtyInput = document.getElementById('order-qty');
-        
         // ── Token ALT: copy alamat & tambah ke MetaMask ──
         const ALT_ADDRESS = '0x950Cca77126C29CD8979179Bf2D8E8144478404D';
 
@@ -1375,55 +1042,6 @@
             } catch (e) {
                 alert('Gagal menambahkan token. Tambahkan manual dengan alamat kontrak: ' + ALT_ADDRESS);
             }
-        }
-
-        function openOrderModal(name, price) {
-            orderProductName.textContent = name;
-            orderProductInput.value = name;
-            orderBasePriceInput.value = price;
-            orderPriceDisplay.textContent = 'Rp. ' + price.toLocaleString('id-ID');
-            orderQtyInput.value = 1;
-            calculateOrderTotal();
-            orderModal.classList.remove('hidden');
-        }
-
-        function closeOrderModal() {
-            orderModal.classList.add('hidden');
-        }
-
-        function calculateOrderTotal() {
-            const price = parseInt(orderBasePriceInput.value) || 0;
-            const qty = parseInt(orderQtyInput.value) || 1;
-            const total = price * qty;
-            orderTotalDisplay.textContent = 'Rp. ' + total.toLocaleString('id-ID');
-        }
-
-        const orderForm = document.getElementById('order-form');
-        const orderSubmitBtn = document.getElementById('order-submit-btn');
-        const orderMsg = document.getElementById('order-msg');
-
-        if(orderForm) {
-            orderForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const productName = document.getElementById('order-product').value;
-                const size = document.getElementById('order-size').value;
-                const qty = document.getElementById('order-qty').value;
-                const name = document.getElementById('order-name').value;
-                const contact = document.getElementById('order-contact').value;
-                const address = document.getElementById('order-address').value;
-                const total = parseInt(orderBasePriceInput.value) * parseInt(qty);
-                
-                // Order lewat Tokopedia (server n8n mati & nomor WA pribadi tidak dipakai lagi).
-                // Modal ini sudah tidak dipanggil dari tombol produk; dibiarkan sebagai cadangan.
-                const shopUrl = 'https://tk.tokopedia.com/ZSmwErNLP/';
-                const win = window.open(shopUrl, '_blank');
-                if (!win) { window.location.href = shopUrl; }
-                orderMsg.textContent = 'Lanjutkan pesanan di Tokopedia ya. 🔥';
-                orderMsg.className = 'text-center text-xs font-medium mt-2 text-green-400';
-                orderMsg.classList.remove('hidden');
-                orderForm.reset();
-                setTimeout(() => { orderMsg.classList.add('hidden'); closeOrderModal(); }, 6000);
-            });
         }
     </script>
 </body>

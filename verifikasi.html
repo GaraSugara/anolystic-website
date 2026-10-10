@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Keaslian | Anolystic Certified</title>
+    <meta name="description" content="Cek keaslian kaos Anolystic. Data sertifikat NFT Anolystic Certified dibaca langsung dari BNB Chain.">
+    <link rel="canonical" href="https://anolystic.site/verifikasi.html">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://anolystic.site/verifikasi.html">
+    <meta property="og:title" content="Cek Keaslian | Anolystic Certified">
+    <meta property="og:description" content="Asli atau bukan? Buktikan sendiri di blockchain.">
+    <meta property="og:image" content="https://anolystic.site/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'anol-black': '#0a0a0a',
+                        'anol-dark': '#141414',
+                        'anol-gray': '#1f1f1f',
+                        'anol-red': '#dc2626',
+                        'anol-red-light': '#ef4444',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['"Dela Gothic One"', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- ethers.js: membaca data langsung dari BNB Chain (tanpa server) -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #fff; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; }
+
+        .jp { font-family: 'Noto Sans JP', sans-serif; font-weight: 900; }
+        .font-display { font-family: 'Dela Gothic One', 'Inter', sans-serif; }
+        .poster-red { background-color: #dc2626; position: relative; }
+        .grain::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+            background-image: radial-gradient(rgba(10,10,10,0.22) 1px, transparent 1.3px);
+            background-size: 5px 5px; mix-blend-mode: multiply;
+        }
+        .ink-shadow { text-shadow: 4px 4px 0 #0a0a0a; }
+        .eyebrow { color: #dc2626; font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; }
+        .hanko {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: #dc2626; color: #fff; border: 3px solid #0a0a0a;
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 900; line-height: 1; transform: rotate(-8deg);
+        }
+        .btn-ink, .btn-red, .btn-ghost {
+            display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
+            padding: .9rem 1.6rem; transition: transform .15s ease, box-shadow .15s ease, background .2s, color .2s;
+        }
+        .btn-ink { background: #0a0a0a; color: #fff; box-shadow: 5px 5px 0 #fff; }
+        .btn-ink:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #fff; }
+        .btn-red { background: #dc2626; color: #fff; box-shadow: 5px 5px 0 #fff; }
+        .btn-red:hover { background: #ef4444; transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #fff; }
+        .btn-ghost { border: 3px solid #fff; color: #fff; }
+        .btn-ghost:hover { background: #fff; color: #0a0a0a; }
+        button:disabled { opacity: .5; cursor: not-allowed; transform: none !important; }
+        .field {
+            background: #141414; border: 2px solid #1f1f1f; color: #fff; padding: .9rem 1rem; width: 100%;
+            outline: none; font-weight: 700;
+        }
+        .field:focus { border-color: #dc2626; }
+        .tab-btn[aria-selected="true"] { background: #dc2626; color: #fff; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner { width: 22px; height: 22px; border: 3px solid #1f1f1f; border-top-color: #dc2626; border-radius: 50%; animation: spin .8s linear infinite; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-anol-black/90 backdrop-blur border-b-2 border-anol-red">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="images/logo-simple.png" alt="Anolystic" class="h-8 md:h-10 w-auto">
+                    <span class="hanko hidden sm:inline-flex w-9 h-9 text-base">異</span>
+                </a>
+                <div class="flex items-center gap-5 text-sm font-bold uppercase tracking-wider">
+                    <a href="index.html" class="text-gray-300 hover:text-anol-red hidden sm:inline">Beranda</a>
+                    <a href="koleksi-nft.html" class="text-gray-300 hover:text-anol-red hidden sm:inline">Galeri</a>
+                    <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener"
+                       class="bg-anol-red hover:bg-anol-red-light text-white px-4 py-2 font-extrabold" style="box-shadow:3px 3px 0 #fff">Shop</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header + pencarian -->
+    <header class="poster-red grain relative overflow-hidden pt-32 pb-20">
+        <div class="absolute -right-6 top-1/2 -translate-y-1/2 jp text-[14rem] md:text-[20rem] leading-none text-anol-black opacity-[0.12] select-none pointer-events-none" aria-hidden="true">本物</div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <p class="inline-block bg-anol-black text-white font-extrabold tracking-[0.3em] uppercase text-xs px-4 py-2 mb-6">NFT Anolystic Certified</p>
+            <h1 class="font-display text-4xl sm:text-5xl md:text-7xl text-white ink-shadow leading-tight">CEK KEASLIAN</h1>
+            <p class="text-white font-semibold text-lg mt-5 max-w-2xl">Scan QR di label kaos, atau masukkan nomor sertifikat. Datanya dibaca langsung dari BNB Chain, bukan dari database kami.</p>
+
+            <form id="lookup-form" class="mt-10 flex flex-col sm:flex-row gap-4 max-w-xl">
+                <label for="token-id" class="sr-only">Nomor sertifikat</label>
+                <input id="token-id" type="number" min="0" step="1" inputmode="numeric" required
+                       class="field flex-1 text-lg !bg-anol-black !border-anol-black" placeholder="Nomor sertifikat, contoh: 12">
+                <button type="submit" class="btn-ink">Cek →</button>
+            </form>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Hasil bukti kepemilikan (muncul kalau membuka link dari penjual) -->
+        <div id="proof-banner" class="hidden mb-10"></div>
+
+        <!-- Hasil pencarian -->
+        <section id="result" class="hidden mb-16" aria-live="polite"></section>
+
+        <!-- Bukti kepemilikan -->
+        <section id="proof-section" class="hidden mb-20">
+            <p class="eyebrow mb-3">Beli kaos bekas?</p>
+            <h2 class="font-display text-3xl md:text-5xl mb-4">BUKTIKAN PEMILIKNYA</h2>
+            <p class="text-gray-400 max-w-2xl mb-8">QR di label bisa difoto dan dicetak ulang oleh pemalsu. Yang tidak bisa dipalsukan adalah wallet pemilik sertifikat. Penjual asli bisa membuktikan dia memegang wallet itu dengan tanda tangan digital, gratis dan tanpa biaya gas.</p>
+
+            <div class="flex border-2 border-anol-gray w-full sm:w-max mb-6" role="tablist">
+                <button class="tab-btn flex-1 sm:flex-none px-6 py-3 font-extrabold uppercase tracking-wider text-sm" role="tab" aria-selected="true" data-tab="buyer">Saya Pembeli</button>
+                <button class="tab-btn flex-1 sm:flex-none px-6 py-3 font-extrabold uppercase tracking-wider text-sm" role="tab" aria-selected="false" data-tab="owner">Saya Pemilik</button>
+            </div>
+
+            <!-- Tab pembeli -->
+            <div id="tab-buyer" class="bg-anol-dark border-2 border-anol-gray p-6 md:p-8">
+                <ol class="space-y-4 text-gray-300 mb-8">
+                    <li class="flex gap-4"><span class="font-display text-anol-red">01</span><span>Buat kode tantangan di bawah, lalu kirim kodenya ke penjual.</span></li>
+                    <li class="flex gap-4"><span class="font-display text-anol-red">02</span><span>Minta penjual membuka halaman ini di aplikasi wallet-nya (MetaMask / Trust Wallet), pilih <strong class="text-white">Saya Pemilik</strong>, masukkan kodenya, lalu kirim link hasilnya ke kamu.</span></li>
+                    <li class="flex gap-4"><span class="font-display text-anol-red">03</span><span>Buka link itu. Kalau muncul <strong class="text-white">TERBUKTI</strong> dan kodenya sama dengan kode kamu, penjual memang pemilik sertifikat ini.</span></li>
+                </ol>
+                <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+                    <button id="make-code" class="btn-red">Buat Kode</button>
+                    <p id="challenge-code" class="font-display text-4xl tracking-[0.2em] text-white"></p>
+                    <button id="copy-code" class="hidden text-sm font-bold uppercase underline text-gray-300 hover:text-white">Salin kode</button>
+                </div>
+            </div>
+
+            <!-- Tab pemilik -->
+            <div id="tab-owner" class="hidden bg-anol-dark border-2 border-anol-gray p-6 md:p-8">
+                <p class="text-gray-300 mb-6">Masukkan kode dari calon pembeli, lalu tanda tangani dengan wallet yang memegang sertifikat ini. Tanda tangan ini <strong class="text-white">bukan transaksi</strong>: tidak ada biaya, dan tidak memberi izin apa pun atas aset kamu.</p>
+                <label for="owner-code" class="block text-xs font-extrabold uppercase tracking-wider text-gray-400 mb-2">Kode dari pembeli</label>
+                <input id="owner-code" class="field font-display text-2xl tracking-[0.2em] uppercase mb-6 max-w-xs" maxlength="12" placeholder="ABC123" autocomplete="off">
+                <div>
+                    <button id="sign-btn" class="btn-red">Hubungkan Wallet & Tanda Tangani</button>
+                </div>
+                <p id="sign-msg" class="text-sm mt-5 hidden"></p>
+                <div id="share-box" class="hidden mt-6 border-2 border-white p-5">
+                    <p class="text-xs font-extrabold uppercase tracking-wider text-gray-400 mb-2">Kirim link ini ke pembeli</p>
+                    <code id="share-link" class="block text-xs break-all text-gray-300 mb-4"></code>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button id="copy-link" class="btn-ghost">Salin Link</button>
+                        <a id="wa-link" target="_blank" rel="noopener" class="btn-red">Kirim via WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Status koleksi on-chain -->
+        <section class="mb-20">
+            <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">記録</span> Live dari blockchain</p>
+            <h2 class="font-display text-3xl md:text-5xl mb-8">KOLEKSI TERCATAT</h2>
+            <div id="collections" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="flex items-center gap-3 text-gray-500"><div class="spinner"></div> Membaca data...</div>
+            </div>
+        </section>
+
+        <!-- Info -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-anol-dark border-2 border-anol-gray p-6 md:p-8">
+                <h3 class="font-display text-xl mb-4">CARA KERJANYA</h3>
+                <ul class="text-gray-400 text-sm space-y-3">
+                    <li>• Setiap kaos Limited dicatat sebagai satu NFT (ERC-721) di kontrak resmi Anolystic Certified.</li>
+                    <li>• Nomor sertifikat (di QR label) menunjuk ke NFT itu. Halaman ini menampilkan koleksi, nomor edisi, dan wallet pemiliknya.</li>
+                    <li>• Hanya kontrak resmi di bawah yang berlaku. Sertifikat dari kontrak lain bukan produk Anolystic.</li>
+                </ul>
+                <p class="text-xs text-gray-500 mt-5 break-all">Kontrak resmi: <a href="https://bscscan.com/address/0xf481fA14111347Eed9Aa56fd16e6cfe132F161d8" target="_blank" rel="noopener" class="text-white underline">0xf481fA14111347Eed9Aa56fd16e6cfe132F161d8</a></p>
+            </div>
+            <div class="bg-anol-dark border-2 border-anol-red p-6 md:p-8">
+                <h3 class="font-display text-xl mb-4 text-anol-red">CURIGA PALSU?</h3>
+                <ul class="text-gray-400 text-sm space-y-3">
+                    <li>• Nomor sertifikat tidak ditemukan, padahal ada di label.</li>
+                    <li>• Desain di sertifikat beda dengan kaos yang kamu pegang.</li>
+                    <li>• Penjual kaos bekas menolak membuktikan kepemilikan.</li>
+                </ul>
+                <p class="text-gray-400 text-sm mt-5">Laporkan ke kami lewat <a href="https://ig.me/m/anolystic" target="_blank" rel="noopener" class="text-white underline">DM Instagram</a> atau <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener" class="text-white underline">grup Telegram</a>, sertakan foto label dan QR.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-anol-black border-t-4 border-anol-red py-10">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <img src="images/logo-full.png" alt="Anolystic" class="h-10 w-auto mx-auto">
+            <p class="text-gray-500 text-sm mt-3">Gaya gak banyak bicara. <span class="jp text-gray-600 ml-1">異常と神秘</span></p>
+            <p class="text-gray-600 text-xs mt-4">© 2026 Anolystic. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ── Konfigurasi ──
+        const NFT_ADDRESS = '0xf481fA14111347Eed9Aa56fd16e6cfe132F161d8';
+        const RPC_URLS = [
+            'https://bsc-dataseed.bnbchain.org',
+            'https://bsc-dataseed1.binance.org',
+            'https://bsc-rpc.publicnode.com',
+        ];
+        const IPFS_GATEWAYS = ['https://gateway.pinata.cloud/ipfs/', 'https://ipfs.io/ipfs/', 'https://dweb.link/ipfs/'];
+        const NFT_ABI = [
+            'function nextCollectionId() view returns (uint256)',
+            'function collections(uint256) view returns (string name, uint256 maxSupply, uint256 minted, bool exists)',
+            'function ownerOf(uint256) view returns (address)',
+            'function tokenURI(uint256) view returns (string)',
+            'function tokenEdition(uint256) view returns (uint256)',
+            'function tokenCollection(uint256) view returns (uint256)',
+        ];
+        // Gambar cadangan (kalau IPFS lambat) per collectionId
+        const LOCAL_ART = { 1: 'images/nft-devotion.jpg', 2: 'images/nft-eastern-dragon.jpg', 3: 'images/nft-rose-blood.jpg' };
+
+        const $ = (id) => document.getElementById(id);
+        const short = (a) => a.slice(0, 6) + '...' + a.slice(-4);
+        const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+        // Pesan yang ditandatangani pemilik (harus sama persis saat dicek)
+        const proofMessage = (id, code) =>
+            `Anolystic Certified - bukti kepemilikan\nSertifikat: #${id}\nKode: ${code}\nKontrak: ${NFT_ADDRESS}`;
+
+        // ── Koneksi ke BNB Chain (coba beberapa RPC) ──
+        let contractPromise = null;
+        function getContract() {
+            if (!contractPromise) {
+                contractPromise = (async () => {
+                    for (const url of RPC_URLS) {
+                        try {
+                            const p = new ethers.JsonRpcProvider(url, 56, { staticNetwork: true });
+                            await p.getBlockNumber();
+                            return new ethers.Contract(NFT_ADDRESS, NFT_ABI, p);
+                        } catch (e) { /* coba RPC berikutnya */ }
+                    }
+                    contractPromise = null;
+                    throw new Error('rpc');
+                })();
+            }
+            return contractPromise;
+        }
+
+        async function fetchWithTimeout(url, ms) {
+            const c = new AbortController();
+            const t = setTimeout(() => c.abort(), ms);
+            try { return await fetch(url, { signal: c.signal }); } finally { clearTimeout(t); }
+        }
+        async function fetchIpfsJson(uri) {
+            if (!uri.startsWith('ipfs://')) {
+                const r = await fetchWithTimeout(uri, 8000);
+                return r.json();
+            }
+            const cid = uri.slice(7);
+            for (const g of IPFS_GATEWAYS) {
+                try {
+                    const r = await fetchWithTimeout(g + cid, 8000);
+                    if (r.ok) return await r.json();
+                } catch (e) { /* gateway berikutnya */ }
+            }
+            return null;
+        }
+        const ipfsToHttp = (uri) => uri && uri.startsWith('ipfs://') ? IPFS_GATEWAYS[0] + uri.slice(7) : uri;
+
+        // ── Status koleksi ──
+        async function loadCollections() {
+            const box = $('collections');
+            try {
+                const c = await getContract();
+                const n = Number(await c.nextCollectionId());
+                const rows = await Promise.all([...Array(n).keys()].map(i => c.collections(i)));
+                box.innerHTML = '';
+                rows.forEach((col, i) => {
+                    const minted = Number(col.minted), max = Number(col.maxSupply);
+                    const card = el('div', 'bg-anol-dark border-2 border-anol-gray p-5');
+                    card.append(el('p', 'text-xs text-gray-500 font-bold uppercase tracking-wider', 'Koleksi #' + i));
+                    card.append(el('p', 'font-display text-lg mt-1 mb-4', col.name));
+                    const bar = el('div', 'h-2 bg-anol-black mb-2');
+                    const fill = el('div', 'h-2 bg-anol-red');
+                    fill.style.width = Math.max(max ? (minted / max) * 100 : 0, minted ? 2 : 0) + '%';
+                    bar.append(fill);
+                    card.append(bar);
+                    card.append(el('p', 'text-sm text-gray-400', `${minted} / ${max} sertifikat diterbitkan`));
+                    box.append(card);
+                });
+            } catch (e) {
+                box.innerHTML = '';
+                box.append(el('p', 'text-gray-500', 'Gagal terhubung ke BNB Chain. Periksa koneksi internet lalu muat ulang halaman.'));
+            }
+        }
+
+        // ── Cek satu sertifikat ──
+        let current = null; // { id, owner }
+
+        function renderLoading(id) {
+            const r = $('result');
+            r.classList.remove('hidden');
+            r.innerHTML = '';
+            const row = el('div', 'flex items-center gap-3 text-gray-400');
+            row.append(el('div', 'spinner'), el('span', '', `Membaca sertifikat #${id} dari blockchain...`));
+            r.append(row);
+        }
+
+        function renderNotFound(id) {
+            const r = $('result');
+            r.innerHTML = '';
+            const box = el('div', 'border-4 border-anol-red bg-anol-dark p-6 md:p-10');
+            box.style.boxShadow = '10px 10px 0 #dc2626';
+            box.append(el('p', 'font-display text-anol-red text-3xl md:text-5xl mb-4', 'TIDAK DITEMUKAN'));
+            box.append(el('p', 'text-gray-300 text-lg mb-3', `Sertifikat #${id} tidak ada di kontrak resmi Anolystic Certified.`));
+            box.append(el('p', 'text-gray-400 text-sm', 'Mungkin nomornya salah ketik, atau sertifikatnya belum diterbitkan. Kalau nomor ini tertulis di label kaos yang kamu pegang, hati-hati: produk itu kemungkinan palsu. Laporkan ke kami.'));
+            r.append(box);
+            $('proof-section').classList.add('hidden');
+        }
+
+        function renderError() {
+            const r = $('result');
+            r.innerHTML = '';
+            r.append(el('p', 'text-gray-400', 'Gagal terhubung ke BNB Chain. Periksa koneksi internet lalu coba lagi.'));
+        }
+
+        async function lookup(id) {
+            renderLoading(id);
+            let c;
+            try { c = await getContract(); } catch (e) { renderError(); return; }
+
+            let owner;
+            try {
+                owner = await c.ownerOf(id);
+            } catch (e) {
+                // ERC721NonexistentToken → belum diterbitkan / tidak ada
+                if (e.code === 'CALL_EXCEPTION') { renderNotFound(id); return; }
+                renderError(); return;
+            }
+
+            const [colId, edition, uri] = await Promise.all([c.tokenCollection(id), c.tokenEdition(id), c.tokenURI(id)]);
+            const col = await c.collections(colId);
+            const meta = await fetchIpfsJson(uri).catch(() => null);
+            current = { id, owner };
+
+            const r = $('result');
+            r.innerHTML = '';
+            const wrap = el('div', 'grid grid-cols-1 lg:grid-cols-5 gap-10 items-start');
+
+            // Gambar
+            const imgBox = el('div', 'lg:col-span-2 relative border-4 border-white');
+            imgBox.style.boxShadow = '12px 12px 0 #dc2626';
+            const img = el('img', 'w-full h-auto block');
+            img.alt = col.name;
+            img.src = (meta && ipfsToHttp(meta.image)) || LOCAL_ART[Number(colId)] || 'images/logo-simple.png';
+            img.onerror = () => { if (LOCAL_ART[Number(colId)] && !img.dataset.fb) { img.dataset.fb = 1; img.src = LOCAL_ART[Number(colId)]; } };
+            imgBox.append(img);
+            const stamp = el('span', 'hanko absolute -top-5 -right-4 w-20 h-20 text-3xl', '本物');
+            stamp.style.fontSize = '1.2rem';
+            imgBox.append(stamp);
+
+            // Detail
+            const info = el('div', 'lg:col-span-3');
+            const badge = el('p', 'inline-block bg-green-600 text-white font-extrabold uppercase tracking-wider text-sm px-4 py-2 mb-5', '✓ Sertifikat resmi Anolystic');
+            info.append(badge);
+            info.append(el('h2', 'font-display text-3xl md:text-5xl mb-2', (meta && meta.name) || col.name));
+            info.append(el('p', 'text-gray-400 mb-8', `Sertifikat #${id}`));
+
+            const grid = el('div', 'grid grid-cols-2 gap-4 mb-8');
+            const stat = (label, value, red) => {
+                const b = el('div', 'border-2 border-anol-gray p-4');
+                b.append(el('p', 'text-xs text-gray-500 uppercase font-bold tracking-wider mb-1', label));
+                b.append(el('p', 'font-display text-xl ' + (red ? 'text-anol-red' : 'text-white'), value));
+                return b;
+            };
+            grid.append(stat('Nomor Edisi', `#${edition} / ${col.maxSupply}`, true));
+            grid.append(stat('Koleksi', col.name));
+            info.append(grid);
+
+            // Atribut dari metadata (misal "Signed Edition")
+            const attrs = (meta && Array.isArray(meta.attributes)) ? meta.attributes : [];
+            const special = attrs.find(a => a && a.trait_type === 'Special');
+            if (special) {
+                info.append(el('p', 'inline-block bg-white text-anol-black font-display px-4 py-2 mb-6', '★ ' + special.value));
+            }
+
+            const ownerRow = el('div', 'bg-anol-dark border-2 border-anol-gray p-4 mb-6');
+            ownerRow.append(el('p', 'text-xs text-gray-500 uppercase font-bold tracking-wider mb-1', 'Wallet pemilik saat ini'));
+            const ownerLink = el('a', 'text-white underline break-all font-mono text-sm', owner);
+            ownerLink.href = 'https://bscscan.com/address/' + owner;
+            ownerLink.target = '_blank'; ownerLink.rel = 'noopener';
+            ownerRow.append(ownerLink);
+            info.append(ownerRow);
+
+            const links = el('div', 'flex flex-wrap gap-4');
+            const mk = (text, href, cls) => { const a = el('a', cls, text); a.href = href; a.target = '_blank'; a.rel = 'noopener'; return a; };
+            links.append(mk('Lihat di BscScan', `https://bscscan.com/nft/${NFT_ADDRESS}/${id}`, 'btn-ghost'));
+            links.append(mk('OpenSea', `https://opensea.io/assets/bsc/${NFT_ADDRESS}/${id}`, 'btn-ghost'));
+            info.append(links);
+
+            wrap.append(imgBox, info);
+            r.append(wrap);
+
+            $('proof-section').classList.remove('hidden');
+            return owner;
+        }
+
+        // ── Bukti kepemilikan: cek link dari penjual ──
+        function showProof(ok, id, code, detail) {
+            const b = $('proof-banner');
+            b.classList.remove('hidden');
+            b.innerHTML = '';
+            const box = el('div', 'p-6 md:p-8 border-4 ' + (ok ? 'bg-green-700 border-green-400' : 'bg-anol-dark border-anol-red'));
+            box.append(el('p', 'font-display text-2xl md:text-4xl mb-3', ok ? '✓ TERBUKTI' : '✕ TIDAK TERBUKTI'));
+            if (ok) {
+                box.append(el('p', 'text-white text-lg', `Pengirim link ini memegang wallet pemilik sertifikat #${id}.`));
+                const codeLine = el('p', 'text-white mt-3');
+                codeLine.append('Kode tantangan: ', el('span', 'font-display text-2xl tracking-[0.2em] bg-anol-black px-3 py-1 ml-1', code));
+                box.append(codeLine);
+                box.append(el('p', 'text-green-100 text-sm mt-3', 'Pastikan kode ini SAMA dengan kode yang kamu buat sendiri. Kalau beda, link ini bukan untuk kamu.'));
+            } else {
+                box.append(el('p', 'text-gray-300', detail));
+            }
+            b.append(box);
+        }
+
+        async function verifyProof(id, code, sig) {
+            const owner = await lookup(id);
+            if (!owner) return;
+            try {
+                const signer = ethers.verifyMessage(proofMessage(id, code), sig);
+                if (signer.toLowerCase() === owner.toLowerCase()) showProof(true, id, code);
+                else showProof(false, id, code, 'Tanda tangan valid, tapi BUKAN dari wallet pemilik sertifikat ini saat ini. Bisa jadi sertifikat sudah pindah tangan, atau penjual bukan pemiliknya.');
+            } catch (e) {
+                showProof(false, id, code, 'Tanda tangan di link ini rusak atau tidak sah.');
+            }
+        }
+
+        // ── Tab pembeli / pemilik ──
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('aria-selected', b === btn ? 'true' : 'false'));
+                $('tab-buyer').classList.toggle('hidden', btn.dataset.tab !== 'buyer');
+                $('tab-owner').classList.toggle('hidden', btn.dataset.tab !== 'owner');
+            });
+        });
+
+        // Kode tantangan acak (tanpa huruf yang mirip: 0/O, 1/I)
+        $('make-code').addEventListener('click', () => {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            const buf = new Uint32Array(6);
+            crypto.getRandomValues(buf);
+            const code = [...buf].map(x => chars[x % chars.length]).join('');
+            $('challenge-code').textContent = code;
+            $('copy-code').classList.remove('hidden');
+        });
+        $('copy-code').addEventListener('click', async () => {
+            try { await navigator.clipboard.writeText($('challenge-code').textContent); $('copy-code').textContent = 'Tersalin ✓'; } catch (e) {}
+        });
+
+        // Pemilik menandatangani
+        function signMsg(text, ok) {
+            const m = $('sign-msg');
+            m.textContent = text;
+            m.className = 'text-sm mt-5 ' + (ok ? 'text-green-400' : 'text-anol-red-light');
+        }
+        $('sign-btn').addEventListener('click', async () => {
+            const code = $('owner-code').value.trim().toUpperCase();
+            if (!current) return;
+            if (!/^[A-Z0-9]{4,12}$/.test(code)) { signMsg('Masukkan kode dari pembeli dulu (huruf/angka, 4–12 karakter).'); return; }
+            if (!window.ethereum) { signMsg('Wallet tidak terdeteksi. Buka halaman ini lewat browser di aplikasi MetaMask atau Trust Wallet.'); return; }
+            const btn = $('sign-btn');
+            btn.disabled = true;
+            try {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const signer = await provider.getSigner();
+                const addr = await signer.getAddress();
+                if (addr.toLowerCase() !== current.owner.toLowerCase()) {
+                    signMsg(`Wallet yang terhubung (${short(addr)}) bukan pemilik sertifikat #${current.id} (${short(current.owner)}). Ganti akun di wallet kamu lalu coba lagi.`);
+                    return;
+                }
+                const sig = await signer.signMessage(proofMessage(current.id, code));
+                const link = `${location.origin}${location.pathname}?id=${current.id}&code=${code}&sig=${sig}`;
+                $('share-link').textContent = link;
+                $('wa-link').href = 'https://wa.me/?text=' + encodeURIComponent(`Bukti kepemilikan sertifikat Anolystic #${current.id} (kode ${code}):\n${link}`);
+                $('share-box').classList.remove('hidden');
+                signMsg('Berhasil ditandatangani. Kirim link di bawah ke pembeli.', true);
+            } catch (e) {
+                signMsg(e.code === 'ACTION_REJECTED' ? 'Tanda tangan dibatalkan.' : 'Gagal menandatangani. Coba lagi.');
+            } finally {
+                btn.disabled = false;
+            }
+        });
+        $('copy-link').addEventListener('click', async () => {
+            try { await navigator.clipboard.writeText($('share-link').textContent); $('copy-link').textContent = 'Tersalin ✓'; } catch (e) {}
+        });
+
+        // ── Form pencarian ──
+        $('lookup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = $('token-id').value.trim();
+            if (!/^\d+$/.test(id)) return;
+            $('proof-banner').classList.add('hidden');
+            history.replaceState(null, '', '?id=' + id);
+            lookup(id);
+            $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // ── Saat halaman dibuka (dari QR: ?id=12, dari penjual: ?id=12&code=...&sig=...) ──
+        const params = new URLSearchParams(location.search);
+        const qId = params.get('id');
+        if (qId && /^\d+$/.test(qId)) {
+            $('token-id').value = qId;
+            const code = (params.get('code') || '').toUpperCase();
+            const sig = params.get('sig');
+            if (code && sig) verifyProof(qId, code, sig);
+            else lookup(qId);
+        }
+        loadCollections();
+    </script>
+</body>
+</html>

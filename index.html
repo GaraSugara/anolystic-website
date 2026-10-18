@@ -26,34 +26,66 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://anolystic.site/images/og-banner.jpg">
 
+    <!-- Data terstruktur: membantu Google menampilkan brand & produk di hasil pencarian -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://anolystic.site/#organization",
+                "name": "Anolystic",
+                "url": "https://anolystic.site/",
+                "logo": "https://anolystic.site/favicon.png",
+                "slogan": "Gaya gak banyak bicara.",
+                "description": "Streetwear Indonesia dengan ilustrasi gambar tangan, edisi terbatas, dan sertifikat keaslian NFT di BNB Chain.",
+                "email": "anolystic@gmail.com",
+                "sameAs": [
+                    "https://instagram.com/Anolystic",
+                    "https://x.com/anolystic",
+                    "https://tk.tokopedia.com/ZSmwErNLP/"
+                ]
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://anolystic.site/#website",
+                "url": "https://anolystic.site/",
+                "name": "Anolystic",
+                "inLanguage": "id-ID",
+                "publisher": { "@id": "https://anolystic.site/#organization" }
+            },
+            {
+                "@type": "Product",
+                "name": "Kaos Anolystic Woman Satanic",
+                "image": "https://anolystic.site/images/woman-satanic.webp",
+                "description": "Kaos oversize desain Genesis 01: wanita bergaya satanic dengan mata tertutup, ilustrasi gambar tangan.",
+                "brand": { "@id": "https://anolystic.site/#organization" },
+                "offers": { "@type": "Offer", "price": "150000", "priceCurrency": "IDR", "url": "https://tk.tokopedia.com/ZSmwErNLP/" }
+            },
+            {
+                "@type": "Product",
+                "name": "Kaos Anolystic Croc Club",
+                "image": "https://anolystic.site/images/croc-club.webp",
+                "description": "Kaos oversize desain Genesis 02: buaya kartun santai dengan tagline Snapping Our Way Through Life.",
+                "brand": { "@id": "https://anolystic.site/#organization" },
+                "offers": { "@type": "Offer", "price": "90000", "priceCurrency": "IDR", "url": "https://tk.tokopedia.com/ZSmwErNLP/" }
+            },
+            {
+                "@type": "Product",
+                "name": "Kaos Anolystic Manticore",
+                "image": "https://anolystic.site/images/manticore.webp",
+                "description": "Kaos oversize desain Genesis 03: manticore bersayap mengaum di atas awan, ilustrasi gambar tangan.",
+                "brand": { "@id": "https://anolystic.site/#organization" },
+                "offers": { "@type": "Offer", "price": "150000", "priceCurrency": "IDR", "url": "https://tk.tokopedia.com/ZSmwErNLP/" }
+            }
+        ]
+    }
+    </script>
+
     <!-- Google Fonts: Inter (teks) + Dela Gothic One (judul gaya poster) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Tailwind Config (warna brand TIDAK diubah) -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'anol-black': '#0a0a0a',
-                        'anol-dark': '#141414',
-                        'anol-gray': '#1f1f1f',
-                        'anol-red': '#dc2626',
-                        'anol-red-light': '#ef4444',
-                    },
-                    fontFamily: {
-                        'sans': ['Inter', 'sans-serif'],
-                        'display': ['"Dela Gothic One"', 'Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
 
     <style>
         * { scroll-behavior: smooth; }
@@ -148,17 +180,6 @@
             * { scroll-behavior: auto; }
         }
 
-        /* Dipakai section Wall of Founder (masih disembunyikan) */
-        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 40px -10px rgba(220, 38, 38, 0.3); }
-        .accent-line { width: 60px; height: 4px; background: #dc2626; margin: 20px 0; }
-        .img-placeholder {
-            background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
-            display: flex; align-items: center; justify-content: center;
-            color: #666; font-size: 14px; border: 2px dashed #333;
-        }
-
         /* Tombol Saluran WhatsApp melayang */
         .wa-float {
             position: fixed; bottom: 24px; right: 24px; z-index: 9999;
@@ -177,6 +198,8 @@
         .faq-item[open] .faq-icon { transform: rotate(45deg); }
         .faq-item summary:hover { color: #ef4444; }
     </style>
+    <!-- CSS Tailwind yang sudah jadi, dimuat SETELAH <style> agar urutannya sama seperti Tailwind CDN dulu (lihat PANDUAN_WEBSITE.txt) -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -190,7 +213,7 @@
                 </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden lg:flex items-center space-x-7">
+                <div class="hidden lg:flex items-center space-x-4 xl:space-x-7 whitespace-nowrap">
                     <a href="#drop" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Devotion</a>
                     <a href="#koleksi" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Koleksi</a>
                     <a href="koleksi-nft.html" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Galeri</a>
@@ -549,173 +572,6 @@
             </div>
         </div>
     </section>
-
-   <!-- WALL OF FOUNDER - 12 ORANG
-        DISEMBUNYIKAN sementara (class "hidden") karena isinya masih placeholder [NAMA]/[FOTO].
-        Untuk menampilkan lagi: hapus kata "hidden" di baris <section> di bawah,
-        dan kembalikan link "Founder" di menu navigasi. -->
-<section id="tentang" class="hidden py-20 bg-anol-black relative overflow-hidden">
-    <div class="absolute inset-0 opacity-5">
-        <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.05) 35px, rgba(255,255,255,.05) 70px);"></div>
-    </div>
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        <!-- Header -->
-        <div class="text-center mb-16 animate-fade-in-up">
-            <p class="text-anol-red font-bold tracking-[0.3em] uppercase text-sm mb-2">The Team</p>
-            <h2 class="text-3xl md:text-5xl font-black mb-4">WALL OF FOUNDER</h2>
-            <div class="accent-line mx-auto"></div>
-            <p class="text-gray-400 mt-4">12 visi, 1 tujuan. Gaya yang tak tergoyahkan.</p>
-        </div>
-
-        <!-- FOUNDER & CO-FOUNDER (2 Orang - Besar) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
-            
-            <!-- Founder 1 -->
-            <div class="glass rounded-lg overflow-hidden group hover-lift animate-fade-in-up">
-                <div class="aspect-[4/5] img-placeholder relative overflow-hidden">
-                    <span class="z-10">[FOTO FOUNDER]</span>
-                    <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                </div>
-                <div class="p-6 text-center">
-                    <h3 class="text-2xl font-black mb-1">[NAMA FOUNDER]</h3>
-                    <p class="text-anol-red font-bold uppercase tracking-wider text-sm mb-3">Founder</p>
-                    <p class="text-gray-400 text-sm">[Quote atau deskripsi singkat]</p>
-                </div>
-            </div>
-
-            <!-- Co-Founder 2 -->
-            <div class="glass rounded-lg overflow-hidden group hover-lift animate-fade-in-up animate-delay-100">
-                <div class="aspect-[4/5] img-placeholder relative overflow-hidden">
-                    <span class="z-10">[FOTO CO-FOUNDER]</span>
-                    <div class="absolute inset-0 bg-anol-red opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                </div>
-                <div class="p-6 text-center">
-                    <h3 class="text-2xl font-black mb-1">[NAMA CO-FOUNDER]</h3>
-                    <p class="text-anol-red font-bold uppercase tracking-wider text-sm mb-3">Co-Founder</p>
-                    <p class="text-gray-400 text-sm">[Quote atau deskripsi singkat]</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 10 NAMA LAINNYA (Grid 5x2) -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 animate-fade-in-up animate-delay-200">
-            
-            <!-- Nama 1 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 1]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-
-            <!-- Nama 2 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 2]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-
-            <!-- Nama 3 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 3]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-
-            <!-- Nama 4 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 4]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-
-            <!-- Nama 5 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 5]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-
-            <!-- Nama 6 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 6]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-
-            <!-- Nama 7 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 7]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-
-            <!-- Nama 8 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 8]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-
-            <!-- Nama 9 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 9]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-
-            <!-- Nama 10 -->
-            <div class="glass rounded-lg p-4 text-center group hover:border-anol-red transition-colors">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-full img-placeholder overflow-hidden">
-                    <span class="text-xs">[FOTO]</span>
-                </div>
-                <h4 class="font-bold text-sm mb-1">[NAMA 10]</h4>
-                <p class="text-gray-500 text-xs">[Role]</p>
-            </div>
-        </div>
-
-        <!-- Quote Brand -->
-        <div class="mt-16 text-center animate-fade-in-up animate-delay-300">
-            <p class="text-2xl md:text-3xl font-light italic text-gray-300 max-w-3xl mx-auto">
-                "Gaya gak banyak bicara, tapi karya yang berbicara."
-            </p>
-            <div class="mt-8 flex justify-center space-x-12">
-                <div class="text-center">
-                    <div class="text-4xl font-black text-anol-red">12</div>
-                    <div class="text-xs text-gray-500 uppercase tracking-wider">Founding Members</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-4xl font-black text-anol-red">100%</div>
-                    <div class="text-xs text-gray-500 uppercase tracking-wider">Original</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-4xl font-black text-anol-red">Local</div>
-                    <div class="text-xs text-gray-500 uppercase tracking-wider">Pride</div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
 
 <!-- ═══ VISI, MISI & ROADMAP ═══ -->
 <section id="visi-misi" class="py-24 bg-anol-black grain-dark relative overflow-hidden">

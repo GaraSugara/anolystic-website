@@ -29,28 +29,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'anol-black': '#0a0a0a',
-                        'anol-dark': '#141414',
-                        'anol-gray': '#1f1f1f',
-                        'anol-red': '#dc2626',
-                        'anol-red-light': '#ef4444',
-                    },
-                    fontFamily: {
-                        'sans': ['Inter', 'sans-serif'],
-                        'display': ['"Dela Gothic One"', 'Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
     <!-- ethers.js: membaca jumlah sertifikat langsung dari BNB Chain -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js" defer></script>
 
@@ -123,6 +101,8 @@
         .animate-delay-200 { animation-delay: 0.2s; }
         @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
     </style>
+    <!-- CSS Tailwind yang sudah jadi, dimuat SETELAH <style> agar urutannya sama seperti Tailwind CDN dulu (lihat PANDUAN_WEBSITE.txt) -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Navigation -->

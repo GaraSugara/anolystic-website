@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Komunitas | Anolystic Design DAO</title>
+    <meta name="description" content="Design DAO Anolystic: holder NFT Anolystic Certified dan Token ALT ikut menentukan desain, warna, dan bahan drop berikutnya. Voting gratis tanpa biaya gas.">
+    <link rel="canonical" href="https://anolystic.site/voting.html">
+    <meta name="robots" content="index, follow">
+    <!-- Favicon - semua ukuran agar Google & browser bisa baca -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+    <meta name="msapplication-TileImage" content="/favicon.png">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://anolystic.site/voting.html">
+    <meta property="og:title" content="Voting Komunitas | Anolystic Design DAO">
+    <meta property="og:description" content="Drop berikutnya ditentukan holder. Pilih desain, warna, dan bahan bareng komunitas Anolystic.">
+    <meta property="og:image" content="https://anolystic.site/images/og-banner.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://anolystic.site/images/og-banner.jpg">
+
+    <!-- Google Fonts: Inter (teks) + Dela Gothic One (judul poster) + Noto Sans JP (kanji) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'anol-black': '#0a0a0a',
+                        'anol-dark': '#141414',
+                        'anol-gray': '#1f1f1f',
+                        'anol-red': '#dc2626',
+                        'anol-red-light': '#ef4444',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['"Dela Gothic One"', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- ethers.js: membaca saldo NFT & ALT dari BNB Chain dan menandatangani suara -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+
+    <style>
+        * { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #ffffff; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; }
+
+        /* ── Gaya poster (sama dengan halaman utama) ── */
+        .jp { font-family: 'Noto Sans JP', sans-serif; font-weight: 900; }
+        .font-display { font-family: 'Dela Gothic One', 'Inter', sans-serif; letter-spacing: 0.01em; }
+        .poster-red { background-color: #dc2626; position: relative; }
+        .grain::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+            background-image: radial-gradient(rgba(10,10,10,0.22) 1px, transparent 1.3px);
+            background-size: 5px 5px; mix-blend-mode: multiply;
+        }
+        .grain-dark::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.3px);
+            background-size: 6px 6px;
+        }
+        .ink-shadow { text-shadow: 4px 4px 0 #0a0a0a; }
+        .ink-shadow-red { text-shadow: 4px 4px 0 #dc2626; }
+        .vertical { writing-mode: vertical-rl; text-orientation: upright; }
+        .kanji-outline { color: transparent; -webkit-text-stroke: 1.5px rgba(220,38,38,0.45); }
+        .hanko {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: #dc2626; color: #fff; border: 3px solid #0a0a0a;
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 900; line-height: 1; transform: rotate(-8deg);
+        }
+        .eyebrow { color: #dc2626; font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; }
+        .red-bar { width: 72px; height: 6px; background: #dc2626; }
+
+        .btn-ink, .btn-red, .btn-ghost {
+            display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
+            padding: .9rem 1.6rem; transition: transform .15s ease, box-shadow .15s ease, background .2s, color .2s;
+        }
+        .btn-ink { background: #0a0a0a; color: #fff; box-shadow: 5px 5px 0 #ffffff; }
+        .btn-ink:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #ffffff; }
+        .btn-red { background: #dc2626; color: #fff; box-shadow: 5px 5px 0 #ffffff; }
+        .btn-red:hover { background: #ef4444; transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #ffffff; }
+        .btn-ghost { border: 3px solid #fff; color: #fff; }
+        .btn-ghost:hover { background: #fff; color: #0a0a0a; }
+        button:disabled { opacity: .5; cursor: not-allowed; transform: none !important; }
+
+        .ink-card { background: #141414; border: 2px solid #1f1f1f; }
+
+        /* Baris pilihan di kartu proposal */
+        .choice-row { position: relative; border: 2px solid #1f1f1f; overflow: hidden; }
+        .choice-fill { position: absolute; inset: 0 auto 0 0; background: rgba(220,38,38,0.22); transition: width .6s ease; }
+        .choice-row.lead { border-color: #dc2626; }
+        .choice-row.mine { border-color: #ffffff; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner { width: 22px; height: 22px; border: 3px solid #1f1f1f; border-top-color: #dc2626; border-radius: 50%; animation: spin .8s linear infinite; }
+
+        .faq-item summary { list-style: none; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item .faq-icon { transition: transform .2s ease; }
+        .faq-item[open] .faq-icon { transform: rotate(45deg); }
+        .faq-item summary:hover { color: #ef4444; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-anol-black/90 backdrop-blur border-b-2 border-anol-red" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex items-center gap-3 flex-shrink-0">
+                    <img src="images/logo-simple.png" alt="Anolystic" class="h-8 md:h-10 w-auto">
+                    <span class="hanko hidden sm:inline-flex w-9 h-9 text-base">異</span>
+                </a>
+
+                <div class="hidden lg:flex items-center space-x-7">
+                    <a href="index.html" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Beranda</a>
+                    <a href="#proposal" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Proposal</a>
+                    <a href="#hak-suara" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Hak Suara</a>
+                    <a href="#aturan" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Aturan</a>
+                    <a href="#kirim-desain" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Kirim Desain</a>
+                    <a href="verifikasi.html" class="text-anol-red hover:text-white transition-colors text-sm font-bold uppercase tracking-wider">Cek Keaslian</a>
+                </div>
+
+                <div class="hidden lg:block">
+                    <button data-connect class="bg-anol-red hover:bg-anol-red-light text-white px-6 py-2 text-sm font-extrabold uppercase tracking-wider transition-all" style="box-shadow:3px 3px 0 #fff">
+                        Sambungkan Wallet
+                    </button>
+                </div>
+
+                <div class="lg:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-anol-red p-2" aria-label="Buka menu">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-anol-black border-t border-anol-gray">
+            <div class="px-4 pt-2 pb-6 space-y-1 font-bold uppercase tracking-wider text-sm">
+                <a href="index.html" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Beranda</a>
+                <a href="#proposal" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Proposal</a>
+                <a href="#hak-suara" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Hak Suara</a>
+                <a href="#aturan" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Aturan</a>
+                <a href="#kirim-desain" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Kirim Desain</a>
+                <a href="verifikasi.html" class="block px-3 py-3 text-anol-red hover:bg-anol-gray">Cek Keaslian</a>
+                <button data-connect class="block w-full text-left px-3 py-3 text-anol-red font-bold uppercase">Sambungkan Wallet →</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══ HERO: poster merah ═══ -->
+    <section class="poster-red grain relative overflow-hidden pt-32 pb-24 md:min-h-[80vh] flex items-center">
+        <div class="absolute -right-8 top-1/2 -translate-y-1/2 jp text-[16rem] md:text-[24rem] leading-none text-anol-black opacity-[0.12] select-none pointer-events-none z-0" aria-hidden="true">投票</div>
+
+        <!-- Kanji vertikal: suara rakyat -->
+        <div class="hidden md:block absolute left-6 lg:left-10 top-1/2 -translate-y-1/2 z-10 jp bg-anol-black text-white text-3xl lg:text-4xl px-2 py-4 vertical select-none" style="box-shadow: 4px 4px 0 #fff;" aria-hidden="true">民の声</div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:pl-28 lg:pl-32 w-full">
+            <div class="max-w-3xl animate-fade-in-up">
+                <p class="inline-block bg-anol-black text-white font-extrabold tracking-[0.3em] uppercase text-xs px-4 py-2 mb-6">Anolystic Design DAO</p>
+                <h1 class="font-display text-white ink-shadow text-4xl sm:text-5xl md:text-7xl leading-tight">
+                    DROP BERIKUTNYA<br>KAMU YANG TENTUKAN.
+                </h1>
+                <p class="text-white font-semibold text-lg mt-6 mb-10 max-w-xl">
+                    Holder <span class="bg-anol-black px-1">NFT Anolystic Certified</span> dan <span class="bg-anol-black px-1">Token ALT</span> ikut memilih desain, warna, dan bahan artikel berikutnya.
+                    Voting cukup dengan tanda tangan wallet: gratis, tanpa biaya gas, dan semua suara bisa dicek publik.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-5">
+                    <a href="#proposal" class="btn-ink">Lihat Proposal</a>
+                    <a href="#hak-suara" class="btn-ghost">Cek Hak Suaramu →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ PROPOSAL ═══ -->
+    <section id="proposal" class="py-24 bg-anol-black grain-dark relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 animate-fade-in-up">
+                <div>
+                    <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">議題</span> Governance</p>
+                    <h2 class="font-display text-4xl md:text-6xl">PROPOSAL</h2>
+                    <div class="red-bar mt-5"></div>
+                </div>
+                <p class="text-gray-400 max-w-md leading-relaxed">
+                    Satu proposal, satu keputusan kreatif. Pilih saat status <strong class="text-white">Voting Aktif</strong>.
+                    Selama voting masih berjalan, kamu bisa ganti pilihan. Suara terakhir yang dihitung.
+                </p>
+            </div>
+
+            <div id="proposals" class="space-y-8" aria-live="polite">
+                <div class="flex items-center gap-3 text-gray-500"><div class="spinner"></div> Memuat proposal...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ HAK SUARA ═══ -->
+    <section id="hak-suara" class="py-24 bg-anol-dark relative overflow-hidden border-t-2 border-anol-gray">
+        <div class="absolute -left-8 top-1/2 -translate-y-1/2 jp text-[14rem] md:text-[20rem] leading-none kanji-outline select-none pointer-events-none" aria-hidden="true">票</div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-12 animate-fade-in-up">
+                <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">権利</span> Voting Power</p>
+                <h2 class="font-display text-4xl md:text-6xl">HAK SUARAMU</h2>
+                <div class="red-bar mt-5"></div>
+                <p class="text-gray-400 mt-6 max-w-2xl leading-relaxed">
+                    Pembeli kaos Limited adalah suara terkuat. Karena itu NFT keaslian punya bobot terbesar,
+                    dan suara dari ALT dibatasi supaya tidak ada satu wallet yang bisa memborong hasil voting.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Rumus -->
+                <div class="space-y-4 animate-fade-in-up">
+                    <div class="bg-anol-black border-2 border-anol-gray border-l-8 border-l-anol-red p-6">
+                        <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">NFT Anolystic Certified</p>
+                        <p class="font-display text-2xl"><span class="text-anol-red">1 NFT</span> = 5 SUARA</p>
+                        <p class="text-gray-400 text-sm mt-2">Tanpa batas. Setiap kaos Limited yang kamu miliki dihitung.</p>
+                    </div>
+                    <div class="bg-anol-black border-2 border-anol-gray border-l-8 border-l-white p-6">
+                        <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Token ALT</p>
+                        <p class="font-display text-2xl"><span class="text-anol-red">10.000 ALT</span> = 1 SUARA</p>
+                        <p class="text-gray-400 text-sm mt-2">Dihitung proporsional (15.000 ALT = 1,5 suara), maksimal <strong class="text-white">10 suara</strong> per wallet dari ALT.</p>
+                    </div>
+                    <div class="bg-anol-black border-2 border-anol-gray p-6">
+                        <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Anti Curang</p>
+                        <p class="text-gray-300 text-sm">Suara dihitung dari saldo di blockchain, <strong class="text-white">semua wallet pemilih dicek di nomor blok yang sama</strong>. Jadi tiap NFT dan ALT hanya terhitung di satu wallet. Memindahkan aset ke wallet lain lalu memilih lagi tidak menambah suara. Hasil final dikunci saat voting ditutup.</p>
+                    </div>
+                    <p class="text-gray-500 text-xs">Contoh: 2 NFT + 50.000 ALT = 10 + 5 = <span class="text-white font-bold">15 suara</span>. 0 NFT + 5.000.000 ALT = <span class="text-white font-bold">10 suara</span> (batas maksimal ALT).</p>
+                </div>
+
+                <!-- Panel wallet -->
+                <div class="poster-red grain p-6 md:p-10 animate-fade-in-up animate-delay-100" style="box-shadow: 10px 10px 0 #ffffff;">
+                    <div class="relative z-10" id="power-panel">
+                        <h3 class="font-display text-2xl md:text-3xl text-white ink-shadow mb-4">CEK SUARAMU</h3>
+                        <p class="text-white font-semibold mb-8">Sambungkan wallet untuk melihat berapa suara yang kamu punya. Kami hanya membaca saldo, tidak meminta izin apa pun atas aset kamu.</p>
+                        <button data-connect class="btn-ink">Sambungkan Wallet</button>
+                        <p class="text-white/80 text-xs mt-6">Belum punya wallet? Tidak masalah. Kamu tetap bisa ikut lewat <a href="#kirim-desain" class="underline">kirim desain</a> dan pantau hasil voting di halaman ini.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SIKLUS VOTING ═══ -->
+    <section id="siklus" class="py-24 bg-anol-black grain-dark relative overflow-hidden border-t-2 border-anol-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-12 animate-fade-in-up">
+                <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">流れ</span> Voting Lifecycle</p>
+                <h2 class="font-display text-4xl md:text-6xl">DARI IDE KE DROP</h2>
+                <div class="red-bar mt-5"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-anol-dark border-2 border-gray-600 p-6 animate-fade-in-up">
+                    <span class="font-display text-gray-400 text-sm">01 · ±7 HARI</span>
+                    <h3 class="font-display text-xl mt-3">PERSIAPAN</h3>
+                    <p class="text-gray-400 text-sm mt-3">Proposal dari tim atau desain komunitas yang lolos kurasi diumumkan di Saluran WhatsApp & Telegram, lengkap dengan mockup dan pilihannya.</p>
+                </div>
+                <div class="bg-anol-red p-6 animate-fade-in-up animate-delay-100" style="box-shadow: 6px 6px 0 #fff;">
+                    <span class="font-display text-white text-sm">02 · 5–7 HARI</span>
+                    <h3 class="font-display text-xl mt-3 text-white">VOTING AKTIF</h3>
+                    <p class="text-white/90 text-sm mt-3">Holder memilih dengan tanda tangan wallet, gratis. Hasil sementara tampil langsung. Pilihan masih bisa diganti sampai voting ditutup.</p>
+                </div>
+                <div class="bg-anol-dark border-2 border-white p-6 animate-fade-in-up animate-delay-200">
+                    <span class="font-display text-anol-red text-sm">03 · 1–2 HARI</span>
+                    <h3 class="font-display text-xl mt-3">PENGHITUNGAN</h3>
+                    <p class="text-gray-400 text-sm mt-3">Hasil dihitung dari saldo di satu nomor blok lalu dikunci. Daftar seluruh suara (wallet + tanda tangan) bisa diunduh, jadi siapa pun bisa menghitung ulang sendiri.</p>
+                </div>
+                <div class="bg-anol-dark border-2 border-dashed border-gray-600 p-6 animate-fade-in-up animate-delay-200">
+                    <span class="font-display text-gray-400 text-sm">04 · BERJALAN</span>
+                    <h3 class="font-display text-xl mt-3">STATUS PRODUKSI</h3>
+                    <p class="text-gray-400 text-sm mt-3">Pilihan pemenang masuk Sampling → Produksi → Drop. Statusnya diperbarui di kartu proposal sampai artikelnya rilis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ ATURAN & REWARD ═══ -->
+    <section id="aturan" class="py-24 bg-anol-dark relative overflow-hidden border-t-2 border-anol-gray">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-12 animate-fade-in-up">
+                <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">規則</span> Transparansi</p>
+                <h2 class="font-display text-4xl md:text-6xl">ATURAN MAIN</h2>
+                <div class="red-bar mt-5"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-anol-black border-2 border-anol-gray p-6 md:p-8">
+                    <h3 class="font-display text-xl mb-4">YANG KAMI JAMIN</h3>
+                    <ul class="text-gray-400 text-sm space-y-3">
+                        <li>✅ <span class="text-white">Wallet brand & tim Anolystic tidak ikut dihitung.</span> Sebagian besar supply ALT dipegang wallet brand, jadi tanpa aturan ini hasil voting tidak adil. Alamatnya tercantum di bawah.</li>
+                        <li>✅ Semua suara (wallet, pilihan, dan tanda tangan) bisa diunduh publik. Halaman ini memverifikasi ulang setiap tanda tangan dan membuang suara yang tidak sah.</li>
+                        <li>✅ Voting hanya tanda tangan pesan, <span class="text-white">bukan transaksi</span>. Tidak ada biaya gas dan tidak memberi izin apa pun atas aset kamu.</li>
+                        <li>✅ Pilihan yang ada di proposal sudah dicek tim: bisa diproduksi, bahannya tersedia, dan harganya masuk akal.</li>
+                    </ul>
+                    <p id="excluded-wallets" class="text-xs text-gray-500 mt-5 break-all"></p>
+                </div>
+                <div class="bg-anol-black border-2 border-anol-red p-6 md:p-8">
+                    <h3 class="font-display text-xl mb-4 text-anol-red">YANG PERLU KAMU TAHU</h3>
+                    <ul class="text-gray-400 text-sm space-y-3">
+                        <li>• Hasil voting dijalankan tim. Kalau pilihan pemenang ternyata gagal di tahap sampling (bahan, sablon, atau biaya), alasannya diumumkan terbuka dan pilihan peringkat kedua yang diproses.</li>
+                        <li>• Voting menentukan arah kreatif produk, bukan keuangan atau kepemilikan perusahaan.</li>
+                        <li>• NFT Anolystic Certified adalah sertifikat keaslian, dan ALT adalah token komunitas. Keduanya <span class="text-white">bukan produk investasi</span>.</li>
+                        <li>• Anolystic tidak akan pernah meminta seed phrase atau private key. Voting resmi hanya di anolystic.site/voting.html.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Reward -->
+            <div class="poster-red grain p-6 md:p-10" style="box-shadow: 10px 10px 0 #ffffff;">
+                <div class="relative z-10">
+                    <p class="inline-block bg-anol-black text-white font-extrabold tracking-[0.3em] uppercase text-xs px-4 py-2 mb-5">Voter Reward</p>
+                    <h3 class="font-display text-2xl md:text-4xl text-white ink-shadow mb-8">YANG MEMILIH, DAPAT DULUAN</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                        <div class="bg-anol-black p-5">
+                            <p class="font-display text-3xl text-anol-red">01</p>
+                            <p class="text-white font-bold mt-3">Whitelist Early Access</p>
+                            <p class="text-sm text-gray-400 mt-2">Semua wallet yang ikut memilih bisa membeli artikel pemenang lebih dulu, sebelum dibuka umum.</p>
+                        </div>
+                        <div class="bg-anol-black p-5">
+                            <p class="font-display text-3xl text-anol-red">02</p>
+                            <p class="text-white font-bold mt-3">Kredit "Dipilih Komunitas"</p>
+                            <p class="text-sm text-gray-400 mt-2">Artikel hasil voting membawa tanda "Community Voted" di hangtag dan sertifikat NFT-nya.</p>
+                        </div>
+                        <div class="bg-anol-black p-5">
+                            <p class="font-display text-3xl text-anol-red">03</p>
+                            <p class="text-white font-bold mt-3">Kredit Desainer</p>
+                            <p class="text-sm text-gray-400 mt-2">Desain komunitas yang menang diproduksi dengan nama desainernya di label, sertifikat, dan halaman Galeri.</p>
+                        </div>
+                    </div>
+                    <p class="text-white/80 text-xs mt-6">Reward bersifat akses dan pengakuan, bukan uang atau token. Detail tiap reward diumumkan di masing-masing proposal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ KIRIM DESAIN ═══ -->
+    <section id="kirim-desain" class="py-24 bg-anol-black grain-dark relative overflow-hidden border-t-2 border-anol-gray">
+        <div class="absolute -right-6 top-24 jp kanji-outline text-[12rem] md:text-[18rem] leading-none select-none pointer-events-none" aria-hidden="true">創作</div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div class="animate-fade-in-up">
+                    <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">応募</span> Community Submission</p>
+                    <h2 class="font-display text-4xl md:text-6xl mb-6">KIRIM DESAINMU</h2>
+                    <div class="red-bar mb-8"></div>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        Ilustrator lokal bisa mengajukan desain untuk divoting komunitas. Desain yang lolos kurasi masuk proposal berikutnya,
+                        dan kalau menang, diproduksi dengan namamu di karyanya.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <a href="https://ig.me/m/anolystic" target="_blank" rel="noopener" class="btn-red">Kirim via DM Instagram</a>
+                        <a href="mailto:anolystic@gmail.com?subject=Submission%20Design%20DAO%20Anolystic" class="btn-ghost">Kirim via Email</a>
+                    </div>
+                </div>
+
+                <div class="bg-anol-dark border-2 border-anol-gray border-t-8 border-t-anol-red p-6 md:p-8 animate-fade-in-up animate-delay-100">
+                    <h3 class="font-display text-xl mb-5">SYARAT SUBMISSION</h3>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3"><span class="font-display text-anol-red">01</span><span><strong class="text-white">Karya orisinal milikmu sendiri.</strong><br><span class="text-gray-400">Bukan hasil jiplak, bukan memakai karakter atau logo brand lain.</span></span></li>
+                        <li class="flex items-start gap-3"><span class="font-display text-anol-red">02</span><span><strong class="text-white">Sesuai DNA Anolystic.</strong><br><span class="text-gray-400">Ilustrasi berkarakter kuat, punya cerita, cocok untuk kaos oversize.</span></span></li>
+                        <li class="flex items-start gap-3"><span class="font-display text-anol-red">03</span><span><strong class="text-white">Kirim preview + cerita singkat.</strong><br><span class="text-gray-400">JPG/PNG resolusi sedang, nama, dan makna di balik desain. File master menyusul kalau lolos.</span></span></li>
+                        <li class="flex items-start gap-3"><span class="font-display text-anol-red">04</span><span><strong class="text-white">Kesepakatan tertulis sebelum produksi.</strong><br><span class="text-gray-400">Hak cipta, kredit, dan kompensasi untuk desain terpilih dibahas dan disepakati tertulis dulu. Mengirim desain tidak berarti menyerahkan hak cipta.</span></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section id="faq" class="py-24 bg-anol-dark relative overflow-hidden border-t-2 border-anol-gray">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-12">
+                <p class="eyebrow mb-3"><span class="jp tracking-normal mr-2">質問</span> Yang Sering Ditanya</p>
+                <h2 class="font-display text-4xl md:text-6xl">FAQ VOTING</h2>
+                <div class="red-bar mt-5"></div>
+            </div>
+            <div class="space-y-4">
+                <details class="faq-item bg-anol-black border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Apakah voting bayar gas fee?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Tidak. Kamu hanya menandatangani pesan di wallet (seperti tanda tangan digital), bukan mengirim transaksi. Gratis dan saldo kamu tidak berkurang sedikit pun.
+                    </div>
+                </details>
+                <details class="faq-item bg-anol-black border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Sertifikat NFT-ku masih disimpan Anolystic, bisa vote?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Suara dihitung dari wallet yang memegang NFT. Minta kami kirim sertifikatnya ke wallet kamu dulu (gratis, gas ditanggung Anolystic) sebelum proposal berikutnya dibuka. Hubungi kami lewat <a href="https://ig.me/m/anolystic" target="_blank" rel="noopener" class="text-white underline">DM Instagram</a>.
+                    </div>
+                </details>
+                <details class="faq-item bg-anol-black border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Kenapa suara dari ALT dibatasi?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Supply ALT 1 miliar. Tanpa batas, satu wallet besar bisa menentukan semua hasil. Dengan batas 10 suara, pembeli kaos Limited tetap jadi suara terkuat, karena merekalah yang benar-benar memakai produknya.
+                    </div>
+                </details>
+                <details class="faq-item bg-anol-black border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Bisa ganti pilihan?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Bisa, selama status proposal masih Voting Aktif. Pilih ulang dan tanda tangani lagi. Hanya suara terakhir yang dihitung.
+                    </div>
+                </details>
+                <details class="faq-item bg-anol-black border-2 border-anol-gray open:border-anol-red">
+                    <summary class="flex justify-between items-center gap-4 cursor-pointer p-5 md:p-6 font-display text-lg md:text-xl">
+                        Bagaimana cara mengecek hasilnya jujur?
+                        <span class="faq-icon text-anol-red text-2xl leading-none">+</span>
+                    </summary>
+                    <div class="px-5 md:px-6 pb-6 text-gray-400 leading-relaxed">
+                        Setiap kartu proposal punya tombol "Unduh Data Suara" berisi seluruh wallet pemilih, pilihannya, pesan, dan tanda tangannya. Tanda tangan bisa diverifikasi ulang dengan alat verifikasi tanda tangan Ethereum mana pun, dan saldo tiap wallet bisa dicek di BscScan pada nomor blok yang tertera di kartu proposal. Wallet brand & tim tidak dihitung.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA penutup -->
+    <section class="poster-red grain py-20 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="font-display text-3xl md:text-5xl text-white ink-shadow mb-4">JANGAN KETINGGALAN VOTING</h2>
+            <p class="text-white font-semibold mb-10">Proposal baru selalu diumumkan pertama kali di Saluran WhatsApp dan grup Telegram.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-5">
+                <a href="https://whatsapp.com/channel/0029VbBKjevAYlUJnYUWL13u" target="_blank" rel="noopener" class="btn-ink">Saluran WhatsApp</a>
+                <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener" class="btn-ghost">Grup Telegram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-anol-black border-t-4 border-anol-red py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <img src="images/logo-full.png" alt="Anolystic" class="h-10 w-auto mx-auto md:mx-0">
+                    <p class="text-gray-500 text-sm mt-2">Gaya gak banyak bicara. <span class="jp text-gray-600 ml-1">異常と神秘</span></p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-bold uppercase tracking-wider">
+                    <a href="verifikasi.html" class="text-anol-red hover:text-white">Cek Keaslian</a>
+                    <a href="index.html" class="text-gray-400 hover:text-white">Beranda</a>
+                    <a href="koleksi-nft.html" class="text-gray-400 hover:text-white">Galeri</a>
+                    <a href="index.html#token" class="text-gray-400 hover:text-white">Token ALT</a>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="https://instagram.com/Anolystic" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors">
+                        <span class="sr-only">Instagram</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://x.com/anolystic" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors">
+                        <span class="sr-only">X</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors">
+                        <span class="sr-only">Telegram</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-anol-gray text-center">
+                <p class="text-gray-600 text-sm">© 2026 Anolystic. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ══════════════════════════════════════════════════════════════
+        //  PENGATURAN — bagian yang boleh diedit (lihat PANDUAN_VOTING.txt)
+        // ══════════════════════════════════════════════════════════════
+
+        // Tempat menyimpan suara:
+        //   'sheets'   = Google Sheets lewat Google Apps Script (gratis, dipakai sekarang)
+        //   'snapshot' = Snapshot.org (rencana pindah November 2026, butuh nama ENS)
+        const VOTE_BACKEND = 'sheets';
+
+        // URL Web App Google Apps Script (berakhiran /exec). Selama kosong, proposal tampil sebagai draf.
+        const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxtBEqhdJvczF3r1kzpvU66M6rwm-pbGNkTu5EMbibqZttWJtytq2JqCo94sYst8tF-Xg/exec';
+
+        // Nama space Snapshot (contoh: 'anolystic.eth'). Hanya dipakai kalau VOTE_BACKEND = 'snapshot'.
+        const SNAPSHOT_SPACE = '';
+
+        // Wallet brand & tim: suaranya TIDAK dihitung, dan alamatnya ditampilkan publik.
+        const EXCLUDED_WALLETS = [
+            '0xab4a487566fbba7b435dee9519b65cb884287907',  // Wallet brand Anolystic (deployer ALT & owner kontrak NFT)
+        ];
+
+        // Status produksi untuk proposal yang sudah selesai. Kunci = ID proposal.
+        // Nilai: 'Sampling' | 'Produksi' | 'Drop' | 'Batal: <alasan singkat>'
+        const PRODUCTION_STATUS = {
+            // 'vol2-colorway': 'Sampling',
+        };
+
+        // Daftar proposal (dipakai kalau VOTE_BACKEND = 'sheets').
+        //   id     : huruf kecil, angka, tanda minus. Jangan diubah setelah voting dibuka.
+        //   start  : waktu voting dibuka, contoh '2026-11-01T10:00:00+07:00'. null = belum dijadwalkan.
+        //   end    : waktu voting ditutup.
+        //   final  : diisi setelah voting ditutup (tombol "Salin Hasil Final" di voting.html?admin=1).
+        const PROPOSALS = [
+            {
+                id: 'vol2-colorway',
+                title: 'Colorway Limited Vol. 2: Eastern Dragon',
+                body: 'Tentukan warna kaos untuk drop Limited Vol. 2 "Eastern Dragon". Bahan, potongan oversize, dan jumlah maksimal 200 pcs tetap sama. Setiap kaos tetap mendapat NFT Anolystic Certified.',
+                choices: ['Hitam · sablon merah', 'Putih tulang · sablon hitam', 'Merah marun · sablon hitam'],
+                start: null,
+                end: null,
+                final: null,
+            },
+        ];
+
+        // Aturan hak suara (kalau pindah ke Snapshot, strateginya harus sama)
+        const VOTES_PER_NFT = 5;
+        const ALT_PER_VOTE = 10000;
+        const ALT_MAX_VOTES = 10;
+
+        // ══════════════════════════════════════════════════════════════
+
+        const NFT_ADDRESS = '0xf481fA14111347Eed9Aa56fd16e6cfe132F161d8';
+        const ALT_ADDRESS = '0x950Cca77126C29CD8979179Bf2D8E8144478404D';
+        const RPC_URLS = ['https://bsc-dataseed.bnbchain.org', 'https://bsc-dataseed1.binance.org', 'https://bsc-rpc.publicnode.com'];
+        const SNAPSHOT_HUB = 'https://hub.snapshot.org/graphql';
+        const SNAPSHOT_SEQ = 'https://seq.snapshot.org/';
+        const SNAPSHOT_UI = 'https://snapshot.org/#/';
+        const BALANCE_ABI = ['function balanceOf(address) view returns (uint256)'];
+        const IS_ADMIN = new URLSearchParams(location.search).get('admin') === '1';
+
+        const $ = (id) => document.getElementById(id);
+        const short = (a) => a.slice(0, 6) + '...' + a.slice(-4);
+        const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+        const fmt = (n) => Number(n).toLocaleString('id-ID', { maximumFractionDigits: 2 });
+        const excluded = new Set(EXCLUDED_WALLETS.map(a => a.toLowerCase()));
+
+        let account = null;      // alamat wallet yang tersambung
+        let proposals = [];      // proposal yang sedang tampil
+        let myVotes = {};        // { proposalId: nomorPilihan }
+
+        // ── Menu mobile ──
+        const mobileMenuBtn = $('mobile-menu-btn');
+        const mobileMenu = $('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a, button').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        // ── Animasi muncul saat discroll ──
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.animate-fade-in-up').forEach(e => {
+            e.style.opacity = '0';
+            e.style.transform = 'translateY(30px)';
+            e.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            observer.observe(e);
+        });
+
+        // ── Daftar wallet yang dikecualikan ──
+        if (EXCLUDED_WALLETS.length) {
+            const p = $('excluded-wallets');
+            p.append('Wallet yang tidak dihitung: ');
+            EXCLUDED_WALLETS.forEach((a, i) => {
+                const link = el('a', 'text-white underline', short(a));
+                link.href = 'https://bscscan.com/address/' + a; link.target = '_blank'; link.rel = 'noopener';
+                if (i) p.append(', ');
+                p.append(link);
+            });
+        }
+
+        // ── Koneksi baca ke BNB Chain (coba beberapa RPC) ──
+        let readProviderPromise = null;
+        function getReadProvider() {
+            if (!readProviderPromise) {
+                readProviderPromise = (async () => {
+                    for (const url of RPC_URLS) {
+                        try {
+                            const p = new ethers.JsonRpcProvider(url, 56, { staticNetwork: true });
+                            await p.getBlockNumber();
+                            return p;
+                        } catch (e) { /* coba RPC berikutnya */ }
+                    }
+                    readProviderPromise = null;
+                    throw new Error('rpc');
+                })();
+            }
+            return readProviderPromise;
+        }
+
+        // Hak suara satu wallet pada blok tertentu
+        async function powerOf(address, blockTag = 'latest') {
+            const provider = await getReadProvider();
+            const [n, t] = await Promise.all([
+                new ethers.Contract(NFT_ADDRESS, BALANCE_ABI, provider).balanceOf(address, { blockTag }),
+                new ethers.Contract(ALT_ADDRESS, BALANCE_ABI, provider).balanceOf(address, { blockTag }),
+            ]);
+            const nft = Number(n);
+            const alt = Number(ethers.formatUnits(t, 18));
+            const nftVotes = nft * VOTES_PER_NFT;
+            const altVotes = Math.min(alt / ALT_PER_VOTE, ALT_MAX_VOTES);
+            return { nft, alt, nftVotes, altVotes, total: nftVotes + altVotes };
+        }
+
+        // Hak suara semua pemilih pada SATU blok yang sama: tiap NFT/ALT hanya terhitung di satu wallet
+        async function powersAtOneBlock(addresses) {
+            const provider = await getReadProvider();
+            const block = await provider.getBlockNumber();
+            const powers = {};
+            for (let i = 0; i < addresses.length; i += 20) {
+                await Promise.all(addresses.slice(i, i + 20).map(async a => { powers[a] = await powerOf(a, block); }));
+            }
+            return { powers, block };
+        }
+
+        // ══ Backend Google Sheets ══
+        // Pesan yang ditandatangani pemilih (dibaca ulang saat penghitungan)
+        const voteMessage = (p, choice, address) =>
+            `Anolystic Design DAO - suara\nProposal: ${p.id}\nPilihan: ${choice} (${p.choices[choice - 1]})\nWallet: ${address}\nWaktu: ${new Date().toISOString()}\n\nTanda tangan ini gratis dan bukan transaksi.`;
+
+        function parseVote(row, p) {
+            try {
+                const at = Date.parse(row.receivedAt) / 1000;
+                if (!(at >= p.start && at < p.end)) return null;          // di luar jadwal voting
+                const signer = ethers.verifyMessage(row.message, row.signature);
+                const field = {};
+                row.message.split('\n').forEach(line => {
+                    const i = line.indexOf(': ');
+                    if (i > 0) field[line.slice(0, i)] = line.slice(i + 2);
+                });
+                if (field['Proposal'] !== p.id) return null;
+                if ((field['Wallet'] || '').toLowerCase() !== signer.toLowerCase()) return null;
+                const choice = parseInt(field['Pilihan'], 10);
+                if (!(choice >= 1 && choice <= p.choices.length)) return null;
+                return { voter: ethers.getAddress(signer), choice, at };
+            } catch (e) {
+                return null;                                              // tanda tangan rusak / palsu
+            }
+        }
+
+        async function loadSheetVotes(p) {
+            const r = await fetch(`${SHEETS_URL}?proposal=${encodeURIComponent(p.id)}`);
+            const j = await r.json();
+            // Suara terakhir per wallet yang dihitung
+            const latest = new Map();
+            (j.votes || []).forEach(row => {
+                const v = parseVote(row, p);
+                if (!v) return;
+                const prev = latest.get(v.voter);
+                if (!prev || v.at > prev.at) latest.set(v.voter, v);
+            });
+            const valid = [...latest.values()];
+            if (p.final) {
+                p.votes = valid.map(v => ({ voter: v.voter, choice: v.choice, vp: 0 }));
+                return;
+            }
+            const counted = valid.filter(v => !excluded.has(v.voter.toLowerCase()));
+            const { powers, block } = await powersAtOneBlock(counted.map(v => v.voter));
+            p.countBlock = block;
+            p.votes = valid.map(v => ({ voter: v.voter, choice: v.choice, vp: powers[v.voter] ? powers[v.voter].total : 0 }));
+        }
+
+        async function fetchSheetsProposals() {
+            const now = Date.now() / 1000;
+            const list = PROPOSALS.map(src => {
+                const start = src.start ? Date.parse(src.start) / 1000 : null;
+                const end = src.end ? Date.parse(src.end) / 1000 : null;
+                const state = !start || now < start ? 'pending' : now < end ? 'active' : 'closed';
+                return { ...src, start, end, state, type: 'single-choice', draft: !SHEETS_URL || !start };
+            });
+            if (SHEETS_URL) await Promise.all(list.filter(p => p.state !== 'pending').map(loadSheetVotes));
+            return list;
+        }
+
+        async function castSheetsVote(p, choice, label) {
+            const pw = await powerOf(account);
+            if (!pw.total) {
+                cardMsg(p.id, 'Wallet ini belum punya hak suara. Miliki NFT Anolystic Certified atau Token ALT untuk ikut memilih.');
+                return;
+            }
+            const signer = await new ethers.BrowserProvider(window.ethereum).getSigner();
+            const message = voteMessage(p, choice, account);
+            const signature = await signer.signMessage(message);
+            // text/plain supaya Google Apps Script bisa menerima tanpa preflight CORS
+            const r = await fetch(SHEETS_URL, {
+                method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ proposal: p.id, address: account, choice, message, signature }),
+            });
+            const j = await r.json().catch(() => ({}));
+            if (!j.ok) throw new Error(j.error || 'sheet');
+            cardMsg(p.id, `Suara tercatat ✓ Kamu memilih "${label}" dengan ${fmt(pw.total)} suara (saldo saat ini). Tanda tanganmu bisa dicek siapa saja.`, true);
+        }
+
+        // ══ Backend Snapshot.org ══
+        async function gql(query, variables) {
+            const r = await fetch(SNAPSHOT_HUB, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query, variables }),
+            });
+            const j = await r.json();
+            if (j.errors) throw new Error(j.errors[0].message);
+            return j.data;
+        }
+
+        async function fetchSnapshotProposals() {
+            const d = await gql(`query($space: String!) {
+                proposals(first: 20, where: { space: $space }, orderBy: "created", orderDirection: desc) {
+                    id title body choices start end snapshot state type scores scores_total
+                }
+            }`, { space: SNAPSHOT_SPACE });
+            const list = d.proposals || [];
+            await Promise.all(list.map(async (p) => {
+                if (p.state === 'pending') return;
+                const v = await gql(`query($id: String!) {
+                    votes(first: 1000, where: { proposal: $id }, orderBy: "vp", orderDirection: desc) { voter choice vp }
+                }`, { id: p.id });
+                p.votes = v.votes || [];
+            }));
+            return list;
+        }
+
+        async function castSnapshotVote(p, choice, label) {
+            // Hak suara resmi menurut snapshot blok proposal ini
+            const d = await gql(`query($voter: String!, $space: String!, $proposal: String!) {
+                vp(voter: $voter, space: $space, proposal: $proposal) { vp }
+            }`, { voter: account, space: SNAPSHOT_SPACE, proposal: p.id });
+            if (!d.vp || !d.vp.vp) {
+                cardMsg(p.id, `Wallet ini belum punya hak suara di snapshot proposal ini (blok #${p.snapshot}).`);
+                return;
+            }
+            const domain = { name: 'snapshot', version: '0.1.4' };
+            const types = { Vote: [
+                { name: 'from', type: 'address' },
+                { name: 'space', type: 'string' },
+                { name: 'timestamp', type: 'uint64' },
+                { name: 'proposal', type: p.id.startsWith('0x') ? 'bytes32' : 'string' },
+                { name: 'choice', type: 'uint32' },
+                { name: 'reason', type: 'string' },
+                { name: 'app', type: 'string' },
+                { name: 'metadata', type: 'string' },
+            ] };
+            const message = {
+                from: account, space: SNAPSHOT_SPACE, timestamp: Math.floor(Date.now() / 1000),
+                proposal: p.id, choice, reason: '', app: 'anolystic', metadata: '{}',
+            };
+            const signer = await new ethers.BrowserProvider(window.ethereum).getSigner();
+            const sig = await signer.signTypedData(domain, types, message);
+            const r = await fetch(SNAPSHOT_SEQ, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ address: account, sig, data: { domain, types, message } }),
+            });
+            if (!r.ok) {
+                const err = await r.json().catch(() => ({}));
+                throw new Error(err.error_description || err.error || 'seq');
+            }
+            cardMsg(p.id, `Suara tercatat ✓ Kamu memilih "${label}" dengan ${fmt(d.vp.vp)} suara. Tanda tanganmu tersimpan permanen dan bisa dicek siapa saja.`, true);
+        }
+
+        // ══ Tampilan proposal ══
+        function tally(p) {
+            if (p.final) return { scores: p.final.scores, total: p.final.scores.reduce((a, b) => a + b, 0), voters: p.final.voters };
+            const scores = p.choices.map(() => 0);
+            let voters = 0;
+            if (p.votes && (p.type === 'single-choice' || p.type === 'basic')) {
+                p.votes.forEach(v => {
+                    if (excluded.has(v.voter.toLowerCase())) return;
+                    if (typeof v.choice === 'number' && scores[v.choice - 1] != null) { scores[v.choice - 1] += v.vp; voters++; }
+                });
+            } else if (Array.isArray(p.scores)) {
+                p.scores.forEach((s, i) => scores[i] = s);
+                voters = p.votes ? p.votes.length : 0;
+            }
+            const total = scores.reduce((a, b) => a + b, 0);
+            return { scores, total, voters };
+        }
+
+        function statusOf(p) {
+            if (p.state === 'active') return { label: 'Voting Aktif', cls: 'bg-anol-red text-white' };
+            if (p.state === 'pending') return { label: 'Persiapan', cls: 'bg-white text-anol-black' };
+            const prod = PRODUCTION_STATUS[p.id];
+            if (prod) return { label: 'Status Produksi: ' + prod, cls: 'bg-green-600 text-white' };
+            if (VOTE_BACKEND === 'sheets' && !p.final) return { label: 'Penghitungan', cls: 'bg-white text-anol-black' };
+            return { label: 'Hasil Final', cls: 'bg-anol-gray text-white' };
+        }
+
+        function timeText(p) {
+            const now = Date.now() / 1000;
+            const dur = (s) => {
+                const d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60);
+                return d ? `${d} hari ${h} jam` : h ? `${h} jam ${m} menit` : `${Math.max(m, 1)} menit`;
+            };
+            const date = (s) => new Date(s * 1000).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            if (!p.start) return 'Jadwal voting diumumkan di Saluran WhatsApp';
+            if (p.state === 'pending') return `Dibuka dalam ${dur(p.start - now)} · ${date(p.start)}`;
+            if (p.state === 'active') return `Ditutup dalam ${dur(p.end - now)} · ${date(p.end)}`;
+            return `Ditutup ${date(p.end)}`;
+        }
+
+        function renderProposals() {
+            const box = $('proposals');
+            box.innerHTML = '';
+            if (!proposals.length) {
+                const empty = el('div', 'bg-anol-dark border-2 border-dashed border-gray-600 p-8 md:p-12 text-center');
+                empty.append(el('p', 'font-display text-2xl md:text-3xl mb-3', 'BELUM ADA PROPOSAL'));
+                empty.append(el('p', 'text-gray-400', 'Proposal pertama sedang disiapkan. Ikuti Saluran WhatsApp supaya jadi yang pertama tahu saat voting dibuka.'));
+                box.append(empty);
+                return;
+            }
+            proposals.forEach(p => box.append(proposalCard(p)));
+        }
+
+        function proposalCard(p) {
+            const st = statusOf(p);
+            const { scores, total, voters } = tally(p);
+            const lead = total ? scores.indexOf(Math.max(...scores)) : -1;
+            const canVote = p.state === 'active' && !p.draft;
+            const mine = myVotes[p.id];
+
+            const card = el('article', 'ink-card p-6 md:p-8');
+            if (p.state === 'active') { card.style.borderColor = '#dc2626'; card.style.boxShadow = '8px 8px 0 #dc2626'; }
+
+            const head = el('div', 'flex flex-wrap items-center gap-3 mb-4');
+            head.append(el('span', 'font-extrabold uppercase tracking-wider text-xs px-3 py-1 ' + st.cls, st.label));
+            if (p.draft) head.append(el('span', 'text-xs text-gray-500 font-bold uppercase tracking-wider', 'Draf'));
+            head.append(el('span', 'text-xs text-gray-400 font-bold uppercase tracking-wider', timeText(p)));
+            card.append(head);
+
+            card.append(el('h3', 'font-display text-2xl md:text-3xl mb-3', p.title));
+            const body = (p.body || '').trim();
+            if (body) card.append(el('p', 'text-gray-400 text-sm leading-relaxed mb-6 whitespace-pre-line', body.length > 500 ? body.slice(0, 500) + '…' : body));
+
+            const list = el('div', 'space-y-3 mb-6');
+            p.choices.forEach((c, i) => {
+                const pct = total ? (scores[i] / total) * 100 : 0;
+                const row = el('div', 'choice-row' + (i === lead && p.state === 'closed' ? ' lead' : '') + (mine === i + 1 ? ' mine' : ''));
+                const fill = el('div', 'choice-fill');
+                fill.style.width = pct + '%';
+                row.append(fill);
+                const inner = el('div', 'relative flex flex-col sm:flex-row sm:items-center gap-3 p-4');
+                const label = el('div', 'flex-1');
+                label.append(el('p', 'font-bold text-white', (mine === i + 1 ? '✓ ' : '') + c));
+                if (p.state !== 'pending') label.append(el('p', 'text-xs text-gray-400 mt-1', `${fmt(scores[i])} suara · ${pct.toFixed(1)}%`));
+                inner.append(label);
+                if (canVote) {
+                    const b = el('button', 'bg-white text-anol-black hover:bg-anol-red hover:text-white px-4 py-2 text-xs font-extrabold uppercase tracking-wider transition-colors whitespace-nowrap',
+                        mine === i + 1 ? 'Pilihanmu' : mine ? 'Ganti ke Ini' : 'Pilih');
+                    b.addEventListener('click', () => castVote(p, i + 1, c, b));
+                    inner.append(b);
+                }
+                row.append(inner);
+                list.append(row);
+            });
+            card.append(list);
+
+            const foot = el('div', 'flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-t-2 border-anol-gray pt-4');
+            const meta = el('p', 'text-xs text-gray-500 font-bold uppercase tracking-wider');
+            if (p.draft) meta.textContent = 'Pilihan bisa berubah sebelum voting dibuka';
+            else {
+                const block = p.final ? p.final.block : p.countBlock || p.snapshot;
+                const blockLabel = p.final ? 'dikunci di blok' : VOTE_BACKEND === 'sheets' ? 'dihitung di blok' : 'snapshot blok';
+                meta.textContent = `${voters} pemilih · ${fmt(total)} suara` + (block ? ` · ${blockLabel} #${block}` : '');
+            }
+            foot.append(meta);
+            if (!p.draft) {
+                const link = el('a', 'text-sm font-bold uppercase underline text-gray-300 hover:text-white');
+                link.target = '_blank'; link.rel = 'noopener';
+                if (VOTE_BACKEND === 'sheets') {
+                    link.textContent = 'Unduh Data Suara →';
+                    link.href = `${SHEETS_URL}?proposal=${encodeURIComponent(p.id)}`;
+                } else {
+                    link.textContent = 'Lihat di Snapshot →';
+                    link.href = `${SNAPSHOT_UI}${SNAPSHOT_SPACE}/proposal/${p.id}`;
+                }
+                if (p.state !== 'pending') foot.append(link);
+            }
+            card.append(foot);
+
+            // Admin: kunci hasil final setelah voting ditutup (buka voting.html?admin=1)
+            if (IS_ADMIN && VOTE_BACKEND === 'sheets' && p.state === 'closed' && !p.final && !p.draft) {
+                const b = el('button', 'btn-ghost mt-4', 'Salin Hasil Final');
+                b.addEventListener('click', async () => {
+                    const text = `final: { block: ${p.countBlock}, scores: [${scores.map(s => +s.toFixed(4)).join(', ')}], voters: ${voters} },`;
+                    try { await navigator.clipboard.writeText(text); b.textContent = 'Tersalin ✓ Tempel ke PROPOSALS'; }
+                    catch (e) { prompt('Salin teks ini ke PROPOSALS:', text); }
+                });
+                card.append(b);
+            }
+
+            const msg = el('p', 'text-sm mt-4 hidden');
+            msg.dataset.msg = p.id;
+            card.append(msg);
+            return card;
+        }
+
+        function cardMsg(id, text, ok) {
+            const m = document.querySelector(`[data-msg="${CSS.escape(id)}"]`);
+            if (!m) return;
+            m.textContent = text;
+            m.className = 'text-sm mt-4 ' + (ok ? 'text-green-400' : 'text-anol-red-light');
+        }
+
+        async function loadProposals() {
+            try {
+                proposals = VOTE_BACKEND === 'snapshot'
+                    ? (SNAPSHOT_SPACE ? await fetchSnapshotProposals() : [])
+                    : await fetchSheetsProposals();
+                loadMyVotes();
+                renderProposals();
+            } catch (e) {
+                const box = $('proposals');
+                box.innerHTML = '';
+                box.append(el('p', 'text-gray-400', 'Gagal memuat proposal. Periksa koneksi internet lalu muat ulang halaman.'));
+            }
+        }
+
+        function loadMyVotes() {
+            myVotes = {};
+            if (!account) return;
+            proposals.forEach(p => (p.votes || []).forEach(v => {
+                if (v.voter.toLowerCase() === account.toLowerCase()) myVotes[p.id] = v.choice;
+            }));
+        }
+
+        // ══ Wallet & hak suara ══
+        async function connectWallet() {
+            if (!window.ethereum) {
+                alert('Wallet tidak terdeteksi. Buka halaman ini lewat browser di aplikasi MetaMask atau Trust Wallet.');
+                return;
+            }
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                await setAccount(accounts[0]);
+            } catch (e) {
+                if (e.code !== 4001) alert('Gagal menyambungkan wallet. Coba lagi.');
+            }
+        }
+
+        async function setAccount(addr) {
+            if (!addr) { location.reload(); return; } // wallet diputus
+            account = ethers.getAddress(addr);
+            document.querySelectorAll('[data-connect]').forEach(b => b.textContent = short(account));
+            loadMyVotes();
+            if (proposals.length) renderProposals();
+            await renderPower();
+        }
+
+        async function renderPower() {
+            const panel = $('power-panel');
+            if (!account) return;
+            panel.innerHTML = '';
+            panel.append(el('h3', 'font-display text-2xl md:text-3xl text-white ink-shadow mb-2', 'SUARAMU'));
+            panel.append(el('p', 'text-white/80 text-sm font-mono mb-6 break-all', account));
+            const loading = el('div', 'flex items-center gap-3 text-white');
+            loading.append(el('div', 'spinner'), el('span', '', 'Membaca saldo dari BNB Chain...'));
+            panel.append(loading);
+
+            try {
+                const { nft, alt, nftVotes, altVotes, total } = await powerOf(account);
+                loading.remove();
+
+                if (excluded.has(account.toLowerCase())) {
+                    panel.append(el('p', 'bg-anol-black text-white font-bold p-4 mb-4', 'Wallet ini milik brand/tim Anolystic dan tidak ikut dihitung dalam hasil voting.'));
+                }
+
+                const big = el('p', 'font-display text-6xl md:text-7xl text-white ink-shadow leading-none mb-6', fmt(total));
+                big.append(el('span', 'text-2xl ml-3', 'SUARA'));
+                panel.append(big);
+
+                const grid = el('div', 'grid grid-cols-2 gap-4 mb-6');
+                const stat = (label, value, sub) => {
+                    const b = el('div', 'bg-anol-black p-4');
+                    b.append(el('p', 'text-xs text-gray-500 uppercase font-bold tracking-wider mb-1', label));
+                    b.append(el('p', 'font-display text-xl text-white', value));
+                    b.append(el('p', 'text-xs text-gray-400 mt-1', sub));
+                    return b;
+                };
+                grid.append(stat('NFT Certified', `${nft} NFT`, `= ${nftVotes} suara`));
+                grid.append(stat('Token ALT', `${fmt(alt)} ALT`, `= ${fmt(altVotes)} suara` + (altVotes === ALT_MAX_VOTES ? ' (maks)' : '')));
+                panel.append(grid);
+
+                if (total === 0) {
+                    panel.append(el('p', 'text-white font-semibold text-sm mb-4', 'Wallet ini belum punya hak suara. Miliki kaos Limited dengan NFT Anolystic Certified, atau Token ALT, untuk ikut memilih di proposal berikutnya.'));
+                }
+                panel.append(el('p', 'text-white/80 text-xs', VOTE_BACKEND === 'sheets'
+                    ? 'Dihitung dari saldo saat ini. Angka resmi dihitung dari saldo di blockchain saat penghitungan, dan dikunci saat voting ditutup.'
+                    : 'Perkiraan dari saldo saat ini. Angka resmi tiap proposal dihitung dari snapshot blok saat proposal dibuka.'));
+            } catch (e) {
+                loading.remove();
+                panel.append(el('p', 'text-white font-semibold', 'Gagal membaca saldo dari BNB Chain. Periksa koneksi internet lalu coba lagi.'));
+            }
+        }
+
+        // ══ Kirim suara (tanda tangan, tanpa gas) ══
+        async function castVote(p, choice, label, btn) {
+            if (!account) { await connectWallet(); if (!account) return; }
+            if (excluded.has(account.toLowerCase())) { cardMsg(p.id, 'Wallet brand/tim Anolystic tidak ikut voting.'); return; }
+
+            btn.disabled = true;
+            cardMsg(p.id, `Cek wallet kamu: tanda tangani pilihan "${label}". Gratis, bukan transaksi.`, true);
+            try {
+                if (VOTE_BACKEND === 'snapshot') await castSnapshotVote(p, choice, label);
+                else await castSheetsVote(p, choice, label);
+                setTimeout(loadProposals, 4000);
+            } catch (e) {
+                if (e.code === 'ACTION_REJECTED' || e.code === 4001) cardMsg(p.id, 'Tanda tangan dibatalkan. Suaramu belum terkirim.');
+                else cardMsg(p.id, 'Suara gagal terkirim. Periksa koneksi internet lalu coba lagi.' + (e.message && !['seq', 'sheet'].includes(e.message) ? ` (${e.message})` : ''));
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        document.querySelectorAll('[data-connect]').forEach(b => b.addEventListener('click', () => {
+            if (account) $('hak-suara').scrollIntoView({ behavior: 'smooth' });
+            else connectWallet();
+        }));
+
+        if (window.ethereum) {
+            window.ethereum.on?.('accountsChanged', (accs) => setAccount(accs[0]));
+            // Sambung otomatis kalau wallet sudah pernah diizinkan
+            window.ethereum.request({ method: 'eth_accounts' }).then(accs => { if (accs[0]) setAccount(accs[0]); }).catch(() => {});
+        }
+
+        loadProposals();
+        // Perbarui hitung mundur & hasil tiap 2 menit selama ada voting yang belum ditutup
+        setInterval(() => { if (proposals.some(p => !p.draft && p.state !== 'closed')) loadProposals(); }, 120000);
+    </script>
+</body>
+</html>

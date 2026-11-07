@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANOLYSTIC: Mystic Streets | Game Roblox Anolystic</title>
+    <meta name="description" content="Main ANOLYSTIC: Mystic Streets di Roblox. Bertani di pulau misterius, racik streetwear Anolystic, trade dengan pemain lain, dan pamerkan gayamu di Runway Show. Gratis di HP dan PC.">
+    <link rel="canonical" href="https://anolystic.site/mystic-streets.html">
+    <meta name="robots" content="index, follow">
+    <!-- Favicon - semua ukuran agar Google & browser bisa baca -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+    <meta name="msapplication-TileImage" content="/favicon.png">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://anolystic.site/mystic-streets.html">
+    <meta property="og:title" content="ANOLYSTIC: Mystic Streets | Game Roblox Anolystic">
+    <meta property="og:description" content="Bertani, racik streetwear, trade, dan pamerkan gayamu di pulau misterius Anolystic. Gratis di Roblox.">
+    <meta property="og:image" content="https://anolystic.site/images/og-banner.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://anolystic.site/images/og-banner.jpg">
+
+    <!-- Google Fonts: Inter (teks) + Dela Gothic One (judul poster) + Noto Sans JP (kanji) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        * { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #ffffff; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; }
+
+        /* ── Gaya poster (sama dengan halaman utama) ── */
+        .jp { font-family: 'Noto Sans JP', sans-serif; font-weight: 900; }
+        .font-display { font-family: 'Dela Gothic One', 'Inter', sans-serif; letter-spacing: 0.01em; }
+        .poster-red { background-color: #dc2626; position: relative; }
+        .grain::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+            background-image: radial-gradient(rgba(10,10,10,0.22) 1px, transparent 1.3px);
+            background-size: 5px 5px; mix-blend-mode: multiply;
+        }
+        .grain-dark::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.3px);
+            background-size: 6px 6px;
+        }
+        .ink-shadow { text-shadow: 4px 4px 0 #0a0a0a; }
+        .ink-shadow-red { text-shadow: 4px 4px 0 #dc2626; }
+        .vertical { writing-mode: vertical-rl; text-orientation: upright; }
+        .kanji-outline { color: transparent; -webkit-text-stroke: 1.5px rgba(220,38,38,0.45); }
+        .hanko {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: #dc2626; color: #fff; border: 3px solid #0a0a0a;
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 900; line-height: 1; transform: rotate(-8deg);
+        }
+        .eyebrow { color: #dc2626; font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; }
+        .red-bar { width: 72px; height: 6px; background: #dc2626; }
+
+        .btn-ink, .btn-red, .btn-ghost {
+            display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
+            padding: .9rem 1.6rem; transition: transform .15s ease, box-shadow .15s ease, background .2s, color .2s;
+        }
+        .btn-ink { background: #0a0a0a; color: #fff; box-shadow: 5px 5px 0 #ffffff; }
+        .btn-ink:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #ffffff; }
+        .btn-red { background: #dc2626; color: #fff; box-shadow: 5px 5px 0 #ffffff; }
+        .btn-red:hover { background: #ef4444; transform: translate(-2px,-2px); box-shadow: 7px 7px 0 #ffffff; }
+        .btn-ghost { border: 3px solid #fff; color: #fff; }
+        .btn-ghost:hover { background: #fff; color: #0a0a0a; }
+
+        .ink-card {
+            background: #141414; border: 2px solid #1f1f1f;
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        }
+        .ink-card:hover { transform: translate(-4px,-4px); box-shadow: 8px 8px 0 #dc2626; border-color: #dc2626; }
+
+        /* Bingkai screenshot game */
+        .shot { border: 3px solid #fff; background: #0a0a0a; box-shadow: 8px 8px 0 #dc2626; }
+        .shot img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+    </style>
+    <!-- CSS Tailwind yang sudah jadi, dimuat SETELAH <style> agar urutannya sama seperti Tailwind CDN dulu (lihat PANDUAN_WEBSITE.txt) -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-anol-black/90 backdrop-blur border-b-2 border-anol-red" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex items-center gap-3 flex-shrink-0">
+                    <img src="images/logo-simple.png" alt="Anolystic" class="h-8 md:h-10 w-auto">
+                    <span class="hanko hidden sm:inline-flex w-9 h-9 text-base">異</span>
+                </a>
+
+                <div class="hidden lg:flex items-center space-x-7">
+                    <a href="index.html" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Beranda</a>
+                    <a href="#fitur" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Fitur</a>
+                    <a href="#galeri" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Galeri</a>
+                    <a href="#mulai" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Cara Main</a>
+                    <a href="koleksi-nft.html" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Galeri Kita</a>
+                    <a href="voting.html" class="text-gray-300 hover:text-anol-red transition-colors text-sm font-bold uppercase tracking-wider">Voting</a>
+                </div>
+
+                <div class="hidden lg:block">
+                    <a href="https://www.roblox.com/games/78678289771230" target="_blank" rel="noopener"
+                       class="bg-anol-red hover:bg-anol-red-light text-white px-6 py-2 text-sm font-extrabold uppercase tracking-wider transition-all" style="box-shadow:3px 3px 0 #fff">
+                        Main Sekarang
+                    </a>
+                </div>
+
+                <div class="lg:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-anol-red p-2" aria-label="Buka menu">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-anol-black border-t border-anol-gray">
+            <div class="px-4 pt-2 pb-6 space-y-1 font-bold uppercase tracking-wider text-sm">
+                <a href="index.html" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Beranda</a>
+                <a href="#fitur" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Fitur Game</a>
+                <a href="#galeri" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Galeri</a>
+                <a href="#mulai" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Cara Main</a>
+                <a href="koleksi-nft.html" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Galeri Kita</a>
+                <a href="voting.html" class="block px-3 py-3 text-gray-300 hover:text-white hover:bg-anol-gray">Voting Komunitas</a>
+                <a href="https://www.roblox.com/games/78678289771230" target="_blank" rel="noopener" class="block px-3 py-3 text-anol-red">Main di Roblox →</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══ HERO: poster merah ═══ -->
+    <section class="poster-red grain relative overflow-hidden pt-32 pb-24 md:min-h-[85vh] flex items-center">
+        <!-- Kanji vertikal: jalanan -->
+        <div class="hidden md:block absolute left-6 lg:left-10 top-1/2 -translate-y-1/2 z-10 jp bg-anol-black text-white text-3xl lg:text-4xl px-2 py-4 vertical select-none" style="box-shadow: 4px 4px 0 #fff;" aria-hidden="true">街道</div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:pl-28 lg:pl-32 w-full">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-6/12 w-full animate-fade-in-up">
+                    <p class="inline-block bg-anol-black text-white font-extrabold tracking-[0.3em] uppercase text-xs px-4 py-2 mb-6">Game Roblox · Gratis</p>
+                    <h1 class="font-display text-white ink-shadow text-4xl sm:text-5xl md:text-6xl leading-tight">
+                        ANOLYSTIC:<br>MYSTIC STREETS
+                    </h1>
+                    <p class="text-white font-semibold text-lg mt-6 mb-10 max-w-xl">
+                        Bangun kebunmu di pulau misterius, tanam bahan langka, lalu racik streetwear Anolystic di Workshop.
+                        Trade dengan pemain lain dan pamerkan gayamu di <span class="bg-anol-black px-1">ANOL Runway</span>.
+                        Bisa dimainkan di HP, tablet, dan PC.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <a href="https://www.roblox.com/games/78678289771230" target="_blank" rel="noopener" class="btn-ink">Main di Roblox</a>
+                        <a href="#fitur" class="btn-ghost">Lihat Fitur →</a>
+                    </div>
+                </div>
+                <div class="lg:w-6/12 w-full animate-fade-in-up animate-delay-100">
+                    <div class="shot">
+                        <img src="images/game-jalan-lentera.jpg" alt="Jalan setapak berlentera di antara bukit dan bunga liar di ANOLYSTIC: Mystic Streets">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FITUR ═══ -->
+    <section id="fitur" class="py-24 bg-anol-black grain-dark relative overflow-hidden">
+        <div class="absolute -right-6 top-16 jp kanji-outline text-[12rem] md:text-[18rem] leading-none select-none pointer-events-none" aria-hidden="true">遊</div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <p class="eyebrow mb-3">Isi Game</p>
+            <h2 class="font-display text-4xl md:text-6xl ink-shadow-red mb-6">APA YANG BISA LO LAKUKAN</h2>
+            <div class="red-bar mb-12"></div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="ink-card p-7 animate-fade-in-up">
+                    <p class="font-display text-anol-red text-3xl mb-3">01</p>
+                    <h3 class="font-display text-xl mb-3">BERTANI DI ROOFTOP</h3>
+                    <p class="text-gray-400 leading-relaxed">Klaim kebunmu, tanam Cotton sampai Croc Hide Root yang langka, panen, lalu jual hasilnya di Anol Market. Tanaman tetap tumbuh saat kamu offline.</p>
+                </div>
+                <div class="ink-card p-7 animate-fade-in-up animate-delay-100">
+                    <p class="font-display text-anol-red text-3xl mb-3">02</p>
+                    <h3 class="font-display text-xl mb-3">RACIK STREETWEAR</h3>
+                    <p class="text-gray-400 leading-relaxed">Di Anol Workshop, gabungkan seed untuk menemukan tanaman baru, lalu craft hoodie, denim jacket, sampai Croc Club Bomber. Semua bisa langsung dipakai di avatar.</p>
+                </div>
+                <div class="ink-card p-7 animate-fade-in-up animate-delay-200">
+                    <p class="font-display text-anol-red text-3xl mb-3">03</p>
+                    <h3 class="font-display text-xl mb-3">TRADE &amp; VENDING</h3>
+                    <p class="text-gray-400 leading-relaxed">Tukar item dengan pemain lain lewat trade yang aman, atau pasang barang daganganmu di vending machine depan kebun.</p>
+                </div>
+                <div class="ink-card p-7 animate-fade-in-up">
+                    <p class="font-display text-anol-red text-3xl mb-3">04</p>
+                    <h3 class="font-display text-xl mb-3">ANOMALY HOUR</h3>
+                    <p class="text-gray-400 leading-relaxed">Tiap beberapa menit langit plaza berubah merah dan Koin Anomaly berjatuhan. Kumpulkan untuk dapat seed langka dan Anol Cash.</p>
+                </div>
+                <div class="ink-card p-7 animate-fade-in-up animate-delay-100">
+                    <p class="font-display text-anol-red text-3xl mb-3">05</p>
+                    <h3 class="font-display text-xl mb-3">ANOL RUNWAY</h3>
+                    <p class="text-gray-400 leading-relaxed">Lomba outfit di pulau Street Party. Naik ke podium, pemain lain memilih gaya terbaik, dan juaranya memakai mahkota TOP DRIP.</p>
+                </div>
+                <div class="ink-card p-7 animate-fade-in-up animate-delay-200">
+                    <p class="font-display text-anol-red text-3xl mb-3">06</p>
+                    <h3 class="font-display text-xl mb-3">JELAJAH PULAU</h3>
+                    <p class="text-gray-400 leading-relaxed">Danau dan air terjun, kolam di padang, jalan setapak berlentera, pantai berperahu, Street Party, sampai Sky Lounge yang eksklusif.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pita pembatas: Galeri -->
+    <div id="galeri" class="bg-anol-red border-y-4 border-anol-black py-6 text-center">
+        <p class="font-display text-2xl md:text-4xl text-white ink-shadow">GALERI PULAU <span class="jp text-anol-black ml-2">島</span></p>
+        <p class="text-white font-bold uppercase tracking-[0.3em] text-xs mt-2">Langsung dari dalam game</p>
+    </div>
+
+    <!-- ═══ GALERI ═══ -->
+    <section class="py-24 bg-anol-dark relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-10">
+                <figure class="animate-fade-in-up">
+                    <div class="shot"><img src="images/game-danau.jpg" alt="Danau dengan dermaga dan perahu dayung" loading="lazy"></div>
+                    <figcaption class="text-gray-400 text-sm mt-4"><span class="text-white font-bold">Danau &amp; dermaga.</span> Perahu dayung, riak ikan, dan air terjun di dekatnya.</figcaption>
+                </figure>
+                <figure class="animate-fade-in-up animate-delay-100">
+                    <div class="shot"><img src="images/game-kolam.jpg" alt="Kolam kecil dengan teratai, bangku kayu, dan pagar di padang" loading="lazy"></div>
+                    <figcaption class="text-gray-400 text-sm mt-4"><span class="text-white font-bold">Kolam di padang.</span> Spot santai dengan teratai, bangku, dan pemandangan laut.</figcaption>
+                </figure>
+                <figure class="animate-fade-in-up">
+                    <div class="shot"><img src="images/game-kebun-vending.jpg" alt="Vending machine streetwear dan papan nama kebun" loading="lazy"></div>
+                    <figcaption class="text-gray-400 text-sm mt-4"><span class="text-white font-bold">Kebun &amp; vending machine.</span> Jual hasil craft-mu ke pemain lain langsung dari depan kebun.</figcaption>
+                </figure>
+                <figure class="animate-fade-in-up animate-delay-100">
+                    <div class="shot"><img src="images/game-runway.jpg" alt="Panggung ANOL Runway dengan piala TOP DRIP di pulau Street Party" loading="lazy"></div>
+                    <figcaption class="text-gray-400 text-sm mt-4"><span class="text-white font-bold">ANOL Runway.</span> Lantai dansa Street Party dan piala TOP DRIP untuk juara.</figcaption>
+                </figure>
+                <figure class="animate-fade-in-up">
+                    <div class="shot"><img src="images/game-patung.jpg" alt="Patung kelelawar Anolystic di plaza" loading="lazy"></div>
+                    <figcaption class="text-gray-400 text-sm mt-4"><span class="text-white font-bold">Plaza Anolystic.</span> Patung kelelawar, api unggun, dan tempat berkumpul saat Anomaly Hour.</figcaption>
+                </figure>
+                <figure class="animate-fade-in-up animate-delay-100">
+                    <div class="shot"><img src="images/game-papan-arah.jpg" alt="Papan penunjuk arah kayu di plaza" loading="lazy"></div>
+                    <figcaption class="text-gray-400 text-sm mt-4"><span class="text-white font-bold">Gampang menjelajah.</span> Papan arah menunjukkan jalan ke Market, Workshop, Street Party, dan lainnya.</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CARA MULAI ═══ -->
+    <section id="mulai" class="py-24 bg-anol-black grain-dark relative overflow-hidden border-t-2 border-anol-gray">
+        <div class="absolute -left-6 top-16 jp kanji-outline text-[12rem] md:text-[18rem] leading-none select-none pointer-events-none" aria-hidden="true">始</div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-14 items-start">
+                <div class="lg:w-7/12 w-full animate-fade-in-up">
+                    <p class="eyebrow mb-3">Cara Mulai</p>
+                    <h2 class="font-display text-4xl md:text-6xl ink-shadow-red mb-6">3 LANGKAH MAIN</h2>
+                    <div class="red-bar mb-10"></div>
+                    <div class="space-y-6">
+                        <div class="ink-card p-6 flex gap-5 items-start">
+                            <span class="font-display text-anol-red text-3xl">1</span>
+                            <p class="text-gray-300 leading-relaxed"><span class="text-white font-bold">Pasang Roblox</span> di HP, tablet, atau PC, lalu masuk atau buat akun (gratis).</p>
+                        </div>
+                        <div class="ink-card p-6 flex gap-5 items-start">
+                            <span class="font-display text-anol-red text-3xl">2</span>
+                            <p class="text-gray-300 leading-relaxed"><span class="text-white font-bold">Klik tombol Main di Roblox</span> di halaman ini, atau cari <span class="text-white font-bold">"ANOLYSTIC: Mystic Streets"</span> di Roblox.</p>
+                        </div>
+                        <div class="ink-card p-6 flex gap-5 items-start">
+                            <span class="font-display text-anol-red text-3xl">3</span>
+                            <p class="text-gray-300 leading-relaxed"><span class="text-white font-bold">Ikuti tutorial singkat</span> di layar: tanam seed pertamamu, buka Workshop, panen, lalu jual di Anol Market.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-5/12 w-full animate-fade-in-up animate-delay-100">
+                    <div class="bg-anol-dark border-2 border-anol-gray border-l-8 border-l-anol-red p-6">
+                        <p class="text-white text-sm font-bold uppercase tracking-wider mb-3">Catatan penting</p>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                            Anol Cash, item, dan semua isi game hanya berlaku di dalam Roblox. Game ini
+                            <span class="text-white font-bold">tidak terhubung dengan token, NFT, atau kripto apa pun</span>,
+                            dan isi game tidak bisa ditukar dengan uang atau barang.
+                        </p>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Pembelian di dalam game hanya memakai Robux resmi Roblox. Kaos fisik Anolystic dijual terpisah di Tokopedia.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="https://www.roblox.com/games/78678289771230" target="_blank" rel="noopener" class="btn-red flex-1">Main di Roblox</a>
+                            <a href="https://tk.tokopedia.com/ZSmwErNLP/" target="_blank" rel="noopener" class="btn-ghost flex-1">Kaos di Tokopedia</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA penutup -->
+    <section class="poster-red grain py-20 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="font-display text-3xl md:text-5xl text-white ink-shadow mb-4">SAMPAI KETEMU DI MYSTIC STREETS</h2>
+            <p class="text-white font-semibold mb-10">Ajak temanmu, bangun kebun bareng, dan rebut mahkota TOP DRIP.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-5">
+                <a href="https://www.roblox.com/games/78678289771230" target="_blank" rel="noopener" class="btn-ink">Main di Roblox</a>
+                <a href="index.html" class="btn-ghost">Kembali ke Beranda</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-anol-black border-t-4 border-anol-red py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <img src="images/logo-full.png" alt="Anolystic" class="h-10 w-auto mx-auto md:mx-0">
+                    <p class="text-gray-500 text-sm mt-2">Gaya gak banyak bicara. <span class="jp text-gray-600 ml-1">異常と神秘</span></p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-bold uppercase tracking-wider">
+                    <a href="verifikasi.html" class="text-anol-red hover:text-white">Cek Keaslian</a>
+                    <a href="index.html" class="text-gray-400 hover:text-white">Beranda</a>
+                    <a href="mystic-streets.html" class="text-gray-400 hover:text-white">Game Roblox</a>
+                    <a href="voting.html" class="text-gray-400 hover:text-white">Voting</a>
+                    <a href="index.html#gabung" class="text-gray-400 hover:text-white">Gabung Tim & Kemitraan</a>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="https://instagram.com/Anolystic" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors">
+                        <span class="sr-only">Instagram</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://x.com/anolystic" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors">
+                        <span class="sr-only">X</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="https://t.me/+GgbXJt5Vchs3NWFI" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors">
+                        <span class="sr-only">Telegram</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-anol-gray text-center">
+                <p class="text-gray-600 text-sm">© 2026 Anolystic. All rights reserved. Roblox adalah merek dagang Roblox Corporation; halaman ini bukan halaman resmi Roblox.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        // Animasi muncul saat discroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
